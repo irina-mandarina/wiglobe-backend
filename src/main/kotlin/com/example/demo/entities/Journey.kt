@@ -13,14 +13,24 @@ class Journey {
 
     @JoinColumn(name = "user_id", nullable = false)
     @ManyToOne
-    var user: User = User()
+    lateinit var user: User
 
     @Column(name = "start_date", nullable = false)
-    var startDate: Timestamp = TODO()
+    lateinit var startDate: Timestamp
 
-    @Column(name = "end_date", nullable = false)
-    var endDate: Timestamp = TODO()
+    @Column(name = "end_date", nullable = true)
+    var endDate: Timestamp? = null
 
-    @Column(name = "destination", nullable = false)
-    var destination: String = ""
+    @JoinColumn(name = "destination_id", nullable = false, unique = true)
+    @ManyToOne
+    lateinit var destination: Destination
+
+    @Column(name = "description", nullable = true)
+    var description: String? = ""
+
+    @OneToMany(mappedBy = "journey")
+    lateinit var activities: List<Activity>
+
+    @OneToMany(mappedBy = "journey")
+    lateinit var comments: List<Comment>
 }

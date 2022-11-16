@@ -1,24 +1,144 @@
 package com.example.demo.services.serviceImplementations
 
+import com.example.demo.entities.Comment
+import com.example.demo.entities.Journey
+import com.example.demo.repositories.CommentRepository
+import com.example.demo.requestEntities.CommentRequest
+import com.example.demo.requestEntities.GetComment
 import com.example.demo.services.CommentService
+import com.example.demo.services.JourneyService
+import com.example.demo.services.UserService
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 
 @Service
-class CommentServiceImpl: CommentService {
-    override fun getCommentsForJourney(username: String, journeyId: String): ResponseEntity<String> {
-        TODO("Not yet implemented")
+class CommentServiceImpl(val journeyService: JourneyService, val userService: UserService,
+                         val commentRepository: CommentRepository): CommentService {
+    override fun getCommentsForJourney(username: String, journeyId: Long): ResponseEntity<String> {
+        if (username.isBlank()) {
+            return ResponseEntity.badRequest().body("Missing request parameter: username")
+        }
+
+        if (userService.userWithUsernameExists(username)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
+        }
+
+        if (journeyId == null) {
+            return ResponseEntity.badRequest().body("Missing request parameter: journeyId")
+        }
+
+        if (journeyService.journeyWithIdExists(journeyId)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Journey does not exist")
+        }
+
+        val comments: List<Comment> = findCommentsByJourney(journeyService.findJourneyById(journeyId)!!)
+        val getComments: List<GetComment> = comments.map { GetComment(it) }
+
+        return ResponseEntity.ok().body(getComments.toString())
+    }
+    override fun commentJourney(
+        username: String,
+        journeyId: Long,
+        commentRequest: CommentRequest
+    ): ResponseEntity<String> {
+        if (username.isBlank()) {
+            return ResponseEntity.badRequest().body("Missing request parameter: username")
+        }
+
+        if (userService.userWithUsernameExists(username)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
+        }
+
+        if (journeyId == null) {
+            return ResponseEntity.badRequest().body("Missing request parameter: journeyId")
+        }
+
+        if (journeyService.journeyWithIdExists(journeyId)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Journey does not exist")
+        }
+
+        if (commentRequest.content.isNullOrBlank()) {
+            return ResponseEntity.badRequest().body("Missing request parameter: CommentRequest.content")
+        }
+
+        var comment = Comment(commentRequest, journeyService.findJourneyById(journeyId)!!,
+            userService.findUserByUsername(username)!!
+        )
+
+        commentRepository.save(comment)
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("that same comment")
     }
 
-    override fun commentJourney(username: String, journeyId: String): ResponseEntity<String> {
-        TODO("Not yet implemented")
+    override fun editComment(username: String, commentId: Long, commentRequest: CommentRequest): ResponseEntity<String> {
+        if (username.isBlank()) {
+            return ResponseEntity.badRequest().body("Missing request parameter: username")
+        }
+
+        if (userService.userWithUsernameExists(username)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
+        }
+
+        if (commentRequest.id == null) {
+            return ResponseEntity.badRequest().body("Missing request parameter: commentRequest.id")
+        }
+
+        if (commentWithIdExists(commentRequest.id!!)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Comment does not exist")
+        }
+
+        var comment = findCommentById(commentRequest.id!!)!!
+
+        if (comment.user.username != username) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Comment with id " + commentRequest.id + " does not belong to user with username: $username")
+        }
+
+        comment.content = commentRequest.content
+
+        commentRepository.save(comment)
+
+        return ResponseEntity.ok().body(GetComment(comment).toString())
     }
 
-    override fun editComment(username: String, journeyId: Long, commentId: Long): ResponseEntity<String> {
-        TODO("Not yet implemented")
+    override fun deleteComment(username: String, commentId: Long): ResponseEntity<String> {
+        if (username.isBlank()) {
+            return ResponseEntity.badRequest().body("Missing request parameter: username")
+        }
+
+        if (userService.userWithUsernameExists(username)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
+        }
+
+        if (commentId == null) {
+            return ResponseEntity.badRequest().body("Missing request parameter: commentId")
+        }
+
+        if (commentWithIdExists(commentId)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Comment does not exist")
+        }
+
+        val comment = findCommentById(commentId)!!
+
+        if (comment.user.username != username) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Comment with id $commentId does not belong to user with username: $username")
+        }
+
+        commentRepository.delete(comment)
+
+        return ResponseEntity.ok().body("Successfully deleted comment with id: $commentId")
     }
 
-    override fun deleteComment(username: String, journeyId: Long, commentId: Long): ResponseEntity<String> {
-        TODO("Not yet implemented")
+    override fun commentWithIdExists(commentId: Long): Boolean {
+        return (findCommentById(commentId) != null)
     }
+
+    override fun findCommentById(id: Long): Comment? {
+        return commentRepository.findCommentById(id)
+    }
+
+    override fun findCommentsByJourney(journey: Journey): List<Comment> {
+        return commentRepository.findCommentsByJourney(journey)
+    }
+
 }

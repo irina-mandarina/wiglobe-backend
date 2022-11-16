@@ -7,6 +7,9 @@ import java.util.*
 
 @Repository
 interface UserRepository: JpaRepository<User, Long> {
-    fun findUserById(id: Long): User
-    fun findUserByUsername(username: String): User
+    fun findUserById(id: Long): User?
+
+    fun findUserByUsername(username: String): User?
+
+    fun findUserByEmail(email: String): User?
 }

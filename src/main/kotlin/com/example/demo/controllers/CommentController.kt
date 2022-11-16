@@ -1,30 +1,29 @@
 package com.example.demo.controllers
 
+import com.example.demo.requestEntities.CommentRequest
 import com.example.demo.services.CommentService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-class CommentController {
-    private val commentService: CommentService = TODO()
-
+class CommentController(val commentService: CommentService) {
     @GetMapping("/journeys/{journeyId}/comments")
-    fun getCommentsForJourney(@RequestHeader username: String, @PathVariable journeyId: String): ResponseEntity<String> {
+    fun getCommentsForJourney(@RequestHeader username: String, @PathVariable journeyId: Long): ResponseEntity<String> {
         return commentService.getCommentsForJourney(username, journeyId)
     }
 
     @PostMapping("/journeys/{journeyId}/comments")
-    fun commentJourney(@RequestHeader username: String, @PathVariable journeyId: String): ResponseEntity<String> {
-        return commentService.commentJourney(username, journeyId)
+    fun commentJourney(@RequestHeader username: String, @PathVariable journeyId: Long, @RequestBody commentRequest: CommentRequest): ResponseEntity<String> {
+        return commentService.commentJourney(username, journeyId, commentRequest)
     }
 
     @PutMapping("/journeys/{journeyId}/comments/{commentId}")
-    fun editComment(@RequestHeader username: String, @PathVariable journeyId: Long, @PathVariable commentId: Long): ResponseEntity<String> {
-        return commentService.editComment(username, journeyId, commentId)
+    fun editComment(@RequestHeader username: String, @PathVariable journeyId: Long, @PathVariable commentId: Long, @RequestBody commentRequest: CommentRequest): ResponseEntity<String> {
+        return commentService.editComment(username, commentId, commentRequest)
     }
 
     @DeleteMapping("/journeys/{journeyId}/comments/{commentId}")
     fun deleteComment(@RequestHeader username: String, @PathVariable journeyId: Long, @PathVariable commentId: Long): ResponseEntity<String> {
-        return commentService.deleteComment(username, journeyId, commentId)
+        return commentService.deleteComment(username, commentId)
     }
 }

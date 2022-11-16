@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface CommentRepository: JpaRepository<Comment, Long> {
     fun findCommentsByJourney(journey: Journey): List<Comment>
+    fun findCommentById(id: Long): Comment?
 }

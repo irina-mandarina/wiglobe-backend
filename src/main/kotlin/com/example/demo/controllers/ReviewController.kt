@@ -6,30 +6,30 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-class ReviewController {
-    private val reviewService: ReviewService = TODO()
-
-    @GetMapping("/journeys/{journeyId}/reviews")
-    fun getReviewsForJourney(@RequestHeader username: String, @PathVariable journeyId: Long
+class ReviewController(val reviewService: ReviewService) {
+    @GetMapping("/destinations/{destinationId}/reviews")
+    fun getReviewsForDestination(@RequestHeader username: String, @PathVariable destinationId: Long
     ): ResponseEntity<String> {
-        return reviewService.getReviewsForJourney(username, journeyId)
+        return reviewService.getReviewsForDestination(username, destinationId)
     }
 
-    @PostMapping("/journeys/{journeyId}/reviews")
-    fun reviewJourney(@RequestHeader username: String, @PathVariable journeyId: String,
+    @PostMapping("/destinations/{destinationId}/reviews")
+    fun reviewdestination(@RequestHeader username: String, @PathVariable destinationId: Long,
                       @RequestBody reviewRequest: ReviewRequest): ResponseEntity<String> {
-        return reviewService.reviewJourney(username, journeyId, reviewRequest)
+        reviewRequest.destinationId = destinationId
+        return reviewService.reviewDestination(username, reviewRequest)
     }
 
-    @PutMapping("/journeys/{journeyId}/reviews/{reviewId}")
-    fun editReview(@RequestHeader username: String, @PathVariable journeyId: Long,
-                   @PathVariable reviewId: Long): ResponseEntity<String> {
-        return reviewService.editReview(username, journeyId, reviewId)
+    @PutMapping("/destinations/{destinationId}/reviews/{reviewId}")
+    fun editReview(@RequestHeader username: String, @PathVariable destinationId: Long,
+                   @PathVariable reviewId: Long, reviewRequest: ReviewRequest): ResponseEntity<String> {
+        reviewRequest.id = reviewId
+        return reviewService.editReview(username, reviewRequest)
     }
 
-    @DeleteMapping("/journeys/{journeyId}/reviews/{reviewId}")
-    fun deleteReview(@RequestHeader username: String, @PathVariable journeyId: Long,
+    @DeleteMapping("/destinations/{destinationId}/reviews/{reviewId}")
+    fun deleteReview(@RequestHeader username: String, @PathVariable destinationId: Long,
                      @PathVariable reviewId: Long): ResponseEntity<String> {
-        return reviewService.deleteReview(username, journeyId, reviewId)
+        return reviewService.deleteReview(username, reviewId)
     }
 }

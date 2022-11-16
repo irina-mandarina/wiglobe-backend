@@ -1,6 +1,7 @@
 package com.example.demo.entities
 
-import java.sql.Timestamp
+import java.sql.Date
+import java.time.LocalDate
 import javax.persistence.*
 
 @Entity
@@ -13,10 +14,10 @@ class Activity {
 
     @JoinColumn(name = "journey_id", nullable = false)
     @ManyToOne
-    var journey: Journey = Journey()
+    lateinit var journey: Journey
 
     @Column(name = "date", nullable = false)
-    var date: Timestamp = TODO()
+    var date: Date = Date.valueOf(LocalDate.now())
 
     @Column(name = "title", nullable = false)
     var title: String = ""

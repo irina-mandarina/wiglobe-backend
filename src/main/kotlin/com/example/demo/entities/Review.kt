@@ -1,6 +1,7 @@
 package com.example.demo.entities
 
 import java.sql.Timestamp
+import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
@@ -13,24 +14,24 @@ class Review {
 
     @JoinColumn(name = "user_id", nullable = false)
     @ManyToOne
-    var user: User = User()
+    lateinit var user: User
 
-    @JoinColumn(name = "journey_id", nullable = false)
+    @JoinColumn(name = "destination_id", nullable = false)
     @ManyToOne
-    var journey: Journey = Journey()
+    lateinit var destination: Destination
 
-    @Column(name = "created_date", nullable = false)
-    var createdDate: Timestamp = TODO()
+    @Column(name = "reviewed_date", nullable = false)
+    var reviewedDate: Timestamp = Timestamp.valueOf(LocalDateTime.now())
 
     @Column(name = "star_rating", nullable = false)
 //    @Min(value = 1)
 //    @Max(value = 10)
-    var starRating: Int = TODO()
+    var starRating: Int = 1
 
-    @Column(name = "title", nullable = false)
-    var title: String = ""
+    @Column(name = "title")
+    var title: String? = ""
 
-    @Column(name = "content", nullable = false)
-    var content: String = ""
+    @Column(name = "content")
+    var content: String? = ""
 
 }

@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface JourneyRepository: JpaRepository<Journey, Long> {
     fun findJourneysByUser(user: User): List<Journey>
+
+    fun findJourneysById(id: Long): Journey?
 }
