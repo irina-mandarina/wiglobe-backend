@@ -4,7 +4,6 @@ import com.example.demo.entities.Comment
 import com.example.demo.entities.Journey
 import com.example.demo.repositories.CommentRepository
 import com.example.demo.requestEntities.CommentRequest
-import com.example.demo.requestEntities.GetComment
 import com.example.demo.services.CommentService
 import com.example.demo.services.JourneyService
 import com.example.demo.services.UserService
@@ -33,7 +32,7 @@ class CommentServiceImpl(val journeyService: JourneyService, val userService: Us
         }
 
         val comments: List<Comment> = findCommentsByJourney(journeyService.findJourneyById(journeyId)!!)
-        val getComments: List<GetComment> = comments.map { GetComment(it) }
+        val getComments: List<CommentRequest> = comments.map { CommentRequest(it) }
 
         return ResponseEntity.ok().body(getComments.toString())
     }
@@ -98,7 +97,7 @@ class CommentServiceImpl(val journeyService: JourneyService, val userService: Us
 
         commentRepository.save(comment)
 
-        return ResponseEntity.ok().body(GetComment(comment).toString())
+        return ResponseEntity.ok().body(CommentRequest(comment).toString())
     }
 
     override fun deleteComment(username: String, commentId: Long): ResponseEntity<String> {

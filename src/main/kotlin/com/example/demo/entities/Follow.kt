@@ -6,7 +6,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "follow")
-class Follow {
+class Follow() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -22,4 +22,10 @@ class Follow {
     @JoinColumn(name = "followed_id", nullable = false)
     @ManyToOne
     var followed: User = User()
+
+    constructor(followRequest: FollowRequest) : this() {
+        this.followDate = Timestamp.valueOf(LocalDateTime.now())
+        this.followed = followRequest.receiver
+        this.follower = followRequest.receiver
+    }
 }

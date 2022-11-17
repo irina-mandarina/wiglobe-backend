@@ -3,7 +3,6 @@ package com.example.demo.services.serviceImplementations
 import com.example.demo.entities.Journey
 import com.example.demo.entities.User
 import com.example.demo.repositories.JourneyRepository
-import com.example.demo.requestEntities.GetJourney
 import com.example.demo.requestEntities.JourneyRequest
 import com.example.demo.services.DestinationService
 import com.example.demo.services.JourneyService
@@ -45,7 +44,7 @@ class JourneyServiceImpl(val journeyRepository: JourneyRepository, val userServi
 
         journeyRepository.save(journey)
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(GetJourney(journey).toString())
+        return ResponseEntity.status(HttpStatus.CREATED).body(JourneyRequest(journey).toString())
     }
 
     override fun deleteJourney(username: String, journeyId: Long): ResponseEntity<String> {
@@ -84,7 +83,8 @@ class JourneyServiceImpl(val journeyRepository: JourneyRepository, val userServi
         journey.activities = journeyRequest.activities
 
         journeyRepository.save(journey)
-        return ResponseEntity.status(HttpStatus.OK).body(GetJourney(findJourneyById(journeyRequest.id!!)!!).toString())
+        return ResponseEntity.status(HttpStatus.OK).body(
+            JourneyRequest(findJourneyById(journeyRequest.id!!)!!).toString())
     }
 
     override fun getJourney(username: String, journeyId: Long): ResponseEntity<String> {
@@ -99,6 +99,6 @@ class JourneyServiceImpl(val journeyRepository: JourneyRepository, val userServi
         val journey: Journey = findJourneyById(journeyId)
             ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Journey does not exist")
 
-        return ResponseEntity.ok().body(GetJourney(findJourneyById(journeyId)!!).toString())
+        return ResponseEntity.ok().body(JourneyRequest(findJourneyById(journeyId)!!).toString())
     }
 }

@@ -6,23 +6,23 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 class FollowRequestController(val followRequestService: FollowRequestService) {
-    @PostMapping("/users/{userId}/add-friend")
-    fun sendFriendRequest(@RequestHeader username: String, @PathVariable userId: Long): ResponseEntity<String> {
+    @PostMapping("/users/{userId}/follow")
+    fun sendFollowRequest(@RequestHeader username: String, @PathVariable userId: Long): ResponseEntity<String> {
         return followRequestService.sendFollowRequest(username, userId)
     }
 
-    @DeleteMapping("/users/{userId}/add-friend")
-    fun deleteFriendRequest(@RequestHeader username: String, @PathVariable userId: Long): ResponseEntity<String> {
+    @DeleteMapping("/users/{userId}/follow")
+    fun deleteFollowRequest(@RequestHeader username: String, @PathVariable userId: Long): ResponseEntity<String> {
         return followRequestService.deleteFollowRequest(username, userId)
     }
 
-    @GetMapping("/me/friendRequests")
-    fun getFriendRequests(@RequestHeader username: String) : ResponseEntity<String> {
+    @GetMapping("/me/followRequests")
+    fun getFollowRequests(@RequestHeader username: String) : ResponseEntity<String> {
         return followRequestService.getFollowRequests(username)
     }
 
-    @DeleteMapping("/me/friendRequests/{friendRequestId}")
-    fun respondToFriendRequest(@RequestHeader username: String, @PathVariable friendRequestId: Long, @RequestBody response: Boolean): ResponseEntity<String> {
-        return followRequestService.approveFollowRequest(username, friendRequestId, response)
+    @DeleteMapping("/me/followRequests/{followRequestId}")
+    fun respondToFollowRequest(@RequestHeader username: String, @PathVariable followRequestId: Long, @RequestBody response: Boolean): ResponseEntity<String> {
+        return followRequestService.approveFollowRequest(username, followRequestId, response)
     }
 }

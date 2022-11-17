@@ -21,17 +21,17 @@ class FollowRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private var id: Long? = null
+    var id: Long? = null
 
     @Column(name = "request_date", nullable = false)
-    private var requestDate: Timestamp = Timestamp.valueOf(LocalDateTime.now())
+    var requestDate: Timestamp = Timestamp.valueOf(LocalDateTime.now())
 
     @JoinColumn(name = "requester_id", nullable = false)
     @ManyToOne
-    private lateinit var requester: User
+    lateinit var requester: User
 
     @JoinColumn(name = "receiver_id", nullable = false)
     @ManyToOne
-    private lateinit var receiver: User
+    lateinit var receiver: User
 
 }

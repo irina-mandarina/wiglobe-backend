@@ -1,17 +1,26 @@
 package com.example.demo.requestEntities
 
-import com.example.demo.entities.Journey
-import com.example.demo.entities.User
+import com.example.demo.entities.Comment
 import java.sql.Timestamp
 
 class CommentRequest {
     var id: Long? = null
+    var journeyId: Long? = null
+    var userId: Long? = null
+    var datePosted: Timestamp? = TODO()
+    var content: String = ""
 
-    var journey: Journey? = Journey()
+    constructor(comment: Comment) {
+        this.journeyId = comment.journey.id
+        this.userId = comment.user.id
+        this.datePosted = comment.datePosted
+        this.content = comment.content
+    }
 
-    var user: User? = User()
-
-    var datePosted: Timestamp = TODO()
-
-    var content: String = TODO()
+    constructor(commentRequest: CommentRequest, journeyId: Long, userId: Long) {
+        this.userId = userId
+        this.journeyId = journeyId
+        this.datePosted = commentRequest.datePosted
+        this.content = commentRequest.content
+    }
 }

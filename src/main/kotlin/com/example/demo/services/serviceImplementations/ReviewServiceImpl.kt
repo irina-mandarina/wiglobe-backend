@@ -4,7 +4,6 @@ import com.example.demo.entities.Destination
 import com.example.demo.entities.Review
 import com.example.demo.entities.User
 import com.example.demo.repositories.ReviewRepository
-import com.example.demo.requestEntities.GetReview
 import com.example.demo.requestEntities.ReviewRequest
 import com.example.demo.services.DestinationService
 import com.example.demo.services.ReviewService
@@ -37,7 +36,7 @@ class ReviewServiceImpl(val destinationService: DestinationService, val userServ
         }
         val reviews: List<Review> = findReviewsByDestination(destinationService.findDestinationById(destinationId)!!)
 
-        val getReviews: List<GetReview> = reviews.map { GetReview(it) }
+        val getReviews: List<ReviewRequest> = reviews.map { ReviewRequest(it) }
 
         return ResponseEntity.ok().body(getReviews.toString())
     }
@@ -65,11 +64,11 @@ class ReviewServiceImpl(val destinationService: DestinationService, val userServ
         review.content = reviewRequest.content
         review.reviewedDate = Timestamp.valueOf(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-mm-dd hh:mm:ss")))
         review.title = reviewRequest.title
-        review.starRating = reviewRequest.starRating
+        review.starRating = reviewRequest.starRating!!
 
         reviewRepository.save(review)
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(GetReview(review).toString())
+        return ResponseEntity.status(HttpStatus.CREATED).body(ReviewRequest(review).toString())
     }
 
     override fun editReview(username: String?, reviewRequest: ReviewRequest): ResponseEntity<String> {
@@ -97,11 +96,11 @@ class ReviewServiceImpl(val destinationService: DestinationService, val userServ
 
         review.title = reviewRequest.title
         review.content = reviewRequest.content
-        review.starRating = reviewRequest.starRating
+        review.starRating = reviewRequest.starRating!!
 
         reviewRepository.save(review)
 
-        return ResponseEntity.ok().body(GetReview(review).toString())
+        return ResponseEntity.ok().body(ReviewRequest(review).toString())
     }
 
     override fun deleteReview(username: String?, reviewId: Long?): ResponseEntity<String> {

@@ -11,8 +11,8 @@ import javax.persistence.*
 class User() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    var id: Long? = null
+    @Column(name = "id", nullable = false, unique = true)
+    var id: Long = 0
 
     @Column(name = "email", nullable = false, unique = true)
     var email: String = ""
@@ -48,13 +48,16 @@ class User() {
     var comments: List<Comment> = listOf()
 
     @OneToMany(mappedBy="requester")
-    var followers: List<FollowRequest> = listOf()
+    var sentFollowRequests: List<FollowRequest> = listOf()
 
     @OneToMany(mappedBy="receiver")
-    var followedUsers: List<FollowRequest> = listOf()
+    var myPendingFollowRequests: List<FollowRequest> = listOf()
 
     @OneToMany(mappedBy="follower")
     var following: List<Follow> = listOf()
+
+    @OneToMany(mappedBy="followed")
+    var followers: List<Follow> = listOf()
 
     constructor(userRequest: UserRequest) : this() {
         this.username = userRequest.username!!
@@ -115,8 +118,8 @@ create table follow_requests (
 create table journeys (
     id int auto_increment primary key unique ,
     user_id int not null,
-    start_date timestamp not null,
-    end_date timestamp,
+    start_date datetime not null,
+    end_date datetime,
     destination_id int not null,
     description varchar(500)
 );
@@ -124,7 +127,7 @@ create table reviews (
     id int auto_increment primary key unique ,
     user_id int not null,
     destination_id int not null,
-    reviewed_date timestamp not null,
+    reviewed_date datetime not null,
     star_rating int not null,
     title varchar(100),
     content varchar(500)

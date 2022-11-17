@@ -30,7 +30,7 @@ class Comment() {
     constructor(commentRequest: CommentRequest, journey: Journey, user: User) : this() {
         this.user = user
         this.journey = journey
-        this.datePosted = commentRequest.datePosted
+        this.datePosted = commentRequest.datePosted!!
         this.content = commentRequest.content
     }
 
