@@ -48,10 +48,6 @@ class JourneyServiceImpl(val journeyRepository: JourneyRepository, val userServi
     }
 
     override fun deleteJourney(username: String, journeyId: Long): ResponseEntity<String> {
-        if (username.isBlank()) {
-            return ResponseEntity.badRequest().body("Missing request parameter: username")
-        }
-
         if (userService.userWithUsernameExists(username)) {
             return ResponseEntity.badRequest().body("Username does not exist")
         }
@@ -67,10 +63,6 @@ class JourneyServiceImpl(val journeyRepository: JourneyRepository, val userServi
         username: String,
         journeyRequest: JourneyRequest
     ): ResponseEntity<String> {
-        if (username.isBlank()) {
-            return ResponseEntity.badRequest().body("Missing request parameter: username")
-        }
-
         if (userService.userWithUsernameExists(username)) {
             return ResponseEntity.badRequest().body("Username does not exist")
         }
@@ -88,11 +80,7 @@ class JourneyServiceImpl(val journeyRepository: JourneyRepository, val userServi
     }
 
     override fun getJourney(username: String, journeyId: Long): ResponseEntity<String> {
-        if (username.isBlank()) {
-            return ResponseEntity.badRequest().body("Missing request parameter: username")
-        }
-
-        if (userService.userWithUsernameExists(username)) {
+       if (userService.userWithUsernameExists(username)) {
             return ResponseEntity.badRequest().body("Username does not exist")
         }
 

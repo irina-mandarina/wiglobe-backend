@@ -6,7 +6,8 @@ import com.example.demo.services.DestinationService
 import org.springframework.stereotype.Service
 
 @Service
-class DestinationServiceImpl(val destinationRepository: DestinationRepository): DestinationService {
+class DestinationServiceImpl(val destinationRepository: DestinationRepository):
+    DestinationService {
     override fun destinationWithIdExists(id: Long): Boolean {
         return (findDestinationById(id) != null)
     }

@@ -1,6 +1,5 @@
 package com.example.demo.services.serviceImplementations
 
-import com.example.demo.entities.Follow
 import com.example.demo.entities.FollowRequest
 import com.example.demo.repositories.FollowRequestRepository
 import com.example.demo.requestEntities.GetFollowRequest
@@ -14,18 +13,11 @@ import java.sql.Timestamp
 import java.time.LocalDateTime
 
 @Service
-class FollowRequestServiceImpl(val followRequestRepository: FollowRequestRepository, val followService: FollowService, val userService: UserService): FollowRequestService {
+class FollowRequestServiceImpl(val followRequestRepository: FollowRequestRepository, val followService: FollowService,
+                               val userService: UserService): FollowRequestService {
     override fun sendFollowRequest(username: String, userId: Long): ResponseEntity<String> {
-        if (username.isBlank()) {
-            return ResponseEntity.badRequest().body("Missing request parameter: username")
-        }
-
         if (userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
-        }
-
-        if (userId == null) {
-            return ResponseEntity.badRequest().body("Missing request parameter: userId")
         }
 
         if (findByReceiver_IdAndAndRequester_Username(userId, username) != null) {
@@ -46,16 +38,8 @@ class FollowRequestServiceImpl(val followRequestRepository: FollowRequestReposit
     }
 
     override fun deleteFollowRequest(username: String, userId: Long): ResponseEntity<String> {
-        if (username.isBlank()) {
-            return ResponseEntity.badRequest().body("Missing request parameter: username")
-        }
-
         if (userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
-        }
-
-        if (userId == null) {
-            return ResponseEntity.badRequest().body("Missing request parameter: userId")
         }
 
         val request = findByReceiver_IdAndAndRequester_Username(userId, username)
@@ -66,10 +50,6 @@ class FollowRequestServiceImpl(val followRequestRepository: FollowRequestReposit
     }
 
     override fun getFollowRequests(username: String): ResponseEntity<String> {
-        if (username.isBlank()) {
-            return ResponseEntity.badRequest().body("Missing request parameter: username")
-        }
-
         if (userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
         }
@@ -79,16 +59,8 @@ class FollowRequestServiceImpl(val followRequestRepository: FollowRequestReposit
     }
 
     override fun approveFollowRequest(username: String, userId: Long, response: Boolean): ResponseEntity<String> {
-        if (username.isBlank()) {
-            return ResponseEntity.badRequest().body("Missing request parameter: username")
-        }
-
         if (userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
-        }
-
-        if (userId == null) {
-            return ResponseEntity.badRequest().body("Missing request parameter: userId")
         }
 
         val request = findByReceiver_IdAndAndRequester_Username(userId, username)

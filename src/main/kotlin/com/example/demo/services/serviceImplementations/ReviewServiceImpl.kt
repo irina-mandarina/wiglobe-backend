@@ -18,15 +18,7 @@ import java.time.format.DateTimeFormatter
 @Service
 class ReviewServiceImpl(val destinationService: DestinationService, val userService: UserService,
                         val reviewRepository: ReviewRepository): ReviewService {
-    override fun getReviewsForDestination(username: String?, destinationId: Long?): ResponseEntity<String> {
-        if (username.isNullOrBlank()) {
-            return ResponseEntity.badRequest().body("Missing request parameter: username")
-        }
-
-        if (destinationId == null) {
-            return ResponseEntity.badRequest().body("Missing request parameter: destinationId")
-        }
-
+    override fun getReviewsForDestination(username: String, destinationId: Long): ResponseEntity<String> {
         if (userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
         }
@@ -41,15 +33,7 @@ class ReviewServiceImpl(val destinationService: DestinationService, val userServ
         return ResponseEntity.ok().body(getReviews.toString())
     }
 
-    override fun reviewDestination(username: String?, reviewRequest: ReviewRequest): ResponseEntity<String> {
-        if (username.isNullOrBlank()) {
-            return ResponseEntity.badRequest().body("Missing request parameter: username")
-        }
-
-        if ((reviewRequest.destinationId) == null) {
-            return ResponseEntity.badRequest().body("Missing request parameter: destinationId")
-        }
-
+    override fun reviewDestination(username: String, reviewRequest: ReviewRequest): ResponseEntity<String> {
         if (userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
         }
@@ -71,15 +55,7 @@ class ReviewServiceImpl(val destinationService: DestinationService, val userServ
         return ResponseEntity.status(HttpStatus.CREATED).body(ReviewRequest(review).toString())
     }
 
-    override fun editReview(username: String?, reviewRequest: ReviewRequest): ResponseEntity<String> {
-        if (username.isNullOrBlank()) {
-            return ResponseEntity.badRequest().body("Missing request parameter: username")
-        }
-
-        if ((reviewRequest.destinationId) == null) {
-            return ResponseEntity.badRequest().body("Missing request parameter: destinationId")
-        }
-
+    override fun editReview(username: String, reviewRequest: ReviewRequest): ResponseEntity<String> {
         if (userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
         }
@@ -103,15 +79,7 @@ class ReviewServiceImpl(val destinationService: DestinationService, val userServ
         return ResponseEntity.ok().body(ReviewRequest(review).toString())
     }
 
-    override fun deleteReview(username: String?, reviewId: Long?): ResponseEntity<String> {
-        if (username.isNullOrBlank()) {
-            return ResponseEntity.badRequest().body("Missing request parameter: username")
-        }
-
-        if (reviewId == null) {
-            return ResponseEntity.badRequest().body("Missing request parameter: reviewId")
-        }
-
+    override fun deleteReview(username: String, reviewId: Long): ResponseEntity<String> {
         if (userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
         }
@@ -136,11 +104,11 @@ class ReviewServiceImpl(val destinationService: DestinationService, val userServ
     }
 
     override fun reviewWithIdExists(id: Long): Boolean {
-        return findReviewById(id) == null
+        return reviewRepository.findReviewById(id) == null
     }
 
     override fun findReviewsByUser(user: User): List<Review> {
-        return findReviewsByUser(user)
+        return reviewRepository.findReviewsByUser(user)
     }
 
     override fun findReviewsByDestination(destination: Destination): List<Review> {

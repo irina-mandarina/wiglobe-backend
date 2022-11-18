@@ -14,7 +14,7 @@ class ReviewController(val reviewService: ReviewService) {
     }
 
     @PostMapping("/destinations/{destinationId}/reviews")
-    fun reviewdestination(@RequestHeader username: String, @PathVariable destinationId: Long,
+    fun reviewDestination(@RequestHeader username: String, @PathVariable destinationId: Long,
                       @RequestBody reviewRequest: ReviewRequest): ResponseEntity<String> {
         reviewRequest.destinationId = destinationId
         return reviewService.reviewDestination(username, reviewRequest)

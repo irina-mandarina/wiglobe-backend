@@ -2,18 +2,16 @@ package com.example.demo.services.serviceImplementations
 
 import com.example.demo.entities.User
 import com.example.demo.repositories.UserRepository
+import com.example.demo.requestEntities.LogInRequest
+import com.example.demo.requestEntities.SignUpRequest
 import com.example.demo.requestEntities.UserRequest
 import com.example.demo.services.UserService
-import lombok.NoArgsConstructor
-import lombok.RequiredArgsConstructor
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 
 @Service
-@RequiredArgsConstructor
-@NoArgsConstructor
-abstract class UserServiceImpl(val userRepository: UserRepository): UserService {
+ class UserServiceImpl(val userRepository: UserRepository): UserService {
     override fun userWithUsernameExists(username: String): Boolean {
         return (userRepository.findUserByUsername(username) == null)
     }
@@ -30,44 +28,32 @@ abstract class UserServiceImpl(val userRepository: UserRepository): UserService 
         return userRepository.findUserByUsername(username)
     }
 
-    override fun logIn(userRequest: UserRequest): ResponseEntity<String> {
-        if ((userRequest.username.isNullOrBlank() && userRequest.email.isNullOrBlank()) ||
-            userRequest.password.isNullOrBlank()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("")
+    override fun logIn(logInRequest: LogInRequest): ResponseEntity<String> {
+        if (userWithUsernameExists(logInRequest.username!!)) {
+            return if (findUserByUsername(logInRequest.username)!!.password != logInRequest.password) {
+                ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Wrong password")
+            } else {
+                ResponseEntity.ok().body("Successfully logged in")
+            }
         }
-
-        if (!userWithUsernameExists(userRequest.username!!)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Username does not exist")
-        }
-
-        return if (findUserByUsername(userRequest.username!!)!!.password != userRequest.password) {
-            ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Wrong password")
-        } else {
-            ResponseEntity.ok().body("Successfully logged in")
-        }
-
-        return ResponseEntity.badRequest().body("Log in request failed")
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Username does not exist")
     }
 
-    override fun register(userRequest: UserRequest): ResponseEntity<String> {
-        if (userRequest.username.isNullOrBlank() || userRequest.email.isNullOrBlank() ||
-            userRequest.password.isNullOrBlank() || userRequest.firstName.isNullOrBlank()) {
-            return ResponseEntity.badRequest().body("Missing request details")
+    override fun signUp(signUpRequest: SignUpRequest): ResponseEntity<String> {
+        println("here")
+        if (userWithUsernameExists(signUpRequest.username)) {
+            return ResponseEntity.badRequest().body("User with username: " + signUpRequest.username + "already exists")
         }
 
-        if (userWithUsernameExists(userRequest.username!!)) {
-            return ResponseEntity.badRequest().body("User with username: " + userRequest.username + "already exists")
+        if (userWithEmailExists(signUpRequest.email)) {
+            return ResponseEntity.badRequest().body("User with email: " + signUpRequest.email + "already exists")
         }
 
-        if (userWithEmailExists(userRequest.email!!)) {
-            return ResponseEntity.badRequest().body("User with email: " + userRequest.email + "already exists")
-        }
-
-        val user: User = User(userRequest)
+        val user = User(signUpRequest)
 
         userRepository.save(user)
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("Registered user with username: " + user.username)
+        return ResponseEntity.status(HttpStatus.CREATED).body(UserRequest(findUserByUsername(user.username)!!).toString())
     }
 
     override fun logOut(username: String): ResponseEntity<String> {
@@ -75,10 +61,6 @@ abstract class UserServiceImpl(val userRepository: UserRepository): UserService 
     }
 
     override fun deleteAccount(username: String): ResponseEntity<String> {
-        if (username.isNullOrBlank()) {
-            return ResponseEntity.badRequest().body("Missing request parameter: username")
-        }
-
         return if (!userWithUsernameExists(username)) {
             ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with username: " + username + "does not exist")
         } else {
@@ -92,14 +74,10 @@ abstract class UserServiceImpl(val userRepository: UserRepository): UserService 
     }
 
     override fun setBio(username: String, bio: String): ResponseEntity<String> {
-        if (username.isNullOrBlank()) {
-            return ResponseEntity.badRequest().body("Missing request parameter: username")
-        }
-
         return if (!userWithUsernameExists(username)) {
             ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with username: " + username + "does not exist")
         } else {
-            var user = findUserByUsername(username)
+            val user = findUserByUsername(username)
             if (user != null) {
                 user.biography = bio
                 userRepository.save(user)
@@ -109,10 +87,6 @@ abstract class UserServiceImpl(val userRepository: UserRepository): UserService 
     }
 
     override fun getUserDetails(username: String): ResponseEntity<String> {
-        if (username.isNullOrBlank()) {
-            return ResponseEntity.badRequest().body("Missing request parameter: username")
-        }
-
         if (!userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body("User with username: " + username + "does not exist")

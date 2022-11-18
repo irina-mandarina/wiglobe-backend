@@ -1,49 +1,50 @@
 package com.example.demo.controllers
 
-import com.example.demo.requestEntities.UserRequest
+import com.example.demo.requestEntities.LogInRequest
+import com.example.demo.requestEntities.SignUpRequest
 import com.example.demo.services.UserService
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestHeader
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
+@CrossOrigin
 class UserController(val userService: UserService) {
-    @PostMapping("/auth/login")
-    fun logIn(@RequestBody userRequest: UserRequest): ResponseEntity<String> {
-        return userService.logIn(userRequest)
+    @PostMapping("/users/login")
+    fun logIn(@RequestBody logInRequest: LogInRequest): ResponseEntity<String> {
+        return userService.logIn(logInRequest)
     }
 
-    @PostMapping("/auth/register")
-    fun register(@RequestBody userRequest: UserRequest): ResponseEntity<String> {
-        return userService.register(userRequest)
+    @PostMapping("/users/signup")
+    fun signUp(@RequestBody signUpRequest: SignUpRequest): ResponseEntity<String> {
+        return userService.signUp(signUpRequest)
     }
 
-    @PostMapping("/auth/logOut")
+    @PostMapping("/users/logout")
     fun logOut(@RequestHeader username: String): ResponseEntity<String> {
         return userService.logOut(username)
     }
 
-    @GetMapping("/me/details")
-    fun getUserDetails(@RequestHeader username: String): ResponseEntity<String> {
+    @GetMapping("/users/{username}")
+    fun getUserDetails(@RequestHeader username: String, @PathVariable("username") otherUserUsername: String): ResponseEntity<String> {
         return userService.getUserDetails(username)
     }
 
-    @DeleteMapping("/me/delete-account")
+    @GetMapping("/users/details")
+    fun getMyDetails(@RequestHeader username: String): ResponseEntity<String> {
+        return userService.getUserDetails(username)
+    }
+
+    @DeleteMapping("/users/delete-account")
     fun deleteAccount(@RequestHeader username: String): ResponseEntity<String> {
         return userService.deleteAccount(username)
     }
 
-    @PostMapping("/me/bio")
+    @PostMapping("/users/bio")
     fun addBio(@RequestHeader username: String, @RequestBody bio: String): ResponseEntity<String> {
         return userService.setBio(username, bio)
     }
 
-    @PutMapping("/me/bio")
+    @PutMapping("/users/bio")
     fun editBio(@RequestHeader username: String, @RequestBody bio: String): ResponseEntity<String> {
         return userService.setBio(username, bio)
     }

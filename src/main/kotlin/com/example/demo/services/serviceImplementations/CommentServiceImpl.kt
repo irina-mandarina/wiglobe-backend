@@ -13,7 +13,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class CommentServiceImpl(val journeyService: JourneyService, val userService: UserService,
-                         val commentRepository: CommentRepository): CommentService {
+                         val commentRepository: CommentRepository):
+    CommentService {
     override fun getCommentsForJourney(username: String, journeyId: Long): ResponseEntity<String> {
         if (username.isBlank()) {
             return ResponseEntity.badRequest().body("Missing request parameter: username")
@@ -41,24 +42,13 @@ class CommentServiceImpl(val journeyService: JourneyService, val userService: Us
         journeyId: Long,
         commentRequest: CommentRequest
     ): ResponseEntity<String> {
-        if (username.isBlank()) {
-            return ResponseEntity.badRequest().body("Missing request parameter: username")
-        }
 
         if (userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
         }
 
-        if (journeyId == null) {
-            return ResponseEntity.badRequest().body("Missing request parameter: journeyId")
-        }
-
         if (journeyService.journeyWithIdExists(journeyId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Journey does not exist")
-        }
-
-        if (commentRequest.content.isNullOrBlank()) {
-            return ResponseEntity.badRequest().body("Missing request parameter: CommentRequest.content")
         }
 
         var comment = Comment(commentRequest, journeyService.findJourneyById(journeyId)!!,
@@ -71,23 +61,15 @@ class CommentServiceImpl(val journeyService: JourneyService, val userService: Us
     }
 
     override fun editComment(username: String, commentId: Long, commentRequest: CommentRequest): ResponseEntity<String> {
-        if (username.isBlank()) {
-            return ResponseEntity.badRequest().body("Missing request parameter: username")
-        }
-
         if (userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
-        }
-
-        if (commentRequest.id == null) {
-            return ResponseEntity.badRequest().body("Missing request parameter: commentRequest.id")
         }
 
         if (commentWithIdExists(commentRequest.id!!)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Comment does not exist")
         }
 
-        var comment = findCommentById(commentRequest.id!!)!!
+        val comment = findCommentById(commentRequest.id!!)!!
 
         if (comment.user.username != username) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Comment with id " + commentRequest.id + " does not belong to user with username: $username")
@@ -101,16 +83,8 @@ class CommentServiceImpl(val journeyService: JourneyService, val userService: Us
     }
 
     override fun deleteComment(username: String, commentId: Long): ResponseEntity<String> {
-        if (username.isBlank()) {
-            return ResponseEntity.badRequest().body("Missing request parameter: username")
-        }
-
         if (userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
-        }
-
-        if (commentId == null) {
-            return ResponseEntity.badRequest().body("Missing request parameter: commentId")
         }
 
         if (commentWithIdExists(commentId)) {

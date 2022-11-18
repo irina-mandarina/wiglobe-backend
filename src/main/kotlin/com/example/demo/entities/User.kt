@@ -1,5 +1,6 @@
 package com.example.demo.entities
 
+import com.example.demo.requestEntities.SignUpRequest
 import com.example.demo.requestEntities.UserRequest
 import java.sql.Date
 import java.sql.Timestamp
@@ -20,13 +21,13 @@ class User() {
     @Column(name = "username", nullable = false, unique = true)
     var username: String = ""
 
-    @Column(name = "password", nullable = false, unique = true)
+    @Column(name = "password", nullable = false)
     var password: String = ""
 
     @Column(name = "first_name", nullable = false)
     var firstName: String = ""
 
-    @Column(name = "lastName", nullable = true)
+    @Column(name = "lastName", nullable = false)
     var lastName: String = ""
 
     @Column(name = "registration_date", nullable = false)
@@ -59,15 +60,17 @@ class User() {
     @OneToMany(mappedBy="followed")
     var followers: List<Follow> = listOf()
 
-    constructor(userRequest: UserRequest) : this() {
-        this.username = userRequest.username!!
-        this.email = userRequest.email!!
-        this.password = userRequest.password!!
-        this.birthdate = userRequest.birthdate
-        this.firstName = userRequest.firstName
-        this.lastName = userRequest.lastName!!
+    constructor(signUpRequest: SignUpRequest) : this() {
+        this.username = signUpRequest.username
+        this.email = signUpRequest.email
+        this.password = signUpRequest.password
+        this.birthdate = signUpRequest.birthdate
+        this.firstName = signUpRequest.firstName
+        this.lastName = signUpRequest.lastName
     }
 }
+
+
 /*
 create database demodb;
 use demodb;

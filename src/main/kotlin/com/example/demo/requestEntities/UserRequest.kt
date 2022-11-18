@@ -6,23 +6,19 @@ import java.sql.Timestamp
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-class UserRequest {
-    var id: Long? = null
-    var email: String = ""
-    var username: String = ""
-    var password: String = ""
-    var firstName: String = ""
-    var lastName: String = ""
-    var registrationDate: Timestamp = Timestamp.valueOf(LocalDateTime.now())
+class UserRequest(user: User) {
+    var email: String? = ""
+    var username: String? = ""
+    var firstName: String? = ""
+    var lastName: String? = ""
+    var registrationDate: Timestamp? = Timestamp.valueOf(LocalDateTime.now())
     var biography: String? = ""
-    var birthdate: Date = Date.valueOf(LocalDate.now())
+    var birthdate: Date? = Date.valueOf(LocalDate.now())
     var journeys: List<JourneyRequest> = listOf()
 
-    constructor(user: User) {
-        this.id = null
+    init {
         this.email = ""
         this.username = ""
-        this.password = ""
         this.firstName = ""
         this.lastName = ""
         this.registrationDate = Timestamp.valueOf(LocalDateTime.now())

@@ -8,22 +8,13 @@ import com.example.demo.services.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
-import java.sql.Timestamp
-import java.time.LocalDateTime
 
 @Service
-class FollowServiceImpl(val followRepository: FollowRepository, val userService: UserService): FollowService {
+class FollowServiceImpl(val followRepository: FollowRepository, val userService: UserService):
+    FollowService {
     override fun endFollow(username: String, userId: Long): ResponseEntity<String> {
-        if (username.isBlank()) {
-            return ResponseEntity.badRequest().body("Missing request parameter: username")
-        }
-
         if (userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
-        }
-
-        if (userId == null) {
-            return ResponseEntity.badRequest().body("Missing request parameter: userId")
         }
 
         val follow = findByFollower_IdAndAndFollowed_Id(userService.findUserByUsername(username)!!.id, userId)
