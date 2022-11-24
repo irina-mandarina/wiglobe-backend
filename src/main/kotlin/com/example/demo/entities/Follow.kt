@@ -3,6 +3,7 @@ package com.example.demo.entities
 import java.sql.Timestamp
 import java.time.LocalDateTime
 import javax.persistence.*
+import org.springframework.data.relational.core.mapping.Table
 
 @Entity
 @Table(name = "follow")

@@ -2,6 +2,7 @@ package com.example.demo.entities
 
 import java.sql.Timestamp
 import javax.persistence.*
+import org.springframework.data.relational.core.mapping.Table
 
 @Entity
 @Table(name = "journeys")

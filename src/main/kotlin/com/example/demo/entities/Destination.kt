@@ -1,8 +1,10 @@
 package com.example.demo.entities
 
 import javax.persistence.*
+import org.springframework.data.relational.core.mapping.Table
 
 @Entity
+@Table(name = "destinations")
 class Destination {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -16,6 +16,7 @@ class UserController(val userService: UserService) {
 
     @PostMapping("/users/signup")
     fun signUp(@RequestBody signUpRequest: SignUpRequest): ResponseEntity<String> {
+        println("in user controller")
         return userService.signUp(signUpRequest)
     }
 
@@ -29,7 +30,7 @@ class UserController(val userService: UserService) {
         return userService.getUserDetails(username)
     }
 
-    @GetMapping("/users/details")
+    @GetMapping("/users/details") // ??
     fun getMyDetails(@RequestHeader username: String): ResponseEntity<String> {
         return userService.getUserDetails(username)
     }

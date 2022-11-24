@@ -14,7 +14,7 @@ class UserRequest(user: User) {
     var registrationDate: Timestamp? = Timestamp.valueOf(LocalDateTime.now())
     var biography: String? = ""
     var birthdate: Date? = Date.valueOf(LocalDate.now())
-    var journeys: List<JourneyRequest> = listOf()
+    var journeys: List<GetJourney> = listOf()
 
     init {
         this.email = ""
@@ -24,6 +24,6 @@ class UserRequest(user: User) {
         this.registrationDate = Timestamp.valueOf(LocalDateTime.now())
         this.biography = ""
         this.birthdate = Date.valueOf(LocalDate.now())
-        this.journeys = user.journeys.map { JourneyRequest(it) }
+        this.journeys = user.journeys.map { GetJourney(it) }
     }
 }

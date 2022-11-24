@@ -1,9 +1,10 @@
 package com.example.demo.entities
 
-import com.example.demo.requestEntities.CommentRequest
+import com.example.demo.requestEntities.PostComment
 import java.sql.Timestamp
 import java.time.LocalDateTime
 import javax.persistence.*
+import org.springframework.data.relational.core.mapping.Table
 
 @Entity
 @Table(name = "comments")
@@ -27,10 +28,11 @@ class Comment() {
     @Column(name = "content", nullable = false)
     var content: String = ""
 
-    constructor(commentRequest: CommentRequest, journey: Journey, user: User) : this() {
+    constructor(commentRequest: PostComment, journey: Journey,
+                user: User) : this() {
         this.user = user
         this.journey = journey
-        this.datePosted = commentRequest.datePosted!!
+        this.datePosted = Timestamp.valueOf(LocalDateTime.now())
         this.content = commentRequest.content
     }
 

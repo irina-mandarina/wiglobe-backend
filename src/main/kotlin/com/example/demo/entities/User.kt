@@ -1,14 +1,15 @@
 package com.example.demo.entities
 
 import com.example.demo.requestEntities.SignUpRequest
-import com.example.demo.requestEntities.UserRequest
 import java.sql.Date
 import java.sql.Timestamp
 import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.persistence.*
+import org.springframework.data.relational.core.mapping.Table
 
 @Entity
+@Table(name = "users")
 class User() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +28,7 @@ class User() {
     @Column(name = "first_name", nullable = false)
     var firstName: String = ""
 
-    @Column(name = "lastName", nullable = false)
+    @Column(name = "last_name", nullable = false)
     var lastName: String = ""
 
     @Column(name = "registration_date", nullable = false)
