@@ -1,15 +1,13 @@
 package com.example.demo.entities
 
-import com.example.demo.models.PostReview
-import com.example.demo.serialization.TimestampSerializer
-import kotlinx.serialization.Serializable
+import com.example.demo.models.requestModels.PostReview
 import java.sql.Timestamp
 import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
 @Table(name = "reviews")
-class Review {
+class Review() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -21,7 +19,7 @@ class Review {
 
     @JoinColumn(name = "destination_id", nullable = false)
     @ManyToOne
-    var destination: Destination
+    lateinit var destination: Destination
 
     @Column(name = "reviewed_date", nullable = false)
     var reviewedDate: Timestamp = Timestamp.valueOf(LocalDateTime.now())
@@ -37,7 +35,7 @@ class Review {
     @Column(name = "content")
     var content: String? = ""
 
-    constructor(reviewRequest: PostReview, reviewedDestination: Destination, user: User) {
+    constructor(reviewRequest: PostReview, reviewedDestination: Destination, user: User) : this() {
         this.user = user
         this.reviewedDate = Timestamp.valueOf(LocalDateTime.now())
         this.starRating = reviewRequest.starRating

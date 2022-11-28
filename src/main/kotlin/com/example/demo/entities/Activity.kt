@@ -1,6 +1,6 @@
 package com.example.demo.entities
 
-import com.example.demo.models.PostActivity
+import com.example.demo.models.requestModels.PostActivity
 import com.example.demo.types.ActivityTypes
 import java.sql.Timestamp
 import java.time.LocalDateTime

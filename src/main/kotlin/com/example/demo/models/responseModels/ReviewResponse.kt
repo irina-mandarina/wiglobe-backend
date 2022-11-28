@@ -11,8 +11,8 @@ data class ReviewResponse(val id: Long,
                           val destination: DestinationResponse,
                           val userNames: UserNamesResponse,
                           var starRating: Int,
-                          val title: String,
                           @Serializable(TimestampSerializer::class)
                           val reviewedDate: Timestamp,
+                          val title: String,
                           val content: String
                           )

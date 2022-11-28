@@ -2,8 +2,7 @@ package com.example.demo.services
 
 import com.example.demo.entities.Activity
 import com.example.demo.repositories.ActivityRepository
-import com.example.demo.models.responseModels.JourneyResponse
-import com.example.demo.models.PostActivity
+import com.example.demo.models.requestModels.PostActivity
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service

@@ -1,6 +1,6 @@
 package com.example.demo.controllers
 
-import com.example.demo.models.PostComment
+import com.example.demo.models.requestModels.PostComment
 import com.example.demo.services.CommentService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*

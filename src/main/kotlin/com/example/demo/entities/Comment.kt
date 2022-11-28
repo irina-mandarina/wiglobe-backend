@@ -1,6 +1,6 @@
 package com.example.demo.entities
 
-import com.example.demo.models.PostComment
+import com.example.demo.models.requestModels.PostComment
 import java.sql.Timestamp
 import java.time.LocalDateTime
 import javax.persistence.*

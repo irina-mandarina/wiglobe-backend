@@ -1,4 +1,4 @@
-package com.example.demo.models
+package com.example.demo.models.requestModels
 
 import com.example.demo.types.Visibility
 import java.sql.Timestamp

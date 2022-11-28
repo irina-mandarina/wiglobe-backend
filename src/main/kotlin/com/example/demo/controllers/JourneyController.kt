@@ -1,6 +1,6 @@
 package com.example.demo.controllers
 
-import com.example.demo.models.PostJourney
+import com.example.demo.models.requestModels.PostJourney
 import com.example.demo.services.JourneyService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*

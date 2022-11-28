@@ -5,35 +5,57 @@ import com.example.demo.entities.Review
 import com.example.demo.entities.User
 import com.example.demo.repositories.ReviewRepository
 import com.example.demo.models.responseModels.ReviewResponse
-import com.example.demo.models.PostReview
+import com.example.demo.models.requestModels.PostReview
+import com.example.demo.models.responseModels.DestinationResponse
+import com.example.demo.models.responseModels.UserNamesResponse
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 
 @Service
-class ReviewService(val destinationService: DestinationService, val userService: UserService,
-                    val reviewRepository: ReviewRepository) {
+class ReviewService(private val destinationService: DestinationService, private val userService: UserService,
+                    private val reviewRepository: ReviewRepository) {
     fun getReviewsForDestination(username: String, destinationId: Long): ResponseEntity<String> {
-        if (userService.userWithUsernameExists(username)) {
+        if (!userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
         }
 
-        if (destinationService.destinationWithIdExists(destinationId)) {
+        if (!destinationService.destinationWithIdExists(destinationId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Destination does not exist")
         }
         val reviews: List<Review> = findReviewsByDestination(destinationService.findDestinationById(destinationId)!!)
 
-//        val getReviews: List<ReviewResponse> = reviews.map { ReviewResponse(it) }
+        val getReviews: List<ReviewResponse> = reviews.map {
+            ReviewResponse(
+                it.id!!,
+                DestinationResponse(
+                    it.destination.x, it.destination.y, it.destination.name!!
+                ),
+                UserNamesResponse(
+                    it.user.username, it.user.firstName, it.user.lastName
+                ),
+                it.starRating,
+                it.reviewedDate,
+                it.title!!,
+                it.content!!
+            )
+        }
 
-        return ResponseEntity.ok().body("getReviews.toString()")
+        return ResponseEntity.ok().body(
+            Json.encodeToString(
+                getReviews
+            )
+        )
     }
 
     fun reviewDestination(username: String, destinationId: Long, reviewRequest: PostReview): ResponseEntity<String> {
-        if (userService.userWithUsernameExists(username)) {
+        if (!userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
         }
 
-        if (destinationService.destinationWithIdExists(destinationId)) {
+        if (!destinationService.destinationWithIdExists(destinationId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Destination does not exist")
         }
 
@@ -42,12 +64,32 @@ class ReviewService(val destinationService: DestinationService, val userService:
 
         reviewRepository.save(review)
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("ReviewResponse(review).toString()")
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+            Json.encodeToString(
+                ReviewResponse(
+                    review.id!!,
+                    DestinationResponse(
+                        review.destination.x, review.destination.y, review.destination.name!!
+                    ),
+                    UserNamesResponse(
+                        review.user.username, review.user.firstName, review.user.lastName
+                    ),
+                    review.starRating,
+                    review.reviewedDate,
+                    review.title!!,
+                    review.content!!
+                )
+            )
+        )
     }
 
     fun editReview(username: String, reviewId: Long, reviewRequest: PostReview): ResponseEntity<String> {
-        if (userService.userWithUsernameExists(username)) {
+        if (!userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
+        }
+
+        if (!reviewWithIdExists(reviewId)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Review does not exist")
         }
 
         val review: Review = findReviewById(reviewId)!!
@@ -62,15 +104,31 @@ class ReviewService(val destinationService: DestinationService, val userService:
 
         reviewRepository.save(review)
 
-        return ResponseEntity.ok().body("ReviewResponse(review).toString()")
+        return ResponseEntity.ok().body(
+            Json.encodeToString(
+                ReviewResponse(
+                    review.id!!,
+                    DestinationResponse(
+                        review.destination.x, review.destination.y, review.destination.name!!
+                    ),
+                    UserNamesResponse(
+                        review.user.username, review.user.firstName, review.user.lastName
+                    ),
+                    review.starRating,
+                    review.reviewedDate,
+                    review.title!!,
+                    review.content!!
+                )
+            )
+        )
     }
 
     fun deleteReview(username: String, reviewId: Long): ResponseEntity<String> {
-        if (userService.userWithUsernameExists(username)) {
+        if (!userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
         }
 
-        if (reviewWithIdExists(reviewId)) {
+        if (!reviewWithIdExists(reviewId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Review does not exist")
         }
 
@@ -82,7 +140,7 @@ class ReviewService(val destinationService: DestinationService, val userService:
 
         reviewRepository.delete(review)
 
-        return ResponseEntity.ok().body("Deleted a review.")
+        return ResponseEntity.ok().body("Successfully deleted a review.")
     }
 
     fun findReviewById(reviewId: Long): Review? {
@@ -90,7 +148,7 @@ class ReviewService(val destinationService: DestinationService, val userService:
     }
 
     fun reviewWithIdExists(id: Long): Boolean {
-        return reviewRepository.findReviewById(id) == null
+        return reviewRepository.findReviewById(id) != null
     }
 
     fun findReviewsByUser(user: User): List<Review> {

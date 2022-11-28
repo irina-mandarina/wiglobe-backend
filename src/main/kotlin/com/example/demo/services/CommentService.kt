@@ -4,7 +4,7 @@ import com.example.demo.entities.Comment
 import com.example.demo.entities.Journey
 import com.example.demo.repositories.CommentRepository
 import com.example.demo.models.responseModels.CommentResponse
-import com.example.demo.models.PostComment
+import com.example.demo.models.requestModels.PostComment
 import com.example.demo.models.responseModels.UserNamesResponse
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
