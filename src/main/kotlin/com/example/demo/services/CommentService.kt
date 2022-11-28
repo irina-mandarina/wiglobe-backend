@@ -20,11 +20,11 @@ class CommentService(val journeyService: JourneyService, val userService: UserSe
             return ResponseEntity.badRequest().body("Missing request parameter: username")
         }
 
-        if (userService.userWithUsernameExists(username)) {
+        if (!userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
         }
 
-        if (journeyService.journeyWithIdExists(journeyId)) {
+        if (!journeyService.journeyWithIdExists(journeyId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Journey does not exist")
         }
 
@@ -40,7 +40,11 @@ class CommentService(val journeyService: JourneyService, val userService: UserSe
             )
         }
 
-        return ResponseEntity.ok().body(getComments.toString())
+        return ResponseEntity.ok().body(
+            Json.encodeToString(
+                getComments
+            )
+        )
     }
     fun commentJourney(
         username: String,
@@ -48,11 +52,11 @@ class CommentService(val journeyService: JourneyService, val userService: UserSe
         commentRequest: PostComment
     ): ResponseEntity<String> {
 
-        if (userService.userWithUsernameExists(username)) {
+        if (!userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
         }
 
-        if (journeyService.journeyWithIdExists(journeyId)) {
+        if (!journeyService.journeyWithIdExists(journeyId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Journey does not exist")
         }
 
@@ -76,18 +80,20 @@ class CommentService(val journeyService: JourneyService, val userService: UserSe
     }
 
     fun editComment(username: String, commentId: Long, commentRequest: PostComment): ResponseEntity<String> {
-        if (userService.userWithUsernameExists(username)) {
+        if (!userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
         }
 
-        if (commentWithIdExists(commentId)) {
+        if (!commentWithIdExists(commentId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Comment does not exist")
         }
 
         val comment = findCommentById(commentId)!!
 
         if (comment.user.username != username) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Comment with id " + commentId + " does not belong to user with username: $username")
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+                "Comment does not belong to user with username: $username"
+            )
         }
 
         comment.content = commentRequest.content
@@ -109,18 +115,20 @@ class CommentService(val journeyService: JourneyService, val userService: UserSe
     }
 
     fun deleteComment(username: String, commentId: Long): ResponseEntity<String> {
-        if (userService.userWithUsernameExists(username)) {
+        if (!userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
         }
 
-        if (commentWithIdExists(commentId)) {
+        if (!commentWithIdExists(commentId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Comment does not exist")
         }
 
         val comment = findCommentById(commentId)!!
 
         if (comment.user.username != username) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Comment with id $commentId does not belong to user with username: $username")
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+                "Comment does not belong to user with username: $username"
+            )
         }
 
         commentRepository.delete(comment)
