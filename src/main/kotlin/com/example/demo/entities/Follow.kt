@@ -28,6 +28,6 @@ class Follow() {
     constructor(followRequest: FollowRequest) : this() {
         this.followDate = Timestamp.valueOf(LocalDateTime.now())
         this.followed = followRequest.receiver
-        this.follower = followRequest.receiver
+        this.follower = followRequest.requester
     }
 }

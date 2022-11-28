@@ -5,6 +5,9 @@ import com.example.demo.repositories.UserRepository
 import com.example.demo.models.requestModels.LogInRequest
 import com.example.demo.models.requestModels.SignUpRequest
 import com.example.demo.models.requestModels.UserRequest
+import com.example.demo.models.responseModels.UserDetailsResponse
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
@@ -91,6 +94,18 @@ import org.springframework.stereotype.Service
                 .body("User with username: " + username + "does not exist")
         }
 
-        return ResponseEntity.ok().body(UserRequest(findUserByUsername(username)!!).toString())
+        val user = findUserByUsername(username)!!
+        return ResponseEntity.ok().body(
+            Json.encodeToString(
+                UserDetailsResponse(
+                    user.username,
+                    user.firstName,
+                    user.lastName,
+                    user.birthdate,
+                    user.biography,
+                    user.registrationDate
+                )
+            )
+        )
     }
 }

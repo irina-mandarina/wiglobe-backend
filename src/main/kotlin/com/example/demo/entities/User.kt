@@ -1,7 +1,6 @@
 package com.example.demo.entities
 
 import com.example.demo.models.requestModels.SignUpRequest
-import com.example.demo.serialization.DateSerializer
 import com.example.demo.serialization.TimestampSerializer
 import kotlinx.serialization.Serializable
 import java.sql.Date
@@ -38,7 +37,7 @@ class User() {
     var registrationDate: Timestamp = Timestamp.valueOf(LocalDateTime.now())
 
     @Column(name = "biography")
-    var biography: String? = ""
+    var biography: String = ""
 
     @Column(name = "birthdate", nullable = false)
     var birthdate: Date = Date.valueOf(LocalDate.now())

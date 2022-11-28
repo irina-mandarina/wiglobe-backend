@@ -21,13 +21,12 @@ class FollowService( val followRepository: FollowRepository, val userService: Us
         return ResponseEntity.ok().body("$username stopped following them")
     }
 
-    fun saveFollow(followRequest: FollowRequest): ResponseEntity<String> {
+    fun saveFollow(followRequest: FollowRequest): Follow? {
         if (findByFollower_IdAndAndFollowed_Id(followRequest.requester.id, followRequest.receiver.id) != null) {
-            return ResponseEntity.accepted().body("Already followed")
+            return null
         }
         val follow = Follow(followRequest)
-        followRepository.save(follow)
-        return ResponseEntity.ok().body("Already followed")
+        return followRepository.save(follow)
     }
 
     fun findByFollower_IdAndAndFollowed_Id(followerId: Long, followedId: Long): Follow? {
