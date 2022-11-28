@@ -1,17 +1,13 @@
 package com.example.demo.entities
 
 import com.example.demo.models.PostActivity
-import com.example.demo.serialization.TimestampSerializer
 import com.example.demo.types.ActivityTypes
-import kotlinx.serialization.Serializable
 import java.sql.Timestamp
-import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
 @Table(name = "activities")
-@Serializable
 class Activity() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +18,6 @@ class Activity() {
     @ManyToOne
     lateinit var journey: Journey
 
-    @Serializable(TimestampSerializer::class)
     @Column(name = "date", nullable = false)
     var date: Timestamp = Timestamp.valueOf(LocalDateTime.now())
 

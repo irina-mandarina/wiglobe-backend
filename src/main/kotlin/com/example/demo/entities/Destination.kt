@@ -3,7 +3,6 @@ package com.example.demo.entities
 import kotlinx.serialization.Serializable
 import javax.persistence.*
 
-@Serializable
 @Entity
 @Table(name = "destinations")
 class Destination {

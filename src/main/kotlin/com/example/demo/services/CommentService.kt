@@ -5,6 +5,9 @@ import com.example.demo.entities.Journey
 import com.example.demo.repositories.CommentRepository
 import com.example.demo.models.responseModels.CommentResponse
 import com.example.demo.models.PostComment
+import com.example.demo.models.responseModels.UserNamesResponse
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
@@ -26,7 +29,16 @@ class CommentService(val journeyService: JourneyService, val userService: UserSe
         }
 
         val comments: List<Comment> = findCommentsByJourney(journeyService.findJourneyById(journeyId)!!)
-        val getComments: List<CommentResponse> = comments.map { CommentResponse(it) }
+        val getComments: List<CommentResponse> = comments.map {
+            CommentResponse(
+                it.id!!,
+                UserNamesResponse(
+                    it.user.username, it.user.firstName, it.user.lastName
+                ),
+                it.datePosted,
+                it.content
+            )
+        }
 
         return ResponseEntity.ok().body(getComments.toString())
     }
@@ -49,7 +61,18 @@ class CommentService(val journeyService: JourneyService, val userService: UserSe
 
         commentRepository.save(comment)
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(CommentResponse(comment).toString())
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+            Json.encodeToString(
+                CommentResponse(
+                    comment.id!!,
+                    UserNamesResponse(
+                        comment.user.username, comment.user.firstName, comment.user.lastName
+                    ),
+                    comment.datePosted,
+                    comment.content
+                )
+            )
+        )
     }
 
     fun editComment(username: String, commentId: Long, commentRequest: PostComment): ResponseEntity<String> {
@@ -71,7 +94,18 @@ class CommentService(val journeyService: JourneyService, val userService: UserSe
 
         commentRepository.save(comment)
 
-        return ResponseEntity.ok().body(CommentResponse(comment).toString())
+        return ResponseEntity.ok().body(
+            Json.encodeToString(
+                CommentResponse(
+                    comment.id!!,
+                    UserNamesResponse(
+                        comment.user.username, comment.user.firstName, comment.user.lastName
+                    ),
+                    comment.datePosted,
+                    comment.content
+                )
+            )
+        )
     }
 
     fun deleteComment(username: String, commentId: Long): ResponseEntity<String> {
@@ -91,7 +125,7 @@ class CommentService(val journeyService: JourneyService, val userService: UserSe
 
         commentRepository.delete(comment)
 
-        return ResponseEntity.ok().body("Successfully deleted comment with id: $commentId")
+        return ResponseEntity.ok().body("Successfully deleted a comment.")
     }
 
     fun commentWithIdExists(commentId: Long): Boolean {

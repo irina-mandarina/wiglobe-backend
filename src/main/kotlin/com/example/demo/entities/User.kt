@@ -12,7 +12,6 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "users")
-@Serializable
 class User() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +40,6 @@ class User() {
     @Column(name = "biography")
     var biography: String? = ""
 
-    @Serializable(DateSerializer::class)
     @Column(name = "birthdate", nullable = false)
     var birthdate: Date = Date.valueOf(LocalDate.now())
 

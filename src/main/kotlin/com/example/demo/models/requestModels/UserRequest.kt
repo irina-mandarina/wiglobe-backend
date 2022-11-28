@@ -2,10 +2,7 @@ package com.example.demo.models.requestModels
 
 import com.example.demo.entities.*
 import com.example.demo.models.responseModels.JourneyResponse
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
+import com.example.demo.models.responseModels.UserNamesResponse
 import java.sql.Date
 import java.sql.Timestamp
 import java.time.LocalDate
@@ -30,7 +27,11 @@ class UserRequest(user: User) {
         this.biography = ""
         this.birthdate = Date.valueOf(LocalDate.now())
         this.journeys = user.journeys.map {
-                JourneyResponse(it.user.username, it.startDate,
+                JourneyResponse(
+                    it.id!!,
+                    UserNamesResponse(
+                        it.user.username, it.user.firstName, it.user.lastName),
+                    it.startDate,
                     it.endDate!!,
                     it.description!!, it.destination.name!!)
         }

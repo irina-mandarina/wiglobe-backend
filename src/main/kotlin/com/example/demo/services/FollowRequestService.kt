@@ -52,7 +52,7 @@ class FollowRequestService( val followRequestRepository: FollowRequestRepository
         }
 
         val requests = findByReceiver_Username(username)
-        return ResponseEntity.ok().body(requests.map{ FollowRequestResponse(it) } .toString())
+        return ResponseEntity.ok().body("todo")
     }
 
     fun approveFollowRequest(username: String, userId: Long, response: Boolean): ResponseEntity<String> {

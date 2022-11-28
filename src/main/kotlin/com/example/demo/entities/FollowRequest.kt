@@ -8,14 +8,12 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "follow_requests")
-@Serializable
 class FollowRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     var id: Long? = null
 
-    @Serializable(TimestampSerializer::class)
     @Column(name = "request_date", nullable = false)
     var requestDate: Timestamp = Timestamp.valueOf(LocalDateTime.now())
 

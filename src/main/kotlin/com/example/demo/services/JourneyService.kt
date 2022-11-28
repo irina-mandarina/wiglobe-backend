@@ -5,7 +5,7 @@ import com.example.demo.entities.User
 import com.example.demo.repositories.JourneyRepository
 import com.example.demo.models.responseModels.JourneyResponse
 import com.example.demo.models.PostJourney
-import com.google.gson.GsonBuilder
+import com.example.demo.models.responseModels.UserNamesResponse
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.springframework.http.HttpStatus
@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service
 
 
 @Service
-class JourneyService( val journeyRepository: JourneyRepository, val userService: UserService,
-                     val destinationService: DestinationService ) {
+class JourneyService(private val journeyRepository: JourneyRepository, private val userService: UserService,
+                     private val destinationService: DestinationService ) {
 
     fun findJourneyById(id: Long): Journey? {
         return journeyRepository.findJourneysById(id)
@@ -47,10 +47,16 @@ class JourneyService( val journeyRepository: JourneyRepository, val userService:
 
         journeyRepository.save(journey)
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(Json.encodeToString(
-            JourneyResponse(journey.user.username, journey.startDate,
-            journey.endDate!!,
-            journey.description!!, journey.destination.name!!)))
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+            Json.encodeToString(
+                JourneyResponse(
+                    journey.id!!,
+                    UserNamesResponse(
+                        journey.user.username, journey.user.firstName, journey.user.lastName),
+                    journey.startDate, journey.endDate!!,
+                    journey.description!!, journey.destination.name!!)
+            )
+        )
     }
 
     fun deleteJourney(username: String, journeyId: Long): ResponseEntity<String> {
@@ -82,15 +88,17 @@ class JourneyService( val journeyRepository: JourneyRepository, val userService:
 //        journey.activities = journeyRequest.activities
 
         journeyRepository.save(journey)
-        val gson = GsonBuilder()
-            .setPrettyPrinting()
-            .serializeNulls()
-            .create()
 
-        return ResponseEntity.status(HttpStatus.OK).body(Json.encodeToString(
-            JourneyResponse(journey.user.username, journey.startDate,
-                journey.endDate!!,
-                journey.description!!, journey.destination.name!!)))
+        return ResponseEntity.status(HttpStatus.OK).body(
+            Json.encodeToString(
+                JourneyResponse(
+                    journey.id!!,
+                    UserNamesResponse(
+                        journey.user.username, journey.user.firstName, journey.user.lastName),
+                    journey.startDate, journey.endDate!!,
+                    journey.description!!, journey.destination.name!!)
+            )
+        )
     }
 
     fun getJourney(username: String, journeyId: Long): ResponseEntity<String> {
@@ -101,6 +109,15 @@ class JourneyService( val journeyRepository: JourneyRepository, val userService:
         val journey: Journey = findJourneyById(journeyId)
             ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Journey does not exist")
 
-        return ResponseEntity.ok().body("JourneyResponse(journey).toString()")
+        return ResponseEntity.ok().body(
+            Json.encodeToString(
+                JourneyResponse(
+                    journey.id!!,
+                    UserNamesResponse(
+                        journey.user.username, journey.user.firstName, journey.user.lastName),
+                    journey.startDate, journey.endDate!!,
+                    journey.description!!, journey.destination.name!!)
+            )
+        )
     }
 }

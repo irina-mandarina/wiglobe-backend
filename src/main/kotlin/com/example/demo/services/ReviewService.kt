@@ -23,9 +23,9 @@ class ReviewService(val destinationService: DestinationService, val userService:
         }
         val reviews: List<Review> = findReviewsByDestination(destinationService.findDestinationById(destinationId)!!)
 
-        val getReviews: List<ReviewResponse> = reviews.map { ReviewResponse(it) }
+//        val getReviews: List<ReviewResponse> = reviews.map { ReviewResponse(it) }
 
-        return ResponseEntity.ok().body(getReviews.toString())
+        return ResponseEntity.ok().body("getReviews.toString()")
     }
 
     fun reviewDestination(username: String, destinationId: Long, reviewRequest: PostReview): ResponseEntity<String> {
@@ -42,7 +42,7 @@ class ReviewService(val destinationService: DestinationService, val userService:
 
         reviewRepository.save(review)
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(ReviewResponse(review).toString())
+        return ResponseEntity.status(HttpStatus.CREATED).body("ReviewResponse(review).toString()")
     }
 
     fun editReview(username: String, reviewId: Long, reviewRequest: PostReview): ResponseEntity<String> {
@@ -62,7 +62,7 @@ class ReviewService(val destinationService: DestinationService, val userService:
 
         reviewRepository.save(review)
 
-        return ResponseEntity.ok().body(ReviewResponse(review).toString())
+        return ResponseEntity.ok().body("ReviewResponse(review).toString()")
     }
 
     fun deleteReview(username: String, reviewId: Long): ResponseEntity<String> {
@@ -82,7 +82,7 @@ class ReviewService(val destinationService: DestinationService, val userService:
 
         reviewRepository.delete(review)
 
-        return ResponseEntity.ok().body("Deleted review with id: $reviewId")
+        return ResponseEntity.ok().body("Deleted a review.")
     }
 
     fun findReviewById(reviewId: Long): Review? {

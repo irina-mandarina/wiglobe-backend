@@ -9,7 +9,6 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "reviews")
-@Serializable
 class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +23,6 @@ class Review {
     @ManyToOne
     var destination: Destination
 
-    @Serializable(TimestampSerializer::class)
     @Column(name = "reviewed_date", nullable = false)
     var reviewedDate: Timestamp = Timestamp.valueOf(LocalDateTime.now())
 
