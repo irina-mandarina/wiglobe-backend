@@ -1,7 +1,7 @@
 package com.example.demo.controllers
 
-import com.example.demo.requestEntities.LogInRequest
-import com.example.demo.requestEntities.SignUpRequest
+import com.example.demo.models.requestModels.LogInRequest
+import com.example.demo.models.requestModels.SignUpRequest
 import com.example.demo.services.UserService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*

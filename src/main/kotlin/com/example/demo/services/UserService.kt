@@ -2,9 +2,9 @@ package com.example.demo.services
 
 import com.example.demo.entities.User
 import com.example.demo.repositories.UserRepository
-import com.example.demo.requestEntities.LogInRequest
-import com.example.demo.requestEntities.SignUpRequest
-import com.example.demo.requestEntities.UserRequest
+import com.example.demo.models.requestModels.LogInRequest
+import com.example.demo.models.requestModels.SignUpRequest
+import com.example.demo.models.requestModels.UserRequest
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service

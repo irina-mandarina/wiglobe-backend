@@ -2,7 +2,7 @@ package com.example.demo.services
 
 import com.example.demo.entities.FollowRequest
 import com.example.demo.repositories.FollowRequestRepository
-import com.example.demo.requestEntities.GetFollowRequest
+import com.example.demo.models.responseModels.FollowRequestResponse
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
@@ -52,7 +52,7 @@ class FollowRequestService( val followRequestRepository: FollowRequestRepository
         }
 
         val requests = findByReceiver_Username(username)
-        return ResponseEntity.ok().body(requests.map{ GetFollowRequest(it) } .toString())
+        return ResponseEntity.ok().body(requests.map{ FollowRequestResponse(it) } .toString())
     }
 
     fun approveFollowRequest(username: String, userId: Long, response: Boolean): ResponseEntity<String> {

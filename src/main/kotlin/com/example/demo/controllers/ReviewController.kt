@@ -1,6 +1,6 @@
 package com.example.demo.controllers
 
-import com.example.demo.requestEntities.PostReview
+import com.example.demo.models.PostReview
 import com.example.demo.services.ReviewService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*

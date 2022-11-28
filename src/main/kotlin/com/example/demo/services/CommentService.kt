@@ -3,8 +3,8 @@ package com.example.demo.services
 import com.example.demo.entities.Comment
 import com.example.demo.entities.Journey
 import com.example.demo.repositories.CommentRepository
-import com.example.demo.requestEntities.GetComment
-import com.example.demo.requestEntities.PostComment
+import com.example.demo.models.responseModels.CommentResponse
+import com.example.demo.models.PostComment
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
@@ -26,7 +26,7 @@ class CommentService(val journeyService: JourneyService, val userService: UserSe
         }
 
         val comments: List<Comment> = findCommentsByJourney(journeyService.findJourneyById(journeyId)!!)
-        val getComments: List<GetComment> = comments.map { GetComment(it) }
+        val getComments: List<CommentResponse> = comments.map { CommentResponse(it) }
 
         return ResponseEntity.ok().body(getComments.toString())
     }
@@ -49,7 +49,7 @@ class CommentService(val journeyService: JourneyService, val userService: UserSe
 
         commentRepository.save(comment)
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(GetComment(comment).toString())
+        return ResponseEntity.status(HttpStatus.CREATED).body(CommentResponse(comment).toString())
     }
 
     fun editComment(username: String, commentId: Long, commentRequest: PostComment): ResponseEntity<String> {
@@ -71,7 +71,7 @@ class CommentService(val journeyService: JourneyService, val userService: UserSe
 
         commentRepository.save(comment)
 
-        return ResponseEntity.ok().body(GetComment(comment).toString())
+        return ResponseEntity.ok().body(CommentResponse(comment).toString())
     }
 
     fun deleteComment(username: String, commentId: Long): ResponseEntity<String> {

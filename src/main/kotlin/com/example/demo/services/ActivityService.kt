@@ -2,8 +2,8 @@ package com.example.demo.services
 
 import com.example.demo.entities.Activity
 import com.example.demo.repositories.ActivityRepository
-import com.example.demo.requestEntities.GetJourney
-import com.example.demo.requestEntities.PostActivity
+import com.example.demo.models.responseModels.JourneyResponse
+import com.example.demo.models.PostActivity
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
@@ -25,7 +25,7 @@ class ActivityService(val activityRepository: ActivityRepository, val journeySer
         activityRepository.save(activity)
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
-            GetJourney(journeyService.findJourneyById(journeyId)!!) .toString()
+            "JourneyResponse(journeyService.findJourneyById(journeyId)!!) .toString()"
         )
     }
 }

@@ -1,14 +1,17 @@
 package com.example.demo.entities
 
-import com.example.demo.requestEntities.PostActivity
+import com.example.demo.models.PostActivity
+import com.example.demo.serialization.TimestampSerializer
 import com.example.demo.types.ActivityTypes
-import java.sql.Date
+import kotlinx.serialization.Serializable
+import java.sql.Timestamp
 import java.time.LocalDate
+import java.time.LocalDateTime
 import javax.persistence.*
-import org.springframework.data.relational.core.mapping.Table
 
 @Entity
 @Table(name = "activities")
+@Serializable
 class Activity() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,8 +22,9 @@ class Activity() {
     @ManyToOne
     lateinit var journey: Journey
 
+    @Serializable(TimestampSerializer::class)
     @Column(name = "date", nullable = false)
-    var date: Date = Date.valueOf(LocalDate.now())
+    var date: Timestamp = Timestamp.valueOf(LocalDateTime.now())
 
     @Column(name = "title", nullable = false)
     var title: String = ""

@@ -1,13 +1,15 @@
 package com.example.demo.entities
 
-import com.example.demo.requestEntities.PostComment
+import com.example.demo.models.PostComment
+import com.example.demo.serialization.TimestampSerializer
+import kotlinx.serialization.Serializable
 import java.sql.Timestamp
 import java.time.LocalDateTime
 import javax.persistence.*
-import org.springframework.data.relational.core.mapping.Table
 
 @Entity
 @Table(name = "comments")
+@Serializable
 class Comment() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +24,7 @@ class Comment() {
     @ManyToOne
     lateinit var user: User
 
+    @Serializable(TimestampSerializer::class)
     @Column(name = "date_posted", nullable = false)
     var datePosted: Timestamp = Timestamp.valueOf(LocalDateTime.now())
 

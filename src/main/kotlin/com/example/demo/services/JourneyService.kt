@@ -3,12 +3,15 @@ package com.example.demo.services
 import com.example.demo.entities.Journey
 import com.example.demo.entities.User
 import com.example.demo.repositories.JourneyRepository
-import com.example.demo.requestEntities.GetJourney
-import com.example.demo.requestEntities.PostJourney
-import com.google.gson.Gson
+import com.example.demo.models.responseModels.JourneyResponse
+import com.example.demo.models.PostJourney
+import com.google.gson.GsonBuilder
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
+
 
 @Service
 class JourneyService( val journeyRepository: JourneyRepository, val userService: UserService,
@@ -44,7 +47,10 @@ class JourneyService( val journeyRepository: JourneyRepository, val userService:
 
         journeyRepository.save(journey)
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(GetJourney(journey).toString())
+        return ResponseEntity.status(HttpStatus.CREATED).body(Json.encodeToString(
+            JourneyResponse(journey.user.username, journey.startDate,
+            journey.endDate!!,
+            journey.description!!, journey.destination.name!!)))
     }
 
     fun deleteJourney(username: String, journeyId: Long): ResponseEntity<String> {
@@ -76,11 +82,15 @@ class JourneyService( val journeyRepository: JourneyRepository, val userService:
 //        journey.activities = journeyRequest.activities
 
         journeyRepository.save(journey)
+        val gson = GsonBuilder()
+            .setPrettyPrinting()
+            .serializeNulls()
+            .create()
 
-        val gson = Gson()
-        return ResponseEntity.status(HttpStatus.OK).body(
-            gson.toJson( GetJourney(journey) )
-        )
+        return ResponseEntity.status(HttpStatus.OK).body(Json.encodeToString(
+            JourneyResponse(journey.user.username, journey.startDate,
+                journey.endDate!!,
+                journey.description!!, journey.destination.name!!)))
     }
 
     fun getJourney(username: String, journeyId: Long): ResponseEntity<String> {
@@ -91,6 +101,6 @@ class JourneyService( val journeyRepository: JourneyRepository, val userService:
         val journey: Journey = findJourneyById(journeyId)
             ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Journey does not exist")
 
-        return ResponseEntity.ok().body(GetJourney(journey).toString())
+        return ResponseEntity.ok().body("JourneyResponse(journey).toString()")
     }
 }

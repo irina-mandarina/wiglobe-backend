@@ -1,7 +1,6 @@
 package com.example.demo.controllers
 
-import com.example.demo.requestEntities.GetComment
-import com.example.demo.requestEntities.PostComment
+import com.example.demo.models.PostComment
 import com.example.demo.services.CommentService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*

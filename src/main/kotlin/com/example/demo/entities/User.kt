@@ -1,15 +1,18 @@
 package com.example.demo.entities
 
-import com.example.demo.requestEntities.SignUpRequest
+import com.example.demo.models.requestModels.SignUpRequest
+import com.example.demo.serialization.DateSerializer
+import com.example.demo.serialization.TimestampSerializer
+import kotlinx.serialization.Serializable
 import java.sql.Date
 import java.sql.Timestamp
 import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.persistence.*
-import org.springframework.data.relational.core.mapping.Table
 
 @Entity
 @Table(name = "users")
+@Serializable
 class User() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,12 +34,14 @@ class User() {
     @Column(name = "last_name", nullable = false)
     var lastName: String = ""
 
+    @Serializable(TimestampSerializer::class)
     @Column(name = "registration_date", nullable = false)
     var registrationDate: Timestamp = Timestamp.valueOf(LocalDateTime.now())
 
     @Column(name = "biography")
     var biography: String? = ""
 
+    @Serializable(DateSerializer::class)
     @Column(name = "birthdate", nullable = false)
     var birthdate: Date = Date.valueOf(LocalDate.now())
 

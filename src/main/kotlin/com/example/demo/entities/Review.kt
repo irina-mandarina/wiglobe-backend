@@ -1,13 +1,15 @@
 package com.example.demo.entities
 
-import com.example.demo.requestEntities.PostReview
+import com.example.demo.models.PostReview
+import com.example.demo.serialization.TimestampSerializer
+import kotlinx.serialization.Serializable
 import java.sql.Timestamp
 import java.time.LocalDateTime
 import javax.persistence.*
-import org.springframework.data.relational.core.mapping.Table
 
 @Entity
 @Table(name = "reviews")
+@Serializable
 class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +24,7 @@ class Review {
     @ManyToOne
     var destination: Destination
 
+    @Serializable(TimestampSerializer::class)
     @Column(name = "reviewed_date", nullable = false)
     var reviewedDate: Timestamp = Timestamp.valueOf(LocalDateTime.now())
 

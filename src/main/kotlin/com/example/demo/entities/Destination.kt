@@ -1,8 +1,9 @@
 package com.example.demo.entities
 
+import kotlinx.serialization.Serializable
 import javax.persistence.*
-import org.springframework.data.relational.core.mapping.Table
 
+@Serializable
 @Entity
 @Table(name = "destinations")
 class Destination {

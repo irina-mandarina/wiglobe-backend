@@ -1,9 +1,21 @@
 # tuesthesis
 Qs:
-1. getters, setters, private members
-2. ids
-3. not null in function arguments
-4. response statuses
+I just fixed. It was something really silly. I found out that for plugins one needs to define a plugin repository section.
+
+<pluginRepositories>
+    <pluginRepository>
+        <id>kotlin-bintray</id>
+        <name>Kotlin Bintray</name>
+        <url>http://dl.bintray.com/kotlin/kotlin-dev</url>
+        <releases>
+            <enabled>true</enabled>
+        </releases>
+        <snapshots>
+            <enabled>false</enabled>
+        </snapshots>
+    </pluginRepository>
+</pluginRepositories>
+And now it works. I guess I should spend more time learning maven in depth :)
 
 To do:
 * get user (others)

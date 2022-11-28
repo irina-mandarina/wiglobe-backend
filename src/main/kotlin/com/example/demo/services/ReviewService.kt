@@ -4,8 +4,8 @@ import com.example.demo.entities.Destination
 import com.example.demo.entities.Review
 import com.example.demo.entities.User
 import com.example.demo.repositories.ReviewRepository
-import com.example.demo.requestEntities.GetReview
-import com.example.demo.requestEntities.PostReview
+import com.example.demo.models.responseModels.ReviewResponse
+import com.example.demo.models.PostReview
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
@@ -23,7 +23,7 @@ class ReviewService(val destinationService: DestinationService, val userService:
         }
         val reviews: List<Review> = findReviewsByDestination(destinationService.findDestinationById(destinationId)!!)
 
-        val getReviews: List<GetReview> = reviews.map { GetReview(it) }
+        val getReviews: List<ReviewResponse> = reviews.map { ReviewResponse(it) }
 
         return ResponseEntity.ok().body(getReviews.toString())
     }
@@ -42,7 +42,7 @@ class ReviewService(val destinationService: DestinationService, val userService:
 
         reviewRepository.save(review)
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(GetReview(review).toString())
+        return ResponseEntity.status(HttpStatus.CREATED).body(ReviewResponse(review).toString())
     }
 
     fun editReview(username: String, reviewId: Long, reviewRequest: PostReview): ResponseEntity<String> {
@@ -62,7 +62,7 @@ class ReviewService(val destinationService: DestinationService, val userService:
 
         reviewRepository.save(review)
 
-        return ResponseEntity.ok().body(GetReview(review).toString())
+        return ResponseEntity.ok().body(ReviewResponse(review).toString())
     }
 
     fun deleteReview(username: String, reviewId: Long): ResponseEntity<String> {
