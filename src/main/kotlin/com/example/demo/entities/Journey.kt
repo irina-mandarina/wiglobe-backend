@@ -1,6 +1,7 @@
 package com.example.demo.entities
 
 import com.example.demo.serialization.TimestampSerializer
+import com.example.demo.types.Visibility
 import kotlinx.serialization.Serializable
 import java.sql.Timestamp
 import javax.persistence.*
@@ -19,6 +20,7 @@ class Journey {
 
     @Column(name = "start_date", nullable = false)
     lateinit var startDate: Timestamp
+
     @Column(name = "end_date", nullable = true)
     var endDate: Timestamp? = null
 
@@ -27,7 +29,10 @@ class Journey {
     lateinit var destination: Destination
 
     @Column(name = "description", nullable = true)
-    var description: String? = ""
+    var description: String = ""
+
+    @Column(name = "visibility")
+    var visibility: Visibility = Visibility.PUBLIC
 
     @OneToMany(mappedBy = "journey")
     lateinit var activities: List<Activity>

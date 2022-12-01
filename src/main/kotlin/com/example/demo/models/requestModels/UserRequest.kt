@@ -1,6 +1,7 @@
 package com.example.demo.models.requestModels
 
 import com.example.demo.entities.*
+import com.example.demo.models.responseModels.ActivityResponse
 import com.example.demo.models.responseModels.JourneyResponse
 import com.example.demo.models.responseModels.UserNamesResponse
 import java.sql.Date
@@ -26,14 +27,24 @@ class UserRequest(user: User) {
         this.registrationDate = Timestamp.valueOf(LocalDateTime.now())
         this.biography = ""
         this.birthdate = Date.valueOf(LocalDate.now())
-        this.journeys = user.journeys.map {
-                JourneyResponse(
-                    it.id!!,
+        this.journeys = user.journeys.map { journey ->
+            JourneyResponse(
+                    journey.id!!,
                     UserNamesResponse(
-                        it.user.username, it.user.firstName, it.user.lastName),
-                    it.startDate,
-                    it.endDate!!,
-                    it.description!!, it.destination.name!!)
+                        journey.user.username, journey.user.firstName, journey.user.lastName),
+                    journey.startDate,
+                    journey.endDate!!,
+                    journey.description, journey.destination.name,
+                    journey.activities.map { activity ->
+                        ActivityResponse(
+                            activity.id!!,
+                            activity.title,
+                            activity.description,
+                            activity.type,
+                            activity.date,
+                            activity.location
+                        )
+                    })
         }
     }
 }

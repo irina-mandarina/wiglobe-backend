@@ -1,6 +1,6 @@
 package com.example.demo.controllers
 
-import com.example.demo.models.requestModels.PostComment
+import com.example.demo.models.requestModels.CommentRequest
 import com.example.demo.services.CommentService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -13,12 +13,12 @@ class CommentController(val commentService: CommentService) {
     }
 
     @PostMapping("/journeys/{journeyId}/comments")
-    fun commentJourney(@RequestHeader username: String, @PathVariable journeyId: Long, @RequestBody commentRequest: PostComment): ResponseEntity<String> {
+    fun commentJourney(@RequestHeader username: String, @PathVariable journeyId: Long, @RequestBody commentRequest: CommentRequest): ResponseEntity<String> {
         return commentService.commentJourney(username, journeyId, commentRequest)
     }
 
     @PutMapping("/journeys/{journeyId}/comments/{commentId}")
-    fun editComment(@RequestHeader username: String, @PathVariable journeyId: Long, @PathVariable commentId: Long, @RequestBody commentRequest: PostComment): ResponseEntity<String> {
+    fun editComment(@RequestHeader username: String, @PathVariable journeyId: Long, @PathVariable commentId: Long, @RequestBody commentRequest: CommentRequest): ResponseEntity<String> {
         return commentService.editComment(username, commentId, commentRequest)
     }
 

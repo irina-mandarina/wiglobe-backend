@@ -18,7 +18,7 @@ class Destination {
     var y: Double = 0.0
 
     @Column(name = "name")
-    var name: String? = null
+    var name: String = ""
 
     @OneToMany(mappedBy = "destination")
     var reviews: List<Review> = listOf()

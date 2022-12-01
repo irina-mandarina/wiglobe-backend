@@ -5,7 +5,7 @@ import com.example.demo.entities.Review
 import com.example.demo.entities.User
 import com.example.demo.repositories.ReviewRepository
 import com.example.demo.models.responseModels.ReviewResponse
-import com.example.demo.models.requestModels.PostReview
+import com.example.demo.models.requestModels.ReviewRequest
 import com.example.demo.models.responseModels.DestinationResponse
 import com.example.demo.models.responseModels.UserNamesResponse
 import kotlinx.serialization.encodeToString
@@ -50,7 +50,7 @@ class ReviewService(private val destinationService: DestinationService, private 
         )
     }
 
-    fun reviewDestination(username: String, destinationId: Long, reviewRequest: PostReview): ResponseEntity<String> {
+    fun reviewDestination(username: String, destinationId: Long, reviewRequest: ReviewRequest): ResponseEntity<String> {
         if (!userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
         }
@@ -83,7 +83,7 @@ class ReviewService(private val destinationService: DestinationService, private 
         )
     }
 
-    fun editReview(username: String, reviewId: Long, reviewRequest: PostReview): ResponseEntity<String> {
+    fun editReview(username: String, reviewId: Long, reviewRequest: ReviewRequest): ResponseEntity<String> {
         if (!userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
         }

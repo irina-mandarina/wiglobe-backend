@@ -4,7 +4,6 @@ import com.example.demo.entities.User
 import com.example.demo.repositories.UserRepository
 import com.example.demo.models.requestModels.LogInRequest
 import com.example.demo.models.requestModels.SignUpRequest
-import com.example.demo.models.requestModels.UserRequest
 import com.example.demo.models.responseModels.UserDetailsResponse
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -42,7 +41,6 @@ import org.springframework.stereotype.Service
     }
 
     fun signUp(signUpRequest: SignUpRequest): ResponseEntity<String> {
-        println("here")
         if (userWithUsernameExists(signUpRequest.username)) {
             return ResponseEntity.badRequest().body("User with username: " + signUpRequest.username + " already exists")
         }
@@ -55,7 +53,19 @@ import org.springframework.stereotype.Service
 
         userRepository.save(user)
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(UserRequest(findUserByUsername(user.username)!!).toString())
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+            Json.encodeToString(
+                UserDetailsResponse(
+                    user.username,
+                    user.firstName,
+                    user.lastName,
+                    user.birthdate,
+                    user.biography,
+                    user.registrationDate,
+                    user.gender
+                )
+            )
+        )
     }
 
     fun logOut(username: String): ResponseEntity<String> {
@@ -64,7 +74,7 @@ import org.springframework.stereotype.Service
 
     fun deleteAccount(username: String): ResponseEntity<String> {
         return if (!userWithUsernameExists(username)) {
-            ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with username: " + username + " does not exist")
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body("User $username does not exist")
         } else {
             val user = findUserByUsername(username)
             if (user != null) {
@@ -103,7 +113,8 @@ import org.springframework.stereotype.Service
                     user.lastName,
                     user.birthdate,
                     user.biography,
-                    user.registrationDate
+                    user.registrationDate,
+                    user.gender
                 )
             )
         )

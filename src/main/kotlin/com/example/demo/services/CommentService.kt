@@ -4,7 +4,7 @@ import com.example.demo.entities.Comment
 import com.example.demo.entities.Journey
 import com.example.demo.repositories.CommentRepository
 import com.example.demo.models.responseModels.CommentResponse
-import com.example.demo.models.requestModels.PostComment
+import com.example.demo.models.requestModels.CommentRequest
 import com.example.demo.models.responseModels.UserNamesResponse
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -13,8 +13,9 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 
 @Service
-class CommentService(val journeyService: JourneyService, val userService: UserService,
-                     val commentRepository: CommentRepository) {
+class CommentService(
+    private val journeyService: JourneyService, private val userService: UserService,
+    val commentRepository: CommentRepository) {
     fun getCommentsForJourney(username: String, journeyId: Long): ResponseEntity<String> {
         if (username.isBlank()) {
             return ResponseEntity.badRequest().body("Missing request parameter: username")
@@ -49,7 +50,7 @@ class CommentService(val journeyService: JourneyService, val userService: UserSe
     fun commentJourney(
         username: String,
         journeyId: Long,
-        commentRequest: PostComment
+        commentRequest: CommentRequest
     ): ResponseEntity<String> {
 
         if (!userService.userWithUsernameExists(username)) {
@@ -79,7 +80,7 @@ class CommentService(val journeyService: JourneyService, val userService: UserSe
         )
     }
 
-    fun editComment(username: String, commentId: Long, commentRequest: PostComment): ResponseEntity<String> {
+    fun editComment(username: String, commentId: Long, commentRequest: CommentRequest): ResponseEntity<String> {
         if (!userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
         }

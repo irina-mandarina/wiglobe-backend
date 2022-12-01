@@ -2,6 +2,7 @@ package com.example.demo.entities
 
 import com.example.demo.models.requestModels.SignUpRequest
 import com.example.demo.serialization.TimestampSerializer
+import com.example.demo.types.Gender
 import kotlinx.serialization.Serializable
 import java.sql.Date
 import java.sql.Timestamp
@@ -32,12 +33,15 @@ class User() {
     @Column(name = "last_name", nullable = false)
     var lastName: String = ""
 
+    @Column(name = "biography")
+    var biography: String = ""
+
+    @Column(name = "gender")
+    var gender: Gender = Gender.OTHER
+
     @Serializable(TimestampSerializer::class)
     @Column(name = "registration_date", nullable = false)
     var registrationDate: Timestamp = Timestamp.valueOf(LocalDateTime.now())
-
-    @Column(name = "biography")
-    var biography: String = ""
 
     @Column(name = "birthdate", nullable = false)
     var birthdate: Date = Date.valueOf(LocalDate.now())

@@ -1,3 +1,3 @@
 package com.example.demo.models.requestModels
 
-data class PostComment(val content: String)
+data class CommentRequest(val content: String)

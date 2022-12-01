@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @CrossOrigin
-class UserController(val userService: UserService) {
+class UserController(private val userService: UserService) {
     @PostMapping("/users/login")
     fun logIn(@RequestBody logInRequest: LogInRequest): ResponseEntity<String> {
         return userService.logIn(logInRequest)
@@ -30,22 +30,22 @@ class UserController(val userService: UserService) {
         return userService.getUserDetails(username)
     }
 
-    @GetMapping("/users/details") // ??
-    fun getMyDetails(@RequestHeader username: String): ResponseEntity<String> {
-        return userService.getUserDetails(username)
-    }
+//    @GetMapping("/users/details") // ??
+//    fun getMyDetails(@RequestHeader username: String): ResponseEntity<String> {
+//        return userService.getUserDetails(username)
+//    }
 
-    @DeleteMapping("/users/delete-account")
+    @DeleteMapping("/users/me")
     fun deleteAccount(@RequestHeader username: String): ResponseEntity<String> {
         return userService.deleteAccount(username)
     }
 
-    @PostMapping("/users/bio")
+    @PostMapping("/users/me/bio")
     fun addBio(@RequestHeader username: String, @RequestBody bio: String): ResponseEntity<String> {
         return userService.setBio(username, bio)
     }
 
-    @PutMapping("/users/bio")
+    @PutMapping("/users/me/bio")
     fun editBio(@RequestHeader username: String, @RequestBody bio: String): ResponseEntity<String> {
         return userService.setBio(username, bio)
     }

@@ -1,6 +1,6 @@
 package com.example.demo.entities
 
-import com.example.demo.models.requestModels.PostActivity
+import com.example.demo.models.requestModels.ActivityRequest
 import com.example.demo.types.ActivityTypes
 import java.sql.Timestamp
 import java.time.LocalDateTime
@@ -33,7 +33,9 @@ class Activity() {
     @Column(name = "location", nullable = false)
     var location: String = ""
 
-    constructor(postActivity: PostActivity, journeyId: Long) : this() {
+    constructor(postActivity: ActivityRequest, journey: Journey) : this() {
+        this.date = postActivity.date
+        this.journey = journey
         this.title = postActivity.title
         this.location = postActivity.location
         this.description = postActivity.description

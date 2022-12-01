@@ -1,6 +1,6 @@
 package com.example.demo.entities
 
-import com.example.demo.models.requestModels.PostComment
+import com.example.demo.models.requestModels.CommentRequest
 import java.sql.Timestamp
 import java.time.LocalDateTime
 import javax.persistence.*
@@ -27,7 +27,7 @@ class Comment() {
     @Column(name = "content", nullable = false)
     var content: String = ""
 
-    constructor(commentRequest: PostComment, journey: Journey,
+    constructor(commentRequest: CommentRequest, journey: Journey,
                 user: User) : this() {
         this.user = user
         this.journey = journey

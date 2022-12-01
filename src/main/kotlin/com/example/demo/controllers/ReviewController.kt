@@ -1,6 +1,6 @@
 package com.example.demo.controllers
 
-import com.example.demo.models.requestModels.PostReview
+import com.example.demo.models.requestModels.ReviewRequest
 import com.example.demo.services.ReviewService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -15,14 +15,14 @@ class ReviewController(private val reviewService: ReviewService) {
 
     @PostMapping("/destinations/{destinationId}/reviews")
     fun reviewDestination(@RequestHeader username: String, @PathVariable destinationId: Long,
-                      @RequestBody reviewRequest: PostReview
+                      @RequestBody reviewRequest: ReviewRequest
     ): ResponseEntity<String> {
         return reviewService.reviewDestination(username, destinationId, reviewRequest)
     }
 
     @PutMapping("/destinations/{destinationId}/reviews/{reviewId}")
     fun editReview(@RequestHeader username: String,
-                   @PathVariable reviewId: Long, @RequestBody reviewRequest: PostReview
+                   @PathVariable reviewId: Long, @RequestBody reviewRequest: ReviewRequest
     ): ResponseEntity<String> {
         return reviewService.editReview(username, reviewId, reviewRequest)
     }

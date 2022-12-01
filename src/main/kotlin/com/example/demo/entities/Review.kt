@@ -1,6 +1,6 @@
 package com.example.demo.entities
 
-import com.example.demo.models.requestModels.PostReview
+import com.example.demo.models.requestModels.ReviewRequest
 import java.sql.Timestamp
 import java.time.LocalDateTime
 import javax.persistence.*
@@ -35,7 +35,7 @@ class Review() {
     @Column(name = "content")
     var content: String? = ""
 
-    constructor(reviewRequest: PostReview, reviewedDestination: Destination, user: User) : this() {
+    constructor(reviewRequest: ReviewRequest, reviewedDestination: Destination, user: User) : this() {
         this.user = user
         this.reviewedDate = Timestamp.valueOf(LocalDateTime.now())
         this.starRating = reviewRequest.starRating

@@ -1,6 +1,6 @@
 package com.example.demo.controllers
 
-import com.example.demo.models.requestModels.PostJourney
+import com.example.demo.models.requestModels.JourneyRequest
 import com.example.demo.services.JourneyService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 class JourneyController(val journeyService: JourneyService) {
     @PostMapping("/journeys")
-    fun createJourney(@RequestHeader username: String, @RequestBody journeyRequest: PostJourney): ResponseEntity<String>  {
+    fun createJourney(@RequestHeader username: String, @RequestBody journeyRequest: JourneyRequest): ResponseEntity<String>  {
         return journeyService.createJourney(username, journeyRequest)
     }
 //
@@ -23,7 +23,7 @@ class JourneyController(val journeyService: JourneyService) {
     }
 
     @PutMapping("/journeys/{journeyId}")
-    fun editJourney(@RequestHeader username: String, @RequestBody journeyRequest: PostJourney,
+    fun editJourney(@RequestHeader username: String, @RequestBody journeyRequest: JourneyRequest,
                     @PathVariable journeyId: Long
     )  : ResponseEntity<String> {
         return journeyService.editJourney(username, journeyId, journeyRequest)
