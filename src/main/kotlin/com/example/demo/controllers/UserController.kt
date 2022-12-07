@@ -2,6 +2,7 @@ package com.example.demo.controllers
 
 import com.example.demo.models.requestModels.LogInRequest
 import com.example.demo.models.requestModels.SignUpRequest
+import com.example.demo.models.responseModels.UserDetails
 import com.example.demo.services.UserService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -15,8 +16,7 @@ class UserController(private val userService: UserService) {
     }
 
     @PostMapping("/users/signup")
-    fun signUp(@RequestBody signUpRequest: SignUpRequest): ResponseEntity<String> {
-        println("in user controller")
+    fun signUp(@RequestBody signUpRequest: SignUpRequest): ResponseEntity<UserDetails> {
         return userService.signUp(signUpRequest)
     }
 
@@ -26,7 +26,8 @@ class UserController(private val userService: UserService) {
     }
 
     @GetMapping("/users/{username}")
-    fun getUserDetails(@RequestHeader username: String, @PathVariable("username") otherUserUsername: String): ResponseEntity<String> {
+    fun getUserDetails(@RequestHeader username: String,
+                       @PathVariable("username") otherUserUsername: String): ResponseEntity<UserDetails> {
         return userService.getUserDetails(username)
     }
 

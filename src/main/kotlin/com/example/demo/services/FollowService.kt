@@ -1,7 +1,7 @@
 package com.example.demo.services
 
-import com.example.demo.entities.Follow
-import com.example.demo.entities.FollowRequest
+import com.example.demo.entities.FollowEntity
+import com.example.demo.entities.FollowRequestEntity
 import com.example.demo.repositories.FollowRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -11,25 +11,28 @@ import org.springframework.stereotype.Service
 class FollowService(private val followRepository: FollowRepository, private val userService: UserService ) {
     fun endFollow(username: String, userId: Long): ResponseEntity<String> {
         if (userService.userWithUsernameExists(username)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
+                "message", "Username does not exist").body(null)
         }
 
         val follow = findByFollowerIdAndAndFollowedId(userService.findUserByUsername(username)!!.id, userId)
-            ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).body("$username is not following them")
+            ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
+                "message", "$username is not following them").body(null)
 
         followRepository.delete(follow)
-        return ResponseEntity.ok().body("$username stopped following them")
+        return ResponseEntity.ok().header(
+            "message", "$username stopped following them").body(null)
     }
 
-    fun saveFollow(followRequest: FollowRequest): Follow? {
+    fun saveFollow(followRequest: FollowRequestEntity): FollowEntity? {
         if (findByFollowerIdAndAndFollowedId(followRequest.requester.id, followRequest.receiver.id) != null) {
             return null
         }
-        val follow = Follow(followRequest)
+        val follow = FollowEntity(followRequest)
         return followRepository.save(follow)
     }
 
-    fun findByFollowerIdAndAndFollowedId(followerId: Long, followedId: Long): Follow? {
+    fun findByFollowerIdAndAndFollowedId(followerId: Long, followedId: Long): FollowEntity? {
         return followRepository.findByFollowerIdAndAndFollowedId(followerId, followedId)
     }
 

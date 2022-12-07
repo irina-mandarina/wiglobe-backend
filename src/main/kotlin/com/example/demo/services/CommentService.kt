@@ -1,13 +1,11 @@
 package com.example.demo.services
 
-import com.example.demo.entities.Comment
-import com.example.demo.entities.Journey
+import com.example.demo.entities.CommentEntity
+import com.example.demo.entities.JourneyEntity
 import com.example.demo.repositories.CommentRepository
-import com.example.demo.models.responseModels.CommentResponse
+import com.example.demo.models.responseModels.Comment
 import com.example.demo.models.requestModels.CommentRequest
-import com.example.demo.models.responseModels.UserNamesResponse
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import com.example.demo.models.responseModels.UserNames
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
@@ -15,25 +13,31 @@ import org.springframework.stereotype.Service
 @Service
 class CommentService(
     private val journeyService: JourneyService, private val userService: UserService,
-    val commentRepository: CommentRepository) {
-    fun getCommentsForJourney(username: String, journeyId: Long): ResponseEntity<String> {
+    private val commentRepository: CommentRepository) {
+    fun getCommentsForJourney(username: String, journeyId: Long): ResponseEntity<List<Comment>> {
         if (username.isBlank()) {
-            return ResponseEntity.badRequest().body("Missing request parameter: username")
+            return ResponseEntity.badRequest().header(
+                "message","Missing request parameter: username")
+                .body(null)
         }
 
         if (!userService.userWithUsernameExists(username)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
+                "message","Username does not exist")
+                .body(null)
         }
 
         if (!journeyService.journeyWithIdExists(journeyId)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Journey does not exist")
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
+                "message","Journey does not exist")
+                .body(null)
         }
 
-        val comments: List<Comment> = findCommentsByJourney(journeyService.findJourneyById(journeyId)!!)
-        val getComments: List<CommentResponse> = comments.map {
-            CommentResponse(
+        val comments: List<CommentEntity> = findCommentsByJourney(journeyService.findJourneyById(journeyId)!!)
+        val getComments: List<Comment> = comments.map {
+            Comment(
                 it.id!!,
-                UserNamesResponse(
+                UserNames(
                     it.user.username, it.user.firstName, it.user.lastName
                 ),
                 it.datePosted,
@@ -42,59 +46,63 @@ class CommentService(
         }
 
         return ResponseEntity.ok().body(
-            Json.encodeToString(
                 getComments
-            )
         )
     }
     fun commentJourney(
         username: String,
         journeyId: Long,
         commentRequest: CommentRequest
-    ): ResponseEntity<String> {
+    ): ResponseEntity<Comment> {
 
         if (!userService.userWithUsernameExists(username)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
+                "message","Username does not exist")
+                .body(null)
         }
 
         if (!journeyService.journeyWithIdExists(journeyId)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Journey does not exist")
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
+                "message","Journey does not exist")
+                .body(null)
         }
 
-        val comment = Comment(commentRequest, journeyService.findJourneyById(journeyId)!!,
+        val comment = CommentEntity(commentRequest, journeyService.findJourneyById(journeyId)!!,
             userService.findUserByUsername(username)!!)
 
         commentRepository.save(comment)
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
-            Json.encodeToString(
-                CommentResponse(
-                    comment.id!!,
-                    UserNamesResponse(
-                        comment.user.username, comment.user.firstName, comment.user.lastName
-                    ),
-                    comment.datePosted,
-                    comment.content
-                )
+            Comment(
+                comment.id!!,
+                UserNames(
+                    comment.user.username, comment.user.firstName, comment.user.lastName
+                ),
+                comment.datePosted,
+                comment.content
             )
         )
     }
 
-    fun editComment(username: String, commentId: Long, commentRequest: CommentRequest): ResponseEntity<String> {
+    fun editComment(username: String, commentId: Long, commentRequest: CommentRequest): ResponseEntity<Comment> {
         if (!userService.userWithUsernameExists(username)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
+                "message","Username does not exist")
+                .body(null)
         }
 
         if (!commentWithIdExists(commentId)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Comment does not exist")
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
+                "message","Comment does not exist")
+                .body(null)
         }
 
         val comment = findCommentById(commentId)!!
 
         if (comment.user.username != username) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
-                "Comment does not belong to user with username: $username"
-            )
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
+                "message","Comment does not belong to user with username: $username")
+                .body(null)
         }
 
         comment.content = commentRequest.content
@@ -102,50 +110,54 @@ class CommentService(
         commentRepository.save(comment)
 
         return ResponseEntity.ok().body(
-            Json.encodeToString(
-                CommentResponse(
-                    comment.id!!,
-                    UserNamesResponse(
-                        comment.user.username, comment.user.firstName, comment.user.lastName
-                    ),
-                    comment.datePosted,
-                    comment.content
-                )
+            Comment(
+                comment.id!!,
+                UserNames(
+                    comment.user.username, comment.user.firstName, comment.user.lastName
+                ),
+                comment.datePosted,
+                comment.content
             )
         )
     }
 
     fun deleteComment(username: String, commentId: Long): ResponseEntity<String> {
         if (!userService.userWithUsernameExists(username)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
+                "message","Username does not exist")
+                .body(null)
         }
 
         if (!commentWithIdExists(commentId)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Comment does not exist")
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
+                "message","Comment does not exist")
+                .body(null)
         }
 
         val comment = findCommentById(commentId)!!
 
         if (comment.user.username != username) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
-                "Comment does not belong to user with username: $username"
-            )
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
+                "message", "Comment does not belong to user with username: $username")
+                .body(null)
         }
 
         commentRepository.delete(comment)
 
-        return ResponseEntity.ok().body("Successfully deleted a comment.")
+        return ResponseEntity.ok().header(
+            "message","Successfully deleted a comment.")
+            .body(null)
     }
 
     fun commentWithIdExists(commentId: Long): Boolean {
         return (findCommentById(commentId) != null)
     }
 
-    fun findCommentById(id: Long): Comment? {
+    fun findCommentById(id: Long): CommentEntity? {
         return commentRepository.findCommentById(id)
     }
 
-    fun findCommentsByJourney(journey: Journey): List<Comment> {
+    fun findCommentsByJourney(journey: JourneyEntity): List<CommentEntity> {
         return commentRepository.findCommentsByJourney(journey)
     }
 

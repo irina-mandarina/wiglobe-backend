@@ -1,13 +1,13 @@
 package com.example.demo.repositories
 
-import com.example.demo.entities.FollowRequest
+import com.example.demo.entities.FollowRequestEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface FollowRequestRepository: JpaRepository<FollowRequest, Long> {
-    fun findByReceiverUsernameAndAndRequesterUsername(receiver: String, requesterUsername: String): FollowRequest?
-    fun findAllByReceiverUsername(receiverUsername: String): List<FollowRequest>
+interface FollowRequestRepository: JpaRepository<FollowRequestEntity, Long> {
+    fun findByReceiverUsernameAndAndRequesterUsername(receiver: String, requesterUsername: String): FollowRequestEntity?
+    fun findAllByReceiverUsername(receiverUsername: String): List<FollowRequestEntity>
 
 
 }

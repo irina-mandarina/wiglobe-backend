@@ -1,10 +1,10 @@
 package com.example.demo.services
 
-import com.example.demo.entities.Activity
-import com.example.demo.entities.Journey
+import com.example.demo.entities.ActivityEntity
+import com.example.demo.entities.JourneyEntity
 import com.example.demo.repositories.ActivityRepository
 import com.example.demo.models.requestModels.ActivityRequest
-import com.example.demo.models.responseModels.ActivityResponse
+import com.example.demo.models.responseModels.Activity
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.springframework.http.HttpStatus
@@ -18,21 +18,25 @@ class ActivityService(
     fun addActivityToJourney(username: String, postActivity: ActivityRequest,
                              journeyId: Long): ResponseEntity<String> {
         if (!userService.userWithUsernameExists(username)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
+                "message","Username does not exist")
+                .body(null)
         }
 
         if (!journeyService.journeyWithIdExists(journeyId)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Journey does not exist")
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
+                "message","Journey does not exist")
+                .body(null)
         }
 
         val journey = journeyService.findJourneyById(journeyId)!!
 
-        val activity = Activity(postActivity, journey)
+        val activity = ActivityEntity(postActivity, journey)
         activityRepository.save(activity)
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
             Json.encodeToString(
-                ActivityResponse(
+                Activity(
                     activity.id!!,
                     activity.title,
                     activity.description,
@@ -44,22 +48,31 @@ class ActivityService(
         )
     }
 
-    fun editActivityForJourney(username: String, activityRequest: ActivityRequest, journeyId: Long, activityId: Long): ResponseEntity<String> {
+    fun editActivityForJourney(username: String, activityRequest: ActivityRequest, journeyId: Long,
+                               activityId: Long): ResponseEntity<Activity> {
         if (!userService.userWithUsernameExists(username)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
+                "message","Username does not exist")
+                .body(null)
         }
 
         if (!journeyService.journeyWithIdExists(journeyId)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Journey does not exist")
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
+                "message","Journey does not exist")
+                .body(null)
         }
 
         if (!activityWithIdExists(activityId)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Activity does not exist")
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
+                "message","Activity does not exist")
+                .body(null)
         }
 
         val journey = journeyService.findJourneyById(journeyId)!!
         if (journey.id != journeyId) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Activity does not belong to journey")
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
+                "message","Activity does not belong to journey")
+                .body(null)
         }
 
         val activity = findActivityById(activityId)!!
@@ -72,63 +85,69 @@ class ActivityService(
         activityRepository.save(activity)
 
         return ResponseEntity.status(HttpStatus.OK).body(
-            Json.encodeToString(
-                ActivityResponse(
-                    activity.id!!,
-                    activity.title,
-                    activity.description,
-                    activity.type,
-                    activity.date,
-                    activity.location
-                )
+            Activity(
+                activity.id!!,
+                activity.title,
+                activity.description,
+                activity.type,
+                activity.date,
+                activity.location
             )
         )
     }
 
     fun deleteActivityFromJourney(username: String, journeyId: Long, activityId: Long): ResponseEntity<String> {
         if (!userService.userWithUsernameExists(username)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
+                "message","Username does not exist")
+                .body(null)
         }
 
         if (!journeyService.journeyWithIdExists(journeyId)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Journey does not exist")
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
+                "message","Journey does not exist")
+                .body(null)
         }
 
         if (!activityWithIdExists(activityId)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Activity does not exist")
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
+                "message","Activity does not exist")
+                .body(null)
         }
 
         val activity = findActivityById(activityId)!!
         activityRepository.delete(activity)
 
-        return ResponseEntity.status(HttpStatus.OK).body(
+        return ResponseEntity.status(HttpStatus.OK).header(
+                "message",
             "Successfully deleted an activity"
         )
+        .body(null)
     }
 
     fun activityWithIdExists(id: Long): Boolean {
         return (activityRepository.findActivityById(id) != null)
     }
 
-    fun findActivityById(id: Long): Activity? {
+    fun findActivityById(id: Long): ActivityEntity? {
         return activityRepository.findActivityById(id)
     }
 
-    fun findActivitiesByJourney(journey: Journey): List<Activity> {
+    fun findActivitiesByJourney(journey: JourneyEntity): List<ActivityEntity> {
         return activityRepository.findActivitiesByJourney(journey)
     }
 
-    fun getActivitiesForJourney(username: String, journeyId: Long): ResponseEntity<String> {
+    fun getActivitiesForJourney(username: String, journeyId: Long): ResponseEntity<List<Activity>> {
         if (!userService.userWithUsernameExists(username)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username does not exist")
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null)
         }
 
         if (!journeyService.journeyWithIdExists(journeyId)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Journey does not exist")
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
         }
 
         val activities = findActivitiesByJourney(journeyService.findJourneyById(journeyId)!!).map {
-            ActivityResponse(
+            Activity(
                 it.id!!,
                 it.title,
                 it.description,
@@ -139,9 +158,7 @@ class ActivityService(
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(
-            Json.encodeToString(
-                activities
-            )
+            activities
         )
     }
 }

@@ -1,18 +1,16 @@
 package com.example.demo.services
 
-import com.example.demo.entities.User
+import com.example.demo.entities.UserEntity
 import com.example.demo.repositories.UserRepository
 import com.example.demo.models.requestModels.LogInRequest
 import com.example.demo.models.requestModels.SignUpRequest
-import com.example.demo.models.responseModels.UserDetailsResponse
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import com.example.demo.models.responseModels.UserDetails
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 
 @Service
- class UserService(val userRepository: UserRepository) {
+ class UserService(private val userRepository: UserRepository) {
     fun userWithUsernameExists(username: String): Boolean {
         return (userRepository.findUserByUsername(username) != null)
     }
@@ -21,49 +19,57 @@ import org.springframework.stereotype.Service
         return ((userRepository.findUserByEmail(email)) != null)
     }
 
-    fun findUserById(id: Long): User? {
+    fun findUserById(id: Long): UserEntity? {
         return userRepository.findUserById(id)
     }
 
-    fun findUserByUsername(username: String): User? {
+    fun findUserByUsername(username: String): UserEntity? {
         return userRepository.findUserByUsername(username)
     }
 
     fun logIn(logInRequest: LogInRequest): ResponseEntity<String> {
         if (userWithUsernameExists(logInRequest.username!!)) {
             return if (findUserByUsername(logInRequest.username)!!.password != logInRequest.password) {
-                ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Wrong password")
+                ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
+                "message", "Wrong password")
+                    .body(null)
             } else {
-                ResponseEntity.ok().body("Successfully logged in")
+                ResponseEntity.ok().header(
+                "message", "Successfully logged in")
+                    .body(null)
             }
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Username does not exist")
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
+                "message", "Username does not exist")
+            .body(null)
     }
 
-    fun signUp(signUpRequest: SignUpRequest): ResponseEntity<String> {
+    fun signUp(signUpRequest: SignUpRequest): ResponseEntity<UserDetails> {
         if (userWithUsernameExists(signUpRequest.username)) {
-            return ResponseEntity.badRequest().body("User with username: " + signUpRequest.username + " already exists")
+            return ResponseEntity.badRequest().header(
+                "message", "User with username: " + signUpRequest.username + " already exists")
+                .body(null)
         }
 
         if (userWithEmailExists(signUpRequest.email)) {
-            return ResponseEntity.badRequest().body("User with email: " + signUpRequest.email + " already exists")
+            return ResponseEntity.badRequest().header(
+                "message", "User with email: " + signUpRequest.email + " already exists")
+                .body(null)
         }
 
-        val user = User(signUpRequest)
+        val user = UserEntity(signUpRequest)
 
         userRepository.save(user)
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
-            Json.encodeToString(
-                UserDetailsResponse(
-                    user.username,
-                    user.firstName,
-                    user.lastName,
-                    user.birthdate,
-                    user.biography,
-                    user.registrationDate,
-                    user.gender
-                )
+            UserDetails(
+                user.username,
+                user.firstName,
+                user.lastName,
+                user.birthdate,
+                user.biography,
+                user.registrationDate,
+                user.gender
             )
         )
     }
@@ -74,48 +80,56 @@ import org.springframework.stereotype.Service
 
     fun deleteAccount(username: String): ResponseEntity<String> {
         return if (!userWithUsernameExists(username)) {
-            ResponseEntity.status(HttpStatus.NOT_FOUND).body("User $username does not exist")
+            ResponseEntity.status(HttpStatus.NOT_FOUND).header(
+                "message", "User $username does not exist")
+                .body(null)
         } else {
             val user = findUserByUsername(username)
             if (user != null) {
                 userRepository.delete(user)
             }
-            ResponseEntity.ok().body("Deleted account with username: $username")
+            ResponseEntity.ok().header(
+                "message", "Deleted account with username: $username")
+                .body(null)
         }
 
     }
 
     fun setBio(username: String, bio: String): ResponseEntity<String> {
         return if (!userWithUsernameExists(username)) {
-            ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with username: " + username + "does not exist")
+            ResponseEntity.status(HttpStatus.NOT_FOUND).header(
+                "message", "User with username: " + username + "does not exist")
+                .body(null)
         } else {
             val user = findUserByUsername(username)
             if (user != null) {
                 user.biography = bio
                 userRepository.save(user)
             }
-            ResponseEntity.ok().body("Changed biography for account with username: $username to: $bio")
+            ResponseEntity.ok().header(
+                "message", "Changed biography for account with username: $username to: $bio")
+                .body(bio)
         }
     }
 
-    fun getUserDetails(username: String): ResponseEntity<String> {
+    fun getUserDetails(username: String): ResponseEntity<UserDetails> {
         if (!userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body("User with username: " + username + "does not exist")
+                .header(
+                "message", "User with username: " + username + "does not exist")
+                .body(null)
         }
 
         val user = findUserByUsername(username)!!
         return ResponseEntity.ok().body(
-            Json.encodeToString(
-                UserDetailsResponse(
-                    user.username,
-                    user.firstName,
-                    user.lastName,
-                    user.birthdate,
-                    user.biography,
-                    user.registrationDate,
-                    user.gender
-                )
+            UserDetails(
+                user.username,
+                user.firstName,
+                user.lastName,
+                user.birthdate,
+                user.biography,
+                user.registrationDate,
+                user.gender
             )
         )
     }

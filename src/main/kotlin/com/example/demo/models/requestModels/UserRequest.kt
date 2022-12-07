@@ -1,15 +1,15 @@
 package com.example.demo.models.requestModels
 
 import com.example.demo.entities.*
-import com.example.demo.models.responseModels.ActivityResponse
-import com.example.demo.models.responseModels.JourneyResponse
-import com.example.demo.models.responseModels.UserNamesResponse
+import com.example.demo.models.responseModels.Activity
+import com.example.demo.models.responseModels.Journey
+import com.example.demo.models.responseModels.UserNames
 import java.sql.Date
 import java.sql.Timestamp
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-class UserRequest(user: User) {
+class UserRequest(user: UserEntity) {
     var email: String? = ""
     var username: String? = ""
     var firstName: String? = ""
@@ -17,7 +17,7 @@ class UserRequest(user: User) {
     var registrationDate: Timestamp? = Timestamp.valueOf(LocalDateTime.now())
     var biography: String? = ""
     var birthdate: Date? = Date.valueOf(LocalDate.now())
-    var journeys: List<JourneyResponse> = listOf()
+    var journeys: List<Journey> = listOf()
 
     init {
         this.email = ""
@@ -28,15 +28,15 @@ class UserRequest(user: User) {
         this.biography = ""
         this.birthdate = Date.valueOf(LocalDate.now())
         this.journeys = user.journeys.map { journey ->
-            JourneyResponse(
+            Journey(
                     journey.id!!,
-                    UserNamesResponse(
+                    UserNames(
                         journey.user.username, journey.user.firstName, journey.user.lastName),
                     journey.startDate,
                     journey.endDate!!,
                     journey.description, journey.destination.name,
                     journey.activities.map { activity ->
-                        ActivityResponse(
+                        Activity(
                             activity.id!!,
                             activity.title,
                             activity.description,
@@ -44,7 +44,9 @@ class UserRequest(user: User) {
                             activity.date,
                             activity.location
                         )
-                    })
+                    },
+                    journey.visibility
+            )
         }
     }
 }

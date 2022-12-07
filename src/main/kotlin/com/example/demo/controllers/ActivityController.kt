@@ -1,6 +1,7 @@
 package com.example.demo.controllers
 
 import com.example.demo.models.requestModels.ActivityRequest
+import com.example.demo.models.responseModels.Activity
 import com.example.demo.services.ActivityService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -22,7 +23,7 @@ class ActivityController(private val activityService: ActivityService) {
 
     @PutMapping("/journeys/{journeyId}/activities/{activityId}")
     fun editActivityForJourney(@RequestHeader username: String, @RequestBody activityRequest: ActivityRequest,
-                               @PathVariable journeyId: Long, @PathVariable activityId: Long): ResponseEntity<String> {
+                               @PathVariable journeyId: Long, @PathVariable activityId: Long): ResponseEntity<Activity> {
         return activityService.editActivityForJourney(username, activityRequest, journeyId, activityId)
     }
 
@@ -34,7 +35,7 @@ class ActivityController(private val activityService: ActivityService) {
 
     @GetMapping("/journeys/{journeyId}/activities")
     fun getActivitiesForJourney(@RequestHeader username: String,
-                                @PathVariable journeyId: Long): ResponseEntity<String> {
+                                @PathVariable journeyId: Long): ResponseEntity<List<Activity>> {
         return activityService.getActivitiesForJourney(username, journeyId)
     }
 
