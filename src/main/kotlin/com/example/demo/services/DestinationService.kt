@@ -1,6 +1,7 @@
 package com.example.demo.services
 
 import com.example.demo.entities.DestinationEntity
+import com.example.demo.models.responseModels.Destination
 import com.example.demo.repositories.DestinationRepository
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
@@ -96,5 +97,20 @@ class DestinationService(private val destinationRepository: DestinationRepositor
     fun readFeatureCodeCsvAndReplaceFeatureCodes(): ResponseEntity<String> {
 // to do
         return ResponseEntity.ok().body(null)
+    }
+
+    fun getDestinations(): ResponseEntity<List<Destination>> {
+        return ResponseEntity.ok().body(
+            destinationRepository.findAll().map {
+                Destination(
+                    it.latitude,
+                    it.longitude,
+                    it.name,
+                    it.countryCode,
+                    it.featureClass,
+                    it.featureCode
+                )
+            }
+        )
     }
 }

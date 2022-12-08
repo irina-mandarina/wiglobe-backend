@@ -18,13 +18,13 @@ class DestinationEntity {
     @Column(name = "name")
     var name: String = ""
 
-    @Column(name = "feature class")
+    @Column(name = "feature_class")
     var featureClass: String = ""
 
-    @Column(name = "feature code")
+    @Column(name = "feature_code")
     var featureCode: String = ""
 
-    @Column(name = "country code")
+    @Column(name = "country_code")
     var countryCode: String = ""
 
 

@@ -1,6 +1,9 @@
 # tuesthesis
 Qs:
-1. I just fixed. It was something really silly. I found out that for plugins one needs to define a plugin repository section.
+1. vader to kotlin ?
+2. 
+
+I just fixed. It was something really silly. I found out that for plugins one needs to define a plugin repository section.
 
 <pluginRepositories>
     <pluginRepository>
@@ -48,7 +51,8 @@ Pages (front end):
 7. notifications
 
 How do journeys work?
-1. You click "create journey" which automatically sends some data with a post request so a journey is created in the db and an id is returned to the frontend
+1. You click "create journey" which automatically sends some data with a post 
+request so a journey is created in the db and an id is returned to the frontend
 2. You already have an id so you can start adding some activities to the journey
 3. You are still on the 'create journey' page, so you can continue adding info that will be sent to the db with a put request
 4. When you are done, a final put request will get sent

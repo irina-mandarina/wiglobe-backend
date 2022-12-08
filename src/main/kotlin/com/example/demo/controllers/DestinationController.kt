@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class DestinationController(private val destinationService: DestinationService) {
     @GetMapping("/destinations")
-    fun getDestinations(): ResponseEntity<Destination> {
+    fun getDestinations(): ResponseEntity<List<Destination>> {
         return destinationService.getDestinations();
     }
 }

@@ -33,7 +33,12 @@ class ReviewService(private val destinationService: DestinationService, private 
             Review(
                 it.id!!,
                 Destination(
-                    it.destination.latitude, it.destination.longitude, it.destination.name
+                    it.destination.latitude,
+                    it.destination.longitude,
+                    it.destination.name,
+                    it.destination.countryCode,
+                    it.destination.featureClass,
+                    it.destination.featureCode
                 ),
                 UserNames(
                     it.user.username, it.user.firstName, it.user.lastName
@@ -72,7 +77,12 @@ class ReviewService(private val destinationService: DestinationService, private 
             Review(
                 review.id!!,
                 Destination(
-                    review.destination.latitude, review.destination.longitude, review.destination.name
+                    review.destination.latitude,
+                    review.destination.longitude,
+                    review.destination.name,
+                    review.destination.countryCode,
+                    review.destination.featureClass,
+                    review.destination.featureCode
                 ),
                 UserNames(
                     review.user.username, review.user.firstName, review.user.lastName
@@ -116,7 +126,12 @@ class ReviewService(private val destinationService: DestinationService, private 
             Review(
                 review.id!!,
                 Destination(
-                    review.destination.latitude, review.destination.longitude, review.destination.name
+                    review.destination.latitude,
+                    review.destination.longitude,
+                    review.destination.name,
+                    review.destination.countryCode,
+                    review.destination.featureClass,
+                    review.destination.featureCode
                 ),
                 UserNames(
                     review.user.username, review.user.firstName, review.user.lastName
