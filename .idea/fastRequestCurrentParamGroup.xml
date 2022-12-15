@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="fastRequestCurrentParamGroup">
+    <option name="className" value="com.example.demo.controllers.JourneyController" />
+    <option name="method" value="getJourney" />
+    <option name="module" value="demo" />
+    <option name="originUrl" value="/journeys/{journeyId}" />
+    <option name="pathParamMap">
+      <map>
+        <entry key="journeyId">
+          <value>
+            <Object />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
+    <option name="url" value="/journeys/1" />
+  </component>
+</project>

@@ -11,8 +11,6 @@ class FollowController(val followService: FollowService) {
 //    fun getFriendshipStatus(@RequestHeader username: String, @PathVariable userId: Long): ResponseEntity<String> {
 //        return friendshipService.getFriendshipStatus(username, userId)
 //    }
-    var sentimentAnalyzer: SentimentAnalyzer = SentimentAnalyzer()
-    sentimentAnalyzer.getScoresFor("sfgsg ")
 
 
 //    @DeleteMapping("/users/{userId}/friendship")
