@@ -6,6 +6,7 @@ import com.example.demo.repositories.CommentRepository
 import com.example.demo.models.responseModels.Comment
 import com.example.demo.models.requestModels.CommentRequest
 import com.example.demo.models.responseModels.UserNames
+import com.example.demo.recommender.JourneyScoreCalculator
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
@@ -71,6 +72,9 @@ class CommentService(
             userService.findUserByUsername(username)!!)
 
         commentRepository.save(comment)
+
+        val calc = JourneyScoreCalculator()
+        calc.calculateScoreForJourney()
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
             Comment(

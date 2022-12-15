@@ -27,7 +27,6 @@ class DestinationEntity {
     @Column(name = "country_code")
     var countryCode: String = ""
 
-
     @OneToMany(mappedBy = "destination")
     var reviews: List<ReviewEntity> = listOf()
 
