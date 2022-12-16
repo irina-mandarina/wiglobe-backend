@@ -1,30 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="fastRequestCurrentParamGroup">
-    <option name="bodyParamMap">
-      <map>
-        <entry key="commentRequest">
-          <value>
-            <Object />
-          </value>
-        </entry>
-      </map>
-    </option>
-    <option name="className" value="com.example.demo.controllers.CommentController" />
-    <option name="method" value="commentJourney" />
-    <option name="methodType" value="POST" />
+    <option name="className" value="com.example.demo.controllers.JourneyController" />
+    <option name="method" value="getJourneyRecommendations" />
     <option name="module" value="tuesthesis" />
-    <option name="originUrl" value="/journeys/{journeyId}/comments" />
-    <option name="pathParamMap">
-      <map>
-        <entry key="journeyId">
-          <value>
-            <Object />
-          </value>
-        </entry>
-      </map>
-    </option>
-    <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
-    <option name="url" value="/journeys/1/comments" />
+    <option name="originUrl" value="/journeys" />
+    <option name="returnDocument" value="&quot;No comment,Type =Number&quot;" />
+    <option name="url" value="/journeys" />
   </component>
 </project>

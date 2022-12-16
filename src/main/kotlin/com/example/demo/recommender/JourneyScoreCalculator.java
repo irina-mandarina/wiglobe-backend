@@ -1,45 +1,102 @@
 package com.example.demo.recommender;
 
-//import com.example.demo.entities.JourneyEntity;
+import com.example.demo.entities.ActivityEntity;
+import com.example.demo.entities.CommentEntity;
+import com.example.demo.entities.JourneyEntity;
+import com.example.demo.entities.UserEntity;
+import com.example.demo.services.CommentService;
+import com.example.demo.services.UserService;
 import com.vader.sentiment.analyzer.SentimentAnalyzer;
 import com.vader.sentiment.analyzer.SentimentPolarities;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
 
+@Service
+@RequiredArgsConstructor
 public class JourneyScoreCalculator {
+
+    private final CommentService commentService;
+    private final UserService userService;
 
     /* we should have info about what each user likes in terms of:
         destination features, countries (based on comments and reviews)
         activity types (based on comments) */
-    ArrayList<String> sentences = new ArrayList<String>() {{
-        add("VADER is smart, handsome, and funny.");
-        add("VADER is smart, handsome, and funny!");
-        add("VADER is very smart, handsome, and funny.");
-        add("VADER is VERY SMART, handsome, and FUNNY.");
-        add("VADER is VERY SMART, handsome, and FUNNY!!!");
-        add("VADER is VERY SMART, really handsome, and INCREDIBLY FUNNY!!!");
-        add("The book was good.");
-        add("The book was kind of good.");
-        add("The plot was good, but the characters are uncompelling and the dialog is not great.");
-        add("A really bad, horrible book.");
-        add("At least it isn't a horrible book.");
-        add(":) and :D");
-        add("");
-        add("Today sux");
-        add("Today sux!");
-        add("Today SUX!");
-        add("Today kinda sux! But I'll get by, lol");
-    }};
 
-    public double calculateScoreForJourney() throws IOException {
-        double score = 0.0;
-        for (String sentence : sentences) {
-            System.out.println(sentence);
+
+    public void analyseCommentsByUser(UserEntity user) {
+        List<CommentEntity> comments = commentService.findAllByUser(user);
+        Map<String, Double> interests = new HashMap<>();
+
+        for (int commentCounter = 0; commentCounter < comments.size(); commentCounter++) {
+            CommentEntity comment = comments.get(commentCounter);
+
+            System.out.println(comment.getContent());
             final SentimentPolarities sentimentPolarities =
-                    SentimentAnalyzer.getScoresFor(sentence);
+                    SentimentAnalyzer.getScoresFor(comment.getContent());
             System.out.println(sentimentPolarities);
+
+            JourneyEntity journey = comment.getJourney();
+
+            // calculate average polarity
+            if (interests.containsKey(journey.getDestination().getCountryCode())) {
+                interests.put( journey.getDestination().getCountryCode(),
+                        (interests.get(journey.getDestination().getCountryCode())*commentCounter + sentimentPolarities.getCompoundPolarity()) / (commentCounter+1) );
+            }
+            else {
+                interests.put( journey.getDestination().getCountryCode(),
+                        (double) sentimentPolarities.getCompoundPolarity());
+            }
+
+            if (interests.containsKey(journey.getDestination().getFeatureCode())) {
+                interests.put( journey.getDestination().getFeatureCode(),
+                        (interests.get(journey.getDestination().getFeatureCode())*commentCounter + sentimentPolarities.getCompoundPolarity()) / (commentCounter+1) );
+            }
+            else {
+                interests.put( journey.getDestination().getFeatureCode(),
+                        (double) sentimentPolarities.getCompoundPolarity());
+            }
+
+            if (interests.containsKey(journey.getDestination().getFeatureClass())) {
+                interests.put( journey.getDestination().getFeatureClass(),
+                        (interests.get(journey.getDestination().getFeatureClass())*commentCounter + sentimentPolarities.getCompoundPolarity()) / (commentCounter+1) );
+            }
+            else {
+                interests.put( journey.getDestination().getFeatureClass(),
+                        (double) sentimentPolarities.getCompoundPolarity());
+            }
+
+            if (interests.containsKey(journey.getDestination().getFeatureClass())) {
+                interests.put( journey.getDestination().getFeatureClass(),
+                        (interests.get(journey.getDestination().getFeatureClass())*commentCounter + sentimentPolarities.getCompoundPolarity()) / (commentCounter+1) );
+            }
+            else {
+                interests.put( journey.getDestination().getFeatureClass(),
+                        (double) sentimentPolarities.getCompoundPolarity());
+            }
+
+            for(ActivityEntity activity: journey.getActivities()) {
+                if ( interests.containsKey(activity.getType().name()) ) {
+                    interests.put( activity.getType().name(),
+                            (interests.get(activity.getType().name())*commentCounter + sentimentPolarities.getCompoundPolarity()) / (commentCounter+1) );
+                }
+                else {
+                    interests.put( activity.getType().name(),
+                            (double) sentimentPolarities.getCompoundPolarity() );
+                }
+            }
         }
+        System.out.println("Interests map: ");
+        for(Map.Entry<String, Double> interest: interests.entrySet()) {
+            System.out.println(interest.getKey() + ": " + interest.getValue());
+        }
+    }
+
+    public double calculateScoreForJourneyForUser(String username) throws IOException {
+        double score = 0.0;
+        analyseCommentsByUser(userService.findUserByUsername(username));
 
         return score;
     }

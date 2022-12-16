@@ -2,6 +2,7 @@ package com.example.demo.services
 
 import com.example.demo.entities.CommentEntity
 import com.example.demo.entities.JourneyEntity
+import com.example.demo.entities.UserEntity
 import com.example.demo.repositories.CommentRepository
 import com.example.demo.models.responseModels.Comment
 import com.example.demo.models.requestModels.CommentRequest
@@ -73,8 +74,8 @@ class CommentService(
 
         commentRepository.save(comment)
 
-        val calc = JourneyScoreCalculator()
-        calc.calculateScoreForJourney()
+//        val calc = JourneyScoreCalculator()
+//        calc.calculateScoreForJourney()
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
             Comment(
@@ -163,6 +164,10 @@ class CommentService(
 
     fun findCommentsByJourney(journey: JourneyEntity): List<CommentEntity> {
         return commentRepository.findCommentsByJourney(journey)
+    }
+
+    fun findAllByUser(user: UserEntity): List<CommentEntity> {
+        return commentRepository.findAllByUser(user)
     }
 
 }
