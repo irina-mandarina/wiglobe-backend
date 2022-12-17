@@ -10,4 +10,5 @@ interface JourneyRepository: JpaRepository<JourneyEntity, Long> {
     fun findJourneysByUser(user: UserEntity): List<JourneyEntity>
 
     fun findJourneysById(id: Long): JourneyEntity?
+    fun findJourneyEntitiesByUserNot(user: UserEntity): List<JourneyEntity>
 }

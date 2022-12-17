@@ -7,7 +7,6 @@ import com.example.demo.repositories.CommentRepository
 import com.example.demo.models.responseModels.Comment
 import com.example.demo.models.requestModels.CommentRequest
 import com.example.demo.models.responseModels.UserNames
-import com.example.demo.recommender.JourneyScoreCalculator
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service

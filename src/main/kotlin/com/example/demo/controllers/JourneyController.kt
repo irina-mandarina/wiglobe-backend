@@ -1,8 +1,9 @@
 package com.example.demo.controllers
 
+import com.example.demo.entities.JourneyEntity
 import com.example.demo.models.requestModels.JourneyRequest
 import com.example.demo.models.responseModels.Journey
-import com.example.demo.recommender.JourneyScoreCalculator
+import com.example.demo.recommender.JourneyRecommender
 import com.example.demo.services.CommentService
 import com.example.demo.services.JourneyService
 import com.example.demo.services.UserService
@@ -11,17 +12,13 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 class JourneyController(private val journeyService: JourneyService, private val commentService: CommentService,
-                        private val userService: UserService, private val journeyScoreCalculator: JourneyScoreCalculator) {
+                        private val userService: UserService, private val journeyScoreCalculator: JourneyRecommender
+) {
     @PostMapping("/journeys")
     fun createJourney(@RequestHeader username: String,
                       @RequestBody journeyRequest: JourneyRequest): ResponseEntity<Journey>  {
         return journeyService.createJourney(username, journeyRequest)
     }
-//
-//    @PostMapping("/journeys/new")
-//    fun createEmptyJourney(@RequestHeader username: String): ResponseEntity<String>  {
-//        return journeyService.createEmptyJourney(username)
-//    }
 
     @DeleteMapping("/journeys/{journeyId}")
     fun deleteJourney(@RequestHeader username: String,
@@ -42,9 +39,8 @@ class JourneyController(private val journeyService: JourneyService, private val 
     }
 
     @GetMapping("/journeys")
-    fun getJourneyRecommendations(@RequestHeader username: String): Double {
-//        val journeyScoreCalculator = JourneyScoreCalculator(commentService, userService)
-        return journeyScoreCalculator.calculateScoreForJourneyForUser(username)
+    fun getJourneyRecommendations(@RequestHeader username: String): MutableList<Journey>? {
+        return journeyScoreCalculator.recommendForUser(username)
     }
 
 }

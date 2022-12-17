@@ -25,6 +25,10 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
         return journeyRepository.findJourneysByUser(user)
     }
 
+    fun findJourneyEntitiesByUserNot(user: UserEntity): List<JourneyEntity> {
+        return journeyRepository.findJourneyEntitiesByUserNot(user)
+    }
+
     fun journeyWithIdExists(id: Long): Boolean {
         return findJourneyById(id) != null
     }
