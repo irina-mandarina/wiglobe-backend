@@ -15,6 +15,15 @@ import org.springframework.stereotype.Service
 class CommentService(
     private val journeyService: JourneyService, private val userService: UserService,
     private val commentRepository: CommentRepository) {
+
+    fun commentFromEntity(commentEntity: CommentEntity): Comment {
+        return Comment(
+            commentEntity.id!!,
+            userService.userNames(commentEntity.user),
+            commentEntity.datePosted,
+            commentEntity.content
+        )
+    }
     fun getCommentsForJourney(username: String, journeyId: Long): ResponseEntity<List<Comment>> {
         if (username.isBlank()) {
             return ResponseEntity.badRequest().header(
@@ -35,19 +44,11 @@ class CommentService(
         }
 
         val comments: List<CommentEntity> = findCommentsByJourney(journeyService.findJourneyById(journeyId)!!)
-        val getComments: List<Comment> = comments.map {
-            Comment(
-                it.id!!,
-                UserNames(
-                    it.user.username, it.user.firstName, it.user.lastName
-                ),
-                it.datePosted,
-                it.content
-            )
-        }
 
         return ResponseEntity.ok().body(
-                getComments
+                comments.map {
+                    commentFromEntity(it)
+                }
         )
     }
     fun commentJourney(
@@ -77,14 +78,7 @@ class CommentService(
 //        calc.calculateScoreForJourney()
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
-            Comment(
-                comment.id!!,
-                UserNames(
-                    comment.user.username, comment.user.firstName, comment.user.lastName
-                ),
-                comment.datePosted,
-                comment.content
-            )
+            commentFromEntity(comment)
         )
     }
 
@@ -114,14 +108,7 @@ class CommentService(
         commentRepository.save(comment)
 
         return ResponseEntity.ok().body(
-            Comment(
-                comment.id!!,
-                UserNames(
-                    comment.user.username, comment.user.firstName, comment.user.lastName
-                ),
-                comment.datePosted,
-                comment.content
-            )
+            commentFromEntity(comment)
         )
     }
 

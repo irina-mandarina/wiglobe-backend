@@ -1,6 +1,5 @@
 package com.example.demo.controllers
 
-import com.example.demo.entities.JourneyEntity
 import com.example.demo.models.requestModels.JourneyRequest
 import com.example.demo.models.responseModels.Journey
 import com.example.demo.recommender.JourneyRecommender
@@ -39,8 +38,10 @@ class JourneyController(private val journeyService: JourneyService, private val 
     }
 
     @GetMapping("/journeys")
-    fun getJourneyRecommendations(@RequestHeader username: String): MutableList<Journey>? {
-        return journeyScoreCalculator.recommendForUser(username)
+    fun getJourneyRecommendations(@RequestHeader username: String): List<Journey> {
+        val journeyRecommendations = journeyScoreCalculator.recommendForUser(username).map {
+            journeyService.journeyFromEntity( it )
+        }
+        return journeyRecommendations
     }
-
 }

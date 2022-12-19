@@ -18,35 +18,36 @@ class UserRequest(user: UserEntity) {
     var biography: String? = ""
     var birthdate: Date? = Date.valueOf(LocalDate.now())
     var journeys: List<Journey> = listOf()
-
-    init {
-        this.email = ""
-        this.username = ""
-        this.firstName = ""
-        this.lastName = ""
-        this.registrationDate = Timestamp.valueOf(LocalDateTime.now())
-        this.biography = ""
-        this.birthdate = Date.valueOf(LocalDate.now())
-        this.journeys = user.journeys.map { journey ->
-            Journey(
-                    journey.id!!,
-                    UserNames(
-                        journey.user.username, journey.user.firstName, journey.user.lastName),
-                    journey.startDate,
-                    journey.endDate!!,
-                    journey.description, journey.destination.name,
-                    journey.activities.map { activity ->
-                        Activity(
-                            activity.id!!,
-                            activity.title,
-                            activity.description,
-                            activity.type,
-                            activity.date,
-                            activity.location
-                        )
-                    },
-                    journey.visibility
-            )
-        }
-    }
+//
+//    init {
+//        this.email = ""
+//        this.username = ""
+//        this.firstName = ""
+//        this.lastName = ""
+//        this.registrationDate = Timestamp.valueOf(LocalDateTime.now())
+//        this.biography = ""
+//        this.birthdate = Date.valueOf(LocalDate.now())
+//        this.journeys = user.journeys.map { journey ->
+//            Journey(
+//                    journey.id!!,
+//                    UserNames(
+//                        journey.user.username, journey.user.firstName, journey.user.lastName),
+//                    journey.startDate,
+//                    journey.endDate!!,
+//                    journey.description,
+//                    destination journey.destination.name,
+//                    journey.activities.map { activity ->
+//                        Activity(
+//                            activity.id!!,
+//                            activity.title,
+//                            activity.description,
+//                            activity.type,
+//                            activity.date,
+//                            activity.location
+//                        )
+//                    },
+//                    journey.visibility
+//            )
+//        }
+//    }
 }

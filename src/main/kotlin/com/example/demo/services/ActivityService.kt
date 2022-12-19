@@ -15,6 +15,17 @@ import org.springframework.stereotype.Service
 class ActivityService(
     private val activityRepository: ActivityRepository, private val journeyService: JourneyService,
     private val userService: UserService) {
+
+    fun activityFromEntity(activityEntity: ActivityEntity): Activity {
+        return Activity(
+            activityEntity.id!!,
+            activityEntity.title,
+            activityEntity.description,
+            activityEntity.type,
+            activityEntity.date,
+            activityEntity.location
+        )
+    }
     fun addActivityToJourney(username: String, postActivity: ActivityRequest,
                              journeyId: Long): ResponseEntity<String> {
         if (!userService.userWithUsernameExists(username)) {
@@ -36,14 +47,7 @@ class ActivityService(
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
             Json.encodeToString(
-                Activity(
-                    activity.id!!,
-                    activity.title,
-                    activity.description,
-                    activity.type,
-                    activity.date,
-                    activity.location
-                )
+                activityFromEntity(activity)
             )
         )
     }
@@ -85,14 +89,7 @@ class ActivityService(
         activityRepository.save(activity)
 
         return ResponseEntity.status(HttpStatus.OK).body(
-            Activity(
-                activity.id!!,
-                activity.title,
-                activity.description,
-                activity.type,
-                activity.date,
-                activity.location
-            )
+            activityFromEntity(activity)
         )
     }
 
@@ -147,14 +144,7 @@ class ActivityService(
         }
 
         val activities = findActivitiesByJourney(journeyService.findJourneyById(journeyId)!!).map {
-            Activity(
-                it.id!!,
-                it.title,
-                it.description,
-                it.type,
-                it.date,
-                it.location
-            )
+            activityFromEntity(it)
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(

@@ -15,6 +15,18 @@ import org.springframework.stereotype.Service
 @Service
 class ReviewService(private val destinationService: DestinationService, private val userService: UserService,
                     private val reviewRepository: ReviewRepository) {
+
+    fun reviewFromEntity(reviewEntity: ReviewEntity): Review {
+        return Review (
+            reviewEntity.id!!,
+            destinationService.destinationFromEntity(reviewEntity.destination),
+            userService.userNames(reviewEntity.user),
+            reviewEntity.starRating,
+            reviewEntity.reviewedDate,
+            reviewEntity.title!!,
+            reviewEntity.content!!
+        )
+    }
     fun getReviewsForDestination(username: String, destinationId: Long): ResponseEntity<List<Review>> {
         if (!userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(

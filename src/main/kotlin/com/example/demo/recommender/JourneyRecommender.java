@@ -4,10 +4,6 @@ import com.example.demo.entities.ActivityEntity;
 import com.example.demo.entities.CommentEntity;
 import com.example.demo.entities.JourneyEntity;
 import com.example.demo.entities.UserEntity;
-import com.example.demo.models.responseModels.Activity;
-import com.example.demo.models.responseModels.Destination;
-import com.example.demo.models.responseModels.Journey;
-import com.example.demo.models.responseModels.UserNames;
 import com.example.demo.services.CommentService;
 import com.example.demo.services.JourneyService;
 import com.example.demo.services.UserService;
@@ -16,7 +12,6 @@ import com.vader.sentiment.analyzer.SentimentPolarities;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -105,14 +100,7 @@ public class JourneyRecommender {
         return interests;
     }
 
-//    public double calculateScoreForJourneyForUser(UserEntity user, JourneyEntity journey) throws IOException {
-//        double score = 0.0;
-//        analyseCommentsByUser(user);
-//
-//        return score;
-//    }
-
-    public List<Journey> recommendForUser(String username) {
+    public List<JourneyEntity> recommendForUser(String username) {
         UserEntity user = userService.findUserByUsername(username);
         Map<JourneyEntity, Double> recommendationsWithScores = new HashMap<>();
         Map<String, Double> interests = analyseCommentsByUser(user);
@@ -141,45 +129,6 @@ public class JourneyRecommender {
             System.out.println(journey.getId() + ": " + score);
         }
 
-        //recommendationsWithScores = (Map<JourneyEntity, Double>) recommendationsWithScores.entrySet().stream().sorted(Map.Entry.<JourneyEntity, Double>comparingByValue());
-
-        List<Journey> recs = null;
-        for(Map.Entry<JourneyEntity, Double> recommendation: recommendationsWithScores.entrySet()) {
-            System.out.println(recommendation.getKey().getId() + ": " + recommendation.getValue());
-            List<Activity> activities = null;
-            for (ActivityEntity activity: recommendation.getKey().getActivities()) {
-                activities.add(new Activity(
-                        activity.getId(),
-                        activity.getTitle(),
-                        activity.getDescription(),
-                        activity.getType(),
-                        activity.getDate(),
-                        activity.getLocation()
-                ));
-            }
-            recs.add(new Journey(
-                    recommendation.getKey().getId(),
-                    new UserNames(
-                            recommendation.getKey().getUser().getUsername(),
-                            recommendation.getKey().getUser().getFirstName(),
-                            recommendation.getKey().getUser().getLastName()
-                    ),
-                    recommendation.getKey().getStartDate(),
-                    recommendation.getKey().getEndDate(),
-                    recommendation.getKey().getDescription(),
-                    new Destination(
-                            recommendation.getKey().getDestination().getLatitude(),
-                            recommendation.getKey().getDestination().getLongitude(),
-                            recommendation.getKey().getDestination().getName(),
-                            recommendation.getKey().getDestination().getCountryCode(),
-                            recommendation.getKey().getDestination().getFeatureClass(),
-                            recommendation.getKey().getDestination().getFeatureCode()
-                    ),
-                    activities,
-                    recommendation.getKey().getVisibility()
-            ));
-        }
-
-        return recs;
+        return recommendationsWithScores.keySet().stream().toList();
     }
 }

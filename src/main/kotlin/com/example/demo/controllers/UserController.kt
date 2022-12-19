@@ -36,17 +36,12 @@ class UserController(private val userService: UserService) {
 //        return userService.getUserDetails(username)
 //    }
 
-    @DeleteMapping("/users/me")
+    @DeleteMapping("/users/{username}")
     fun deleteAccount(@RequestHeader username: String): ResponseEntity<String> {
         return userService.deleteAccount(username)
     }
 
-    @PostMapping("/users/me/bio")
-    fun addBio(@RequestHeader username: String, @RequestBody bio: String): ResponseEntity<String> {
-        return userService.setBio(username, bio)
-    }
-
-    @PutMapping("/users/me/bio")
+    @PutMapping("/users/{username}/bio")
     fun editBio(@RequestHeader username: String, @RequestBody bio: String): ResponseEntity<String> {
         return userService.setBio(username, bio)
     }

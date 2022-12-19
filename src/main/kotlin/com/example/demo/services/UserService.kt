@@ -5,12 +5,21 @@ import com.example.demo.repositories.UserRepository
 import com.example.demo.models.requestModels.LogInRequest
 import com.example.demo.models.requestModels.SignUpRequest
 import com.example.demo.models.responseModels.UserDetails
+import com.example.demo.models.responseModels.UserNames
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 
 @Service
  class UserService(private val userRepository: UserRepository) {
+
+    fun userNames(user: UserEntity): UserNames {
+        return UserNames(
+            user.username,
+            user.firstName,
+            user.lastName
+        )
+    }
     fun userWithUsernameExists(username: String): Boolean {
         return (userRepository.findUserByUsername(username) != null)
     }

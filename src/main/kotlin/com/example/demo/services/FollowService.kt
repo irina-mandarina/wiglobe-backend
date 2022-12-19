@@ -2,6 +2,8 @@ package com.example.demo.services
 
 import com.example.demo.entities.FollowEntity
 import com.example.demo.entities.FollowRequestEntity
+import com.example.demo.models.responseModels.Follow
+import com.example.demo.models.responseModels.UserNames
 import com.example.demo.repositories.FollowRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -9,6 +11,14 @@ import org.springframework.stereotype.Service
 
 @Service
 class FollowService(private val followRepository: FollowRepository, private val userService: UserService ) {
+    fun followFromEntity(followEntity: FollowEntity): Follow {
+        return Follow (
+            userService.userNames(followEntity.followed),
+            userService.userNames(followEntity.follower),
+            followEntity.followDate
+        )
+    }
+
     fun endFollow(username: String, userId: Long): ResponseEntity<String> {
         if (userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(

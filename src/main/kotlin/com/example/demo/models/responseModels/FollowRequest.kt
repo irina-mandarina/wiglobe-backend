@@ -9,4 +9,4 @@ data class FollowRequest(val requester: UserNames,
                          val receiver: UserNames,
                          @Serializable(TimestampSerializer::class)
                                  val requestDate: Timestamp
-                                 )
+                         )

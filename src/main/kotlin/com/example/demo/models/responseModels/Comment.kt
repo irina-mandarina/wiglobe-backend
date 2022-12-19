@@ -10,4 +10,4 @@ data class Comment(val id: Long,
                    @Serializable(TimestampSerializer::class)
                            val datePosted: Timestamp,
                    val content: String
-                           )
+                   )

@@ -17,6 +17,27 @@ import org.springframework.stereotype.Service
 class JourneyService(private val journeyRepository: JourneyRepository, private val userService: UserService,
                      private val destinationService: DestinationService, private val followService: FollowService) {
 
+    fun journeyFromEntity(journeyEntity: JourneyEntity): Journey {
+        return Journey (
+            journeyEntity.id!!,
+            userService.userNames(journeyEntity.user),
+            journeyEntity.startDate, journeyEntity.endDate!!,
+            journeyEntity.description,
+            destinationService.destinationFromEntity(journeyEntity.destination),
+            journeyEntity.activities.map {
+                Activity(
+                    it.id!!,
+                    it.title,
+                    it.description,
+                    it.type,
+                    it.date,
+                    it.location
+                )
+            },
+            journeyEntity.visibility
+        )
+    }
+
     fun findJourneyById(id: Long): JourneyEntity? {
         return journeyRepository.findJourneysById(id)
     }
@@ -56,24 +77,7 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
         journeyRepository.save(journey)
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
-            Journey(
-                journey.id!!,
-                UserNames(
-                    journey.user.username, journey.user.firstName, journey.user.lastName),
-                journey.startDate, journey.endDate!!,
-                journey.description, journey.destination.name,
-                journey.activities.map {
-                    Activity(
-                        it.id!!,
-                        it.title,
-                        it.description,
-                        it.type,
-                        it.date,
-                        it.location
-                    )
-                },
-                journey.visibility
-            )
+            journeyFromEntity(journey)
         )
     }
 
@@ -117,24 +121,7 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
         journeyRepository.save(journey)
 
         return ResponseEntity.status(HttpStatus.OK).body(
-            Journey(
-                journey.id!!,
-                UserNames(
-                    journey.user.username, journey.user.firstName, journey.user.lastName),
-                journey.startDate, journey.endDate!!,
-                journey.description, journey.destination.name,
-                journey.activities.map {
-                    Activity(
-                        it.id!!,
-                        it.title,
-                        it.description,
-                        it.type,
-                        it.date,
-                        it.location
-                    )
-                },
-                journey.visibility
-            )
+            journeyFromEntity(journey)
         )
     }
 
@@ -172,24 +159,7 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
        }
 
         return ResponseEntity.ok().body(
-            Journey(
-                journey.id!!,
-                UserNames(
-                    journey.user.username, journey.user.firstName, journey.user.lastName),
-                journey.startDate, journey.endDate!!,
-                journey.description, journey.destination.name,
-                journey.activities.map {
-                    Activity(
-                        it.id!!,
-                        it.title,
-                        it.description,
-                        it.type,
-                        it.date,
-                        it.location
-                    )
-                },
-                journey.visibility
-            )
+            journeyFromEntity(journey)
         )
     }
 }

@@ -4,7 +4,6 @@ import com.example.demo.serialization.TimestampSerializer
 import kotlinx.serialization.Serializable
 import java.sql.Timestamp
 
-
 @Serializable
 data class Review(val id: Long,
                   val destination: Destination,
@@ -14,4 +13,4 @@ data class Review(val id: Long,
                           val reviewedDate: Timestamp,
                   val title: String,
                   val content: String
-                          )
+)

@@ -14,6 +14,14 @@ import java.time.LocalDateTime
 @Service
 class FollowRequestService(private val followRequestRepository: FollowRequestRepository,
                            private val followService: FollowService, private val userService: UserService) {
+    fun followRequestFromEntity(followRequestEntity: FollowRequestEntity): FollowRequest {
+        return FollowRequest(
+            userService.userNames(followRequestEntity.receiver),
+            userService.userNames(followRequestEntity.requester),
+            followRequestEntity.requestDate,
+        )
+    }
+
     fun sendFollowRequest(username: String, receiverUsername: String): ResponseEntity<FollowRequest> {
         if (!userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
@@ -40,19 +48,7 @@ class FollowRequestService(private val followRequestRepository: FollowRequestRep
         followRequestRepository.save(followRequest)
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
-            FollowRequest(
-                UserNames(
-                    followRequest.requester.username,
-                    followRequest.requester.firstName,
-                    followRequest.requester.lastName
-                ),
-                UserNames(
-                    followRequest.receiver.username,
-                    followRequest.receiver.firstName,
-                    followRequest.receiver.lastName
-                ),
-                followRequest.requestDate
-            )
+            followRequestFromEntity(followRequest)
         )
     }
 
@@ -96,7 +92,11 @@ class FollowRequestService(private val followRequestRepository: FollowRequestRep
                 it.requestDate
             )
         }
-        return ResponseEntity.ok().body(response)
+        return ResponseEntity.ok().body(
+            findAllByReceiverUsername(username).map {
+                followRequestFromEntity( it )
+            }
+        )
     }
 
     fun approveFollowRequest(username: String, requesterUsername: String, response: Boolean): ResponseEntity<Follow> {

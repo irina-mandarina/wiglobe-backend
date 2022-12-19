@@ -9,4 +9,4 @@ data class Follow(val follower: UserNames,
                   val followed: UserNames,
                   @Serializable(TimestampSerializer::class)
                           val followDate: Timestamp
-                          )
+                  )
