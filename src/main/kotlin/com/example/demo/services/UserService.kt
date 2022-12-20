@@ -20,6 +20,19 @@ import org.springframework.stereotype.Service
             user.lastName
         )
     }
+
+    fun userDetails(user: UserEntity): UserDetails {
+        return UserDetails(
+            user.username,
+            user.firstName,
+            user.lastName,
+            user.birthdate,
+            user.biography,
+            user.registrationDate,
+            user.gender
+        )
+    }
+
     fun userWithUsernameExists(username: String): Boolean {
         return (userRepository.findUserByUsername(username) != null)
     }
@@ -36,20 +49,25 @@ import org.springframework.stereotype.Service
         return userRepository.findUserByUsername(username)
     }
 
-    fun logIn(logInRequest: LogInRequest): ResponseEntity<String> {
+    fun logIn(logInRequest: LogInRequest): ResponseEntity<UserDetails> {
         if (userWithUsernameExists(logInRequest.username!!)) {
-            return if (findUserByUsername(logInRequest.username)!!.password != logInRequest.password) {
+            val user = findUserByUsername(logInRequest.username)!!
+            return if (user.password != logInRequest.password) {
                 ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
-                "message", "Wrong password")
+                    "message", "Wrong password")
                     .body(null)
             } else {
                 ResponseEntity.ok().header(
-                "message", "Successfully logged in")
-                    .body(null)
+                    "message", "Successfully logged in")
+                    .body(
+                        userDetails(
+                            user
+                        )
+                    )
             }
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
-                "message", "Username does not exist")
+            "message", "Username does not exist")
             .body(null)
     }
 
@@ -71,14 +89,8 @@ import org.springframework.stereotype.Service
         userRepository.save(user)
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
-            UserDetails(
-                user.username,
-                user.firstName,
-                user.lastName,
-                user.birthdate,
-                user.biography,
-                user.registrationDate,
-                user.gender
+            userDetails(
+                user
             )
         )
     }
@@ -131,14 +143,8 @@ import org.springframework.stereotype.Service
 
         val user = findUserByUsername(username)!!
         return ResponseEntity.ok().body(
-            UserDetails(
-                user.username,
-                user.firstName,
-                user.lastName,
-                user.birthdate,
-                user.biography,
-                user.registrationDate,
-                user.gender
+            userDetails(
+                user
             )
         )
     }

@@ -1,9 +1,7 @@
 package com.example.demo.models.requestModels
 
 import com.example.demo.entities.*
-import com.example.demo.models.responseModels.Activity
 import com.example.demo.models.responseModels.Journey
-import com.example.demo.models.responseModels.UserNames
 import java.sql.Date
 import java.sql.Timestamp
 import java.time.LocalDate

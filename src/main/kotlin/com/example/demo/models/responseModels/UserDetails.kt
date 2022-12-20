@@ -17,4 +17,4 @@ data class UserDetails(val username: String,
                        @Serializable(TimestampSerializer::class)
                                val registrationDate: Timestamp,
                        val gender: Gender
-                               )
+)

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 @CrossOrigin
 class UserController(private val userService: UserService) {
     @PostMapping("/users/login")
-    fun logIn(@RequestBody logInRequest: LogInRequest): ResponseEntity<String> {
+    fun logIn(@RequestBody logInRequest: LogInRequest): ResponseEntity<UserDetails> {
         return userService.logIn(logInRequest)
     }
 

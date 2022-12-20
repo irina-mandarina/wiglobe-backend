@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
+@CrossOrigin
 class FollowRequestController(private val followRequestService: FollowRequestService) {
     @PostMapping("/users/{username}/follow")
     fun sendFollowRequest(@RequestHeader username: String, @PathVariable("username") receiverUsername: String): ResponseEntity<FollowRequest> {

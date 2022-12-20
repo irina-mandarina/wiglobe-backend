@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
+@CrossOrigin
 class JourneyController(private val journeyService: JourneyService, private val commentService: CommentService,
                         private val userService: UserService, private val journeyScoreCalculator: JourneyRecommender
 ) {
