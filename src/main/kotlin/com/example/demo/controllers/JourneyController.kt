@@ -45,4 +45,10 @@ class JourneyController(private val journeyService: JourneyService, private val 
         }
         return journeyRecommendations
     }
+
+    @GetMapping("/{username}/journeys")
+    fun getJourneysByUser(@RequestHeader username: String,
+                          @PathVariable("username") requestedJourneysOwnerUsername: String): ResponseEntity<List<Journey>> {
+        return journeyService.getJourneysByUser(username, requestedJourneysOwnerUsername)
+    }
 }

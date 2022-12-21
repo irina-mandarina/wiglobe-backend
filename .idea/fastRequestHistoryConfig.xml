@@ -4,6 +4,58 @@
     <option name="historyList">
       <list>
         <ResponseHistory>
+          <option name="className" value="com.example.demo.controllers.FollowRequestController" />
+          <option name="code" value="201" />
+          <option name="enableEnv" value="local" />
+          <option name="enableProject" value="tuesthesis" />
+          <option name="method" value="sendFollowRequest" />
+          <option name="methodType" value="POST" />
+          <option name="paramGroup">
+            <ParamGroupCollection>
+              <option name="className" value="com.example.demo.controllers.FollowRequestController" />
+              <option name="method" value="sendFollowRequest" />
+              <option name="methodDescription" value="New Request" />
+              <option name="methodType" value="POST" />
+              <option name="multipartKeyValueListJson" value="[]" />
+              <option name="originUrl" value="/users/{username}/follow" />
+              <option name="pathParamsKeyValueListJson" value="[{&quot;comment&quot;:&quot;&quot;,&quot;customFlag&quot;:2,&quot;enabled&quot;:true,&quot;key&quot;:&quot;username&quot;,&quot;type&quot;:&quot;String&quot;,&quot;value&quot;:&quot;username_vtbzn&quot;}]" />
+              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
+              <option name="url" value="/users/kiril/follow" />
+              <option name="urlEncodedKeyValueListJson" value="[]" />
+              <option name="urlParamsKeyValueListJson" value="[]" />
+            </ParamGroupCollection>
+          </option>
+          <option name="requestInfo" value="Request Url: http://localhost:8080/users/kiril/follow&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    username: alex&#13;&#10;Request Body: &#13;&#10;    null&#13;&#10;" />
+          <option name="response" value="{&quot;requester&quot;:{&quot;username&quot;:&quot;kiril&quot;,&quot;firstName&quot;:&quot;Kiril&quot;,&quot;lastName&quot;:&quot;Petkov&quot;},&quot;receiver&quot;:{&quot;username&quot;:&quot;alex&quot;,&quot;firstName&quot;:&quot;Alex&quot;,&quot;lastName&quot;:&quot;lastName_xox01&quot;},&quot;requestDate&quot;:1671660821908}" />
+          <option name="url" value="/users/kiril/follow" />
+        </ResponseHistory>
+        <ResponseHistory>
+          <option name="className" value="com.example.demo.controllers.FollowRequestController" />
+          <option name="code" value="201" />
+          <option name="enableEnv" value="local" />
+          <option name="enableProject" value="tuesthesis" />
+          <option name="method" value="sendFollowRequest" />
+          <option name="methodType" value="POST" />
+          <option name="paramGroup">
+            <ParamGroupCollection>
+              <option name="className" value="com.example.demo.controllers.FollowRequestController" />
+              <option name="method" value="sendFollowRequest" />
+              <option name="methodDescription" value="New Request" />
+              <option name="methodType" value="POST" />
+              <option name="multipartKeyValueListJson" value="[]" />
+              <option name="originUrl" value="/users/{username}/follow" />
+              <option name="pathParamsKeyValueListJson" value="[{&quot;comment&quot;:&quot;&quot;,&quot;customFlag&quot;:2,&quot;enabled&quot;:true,&quot;key&quot;:&quot;username&quot;,&quot;type&quot;:&quot;String&quot;,&quot;value&quot;:&quot;username_vtbzn&quot;}]" />
+              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
+              <option name="url" value="/users/kiril/follow" />
+              <option name="urlEncodedKeyValueListJson" value="[]" />
+              <option name="urlParamsKeyValueListJson" value="[]" />
+            </ParamGroupCollection>
+          </option>
+          <option name="requestInfo" value="Request Url: http://localhost:8080/users/kiril/follow&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    username: gosho&#13;&#10;Request Body: &#13;&#10;    null&#13;&#10;" />
+          <option name="response" value="{&quot;requester&quot;:{&quot;username&quot;:&quot;kiril&quot;,&quot;firstName&quot;:&quot;Kiril&quot;,&quot;lastName&quot;:&quot;Petkov&quot;},&quot;receiver&quot;:{&quot;username&quot;:&quot;gosho&quot;,&quot;firstName&quot;:&quot;Gosho&quot;,&quot;lastName&quot;:&quot;lastName_f7z8m&quot;},&quot;requestDate&quot;:1671660813101}" />
+          <option name="url" value="/users/kiril/follow" />
+        </ResponseHistory>
+        <ResponseHistory>
           <option name="className" value="com.example.demo.controllers.JourneyController" />
           <option name="code" value="200" />
           <option name="enableEnv" value="local" />
@@ -492,62 +544,6 @@
           </option>
           <option name="requestInfo" value="Request Url: http://localhost:8080/journeys/4/comments&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    Content-Length: 21&#13;&#10;    username: alex&#13;&#10;    Content-Type: application/json;charset=UTF-8&#13;&#10;Request Body: &#13;&#10;    {&#10;  &quot;content&quot;: &quot;no&quot;&#10;}&#13;&#10;" />
           <option name="response" value="{&quot;id&quot;:30,&quot;userNames&quot;:{&quot;username&quot;:&quot;alex&quot;,&quot;firstName&quot;:&quot;firstName_hn9cl&quot;,&quot;lastName&quot;:&quot;lastName_xox01&quot;},&quot;datePosted&quot;:1671285507523,&quot;content&quot;:&quot;no&quot;}" />
-          <option name="url" value="/journeys/4/comments" />
-        </ResponseHistory>
-        <ResponseHistory>
-          <option name="className" value="com.example.demo.controllers.CommentController" />
-          <option name="code" value="201" />
-          <option name="enableEnv" value="local" />
-          <option name="enableProject" value="tuesthesis" />
-          <option name="method" value="commentJourney" />
-          <option name="methodType" value="POST" />
-          <option name="paramGroup">
-            <ParamGroupCollection>
-              <option name="bodyKeyValueListJson" value="{&#10;  &quot;content&quot;: &quot;no&quot;&#10;}" />
-              <option name="className" value="com.example.demo.controllers.CommentController" />
-              <option name="jsonDocument" value="{&#10;  &quot;content&quot;: &quot;No comment,Value =content_2rxyj&quot;&#10;}" />
-              <option name="method" value="commentJourney" />
-              <option name="methodDescription" value="New Request" />
-              <option name="methodType" value="POST" />
-              <option name="multipartKeyValueListJson" value="[]" />
-              <option name="originUrl" value="/journeys/{journeyId}/comments" />
-              <option name="pathParamsKeyValueListJson" value="[{&quot;comment&quot;:&quot;&quot;,&quot;customFlag&quot;:2,&quot;enabled&quot;:true,&quot;key&quot;:&quot;journeyId&quot;,&quot;type&quot;:&quot;Number&quot;,&quot;value&quot;:&quot;1&quot;}]" />
-              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
-              <option name="url" value="/journeys/4/comments" />
-              <option name="urlEncodedKeyValueListJson" value="[]" />
-              <option name="urlParamsKeyValueListJson" value="[]" />
-            </ParamGroupCollection>
-          </option>
-          <option name="requestInfo" value="Request Url: http://localhost:8080/journeys/4/comments&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    Content-Length: 21&#13;&#10;    username: alex&#13;&#10;    Content-Type: application/json;charset=UTF-8&#13;&#10;Request Body: &#13;&#10;    {&#10;  &quot;content&quot;: &quot;no&quot;&#10;}&#13;&#10;" />
-          <option name="response" value="{&quot;id&quot;:29,&quot;userNames&quot;:{&quot;username&quot;:&quot;alex&quot;,&quot;firstName&quot;:&quot;firstName_hn9cl&quot;,&quot;lastName&quot;:&quot;lastName_xox01&quot;},&quot;datePosted&quot;:1671285507329,&quot;content&quot;:&quot;no&quot;}" />
-          <option name="url" value="/journeys/4/comments" />
-        </ResponseHistory>
-        <ResponseHistory>
-          <option name="className" value="com.example.demo.controllers.CommentController" />
-          <option name="code" value="201" />
-          <option name="enableEnv" value="local" />
-          <option name="enableProject" value="tuesthesis" />
-          <option name="method" value="commentJourney" />
-          <option name="methodType" value="POST" />
-          <option name="paramGroup">
-            <ParamGroupCollection>
-              <option name="bodyKeyValueListJson" value="{&#10;  &quot;content&quot;: &quot;no&quot;&#10;}" />
-              <option name="className" value="com.example.demo.controllers.CommentController" />
-              <option name="jsonDocument" value="{&#10;  &quot;content&quot;: &quot;No comment,Value =content_2rxyj&quot;&#10;}" />
-              <option name="method" value="commentJourney" />
-              <option name="methodDescription" value="New Request" />
-              <option name="methodType" value="POST" />
-              <option name="multipartKeyValueListJson" value="[]" />
-              <option name="originUrl" value="/journeys/{journeyId}/comments" />
-              <option name="pathParamsKeyValueListJson" value="[{&quot;comment&quot;:&quot;&quot;,&quot;customFlag&quot;:2,&quot;enabled&quot;:true,&quot;key&quot;:&quot;journeyId&quot;,&quot;type&quot;:&quot;Number&quot;,&quot;value&quot;:&quot;1&quot;}]" />
-              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
-              <option name="url" value="/journeys/4/comments" />
-              <option name="urlEncodedKeyValueListJson" value="[]" />
-              <option name="urlParamsKeyValueListJson" value="[]" />
-            </ParamGroupCollection>
-          </option>
-          <option name="requestInfo" value="Request Url: http://localhost:8080/journeys/4/comments&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    Content-Length: 21&#13;&#10;    username: alex&#13;&#10;    Content-Type: application/json;charset=UTF-8&#13;&#10;Request Body: &#13;&#10;    {&#10;  &quot;content&quot;: &quot;no&quot;&#10;}&#13;&#10;" />
-          <option name="response" value="{&quot;id&quot;:28,&quot;userNames&quot;:{&quot;username&quot;:&quot;alex&quot;,&quot;firstName&quot;:&quot;firstName_hn9cl&quot;,&quot;lastName&quot;:&quot;lastName_xox01&quot;},&quot;datePosted&quot;:1671285507140,&quot;content&quot;:&quot;no&quot;}" />
           <option name="url" value="/journeys/4/comments" />
         </ResponseHistory>
       </list>

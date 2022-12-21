@@ -162,4 +162,34 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
             journeyFromEntity(journey)
         )
     }
+
+    fun getJourneysByUser(username: String, requestedJourneysOwnerUsername: String): ResponseEntity<List<Journey>> {
+        if (!userService.userWithUsernameExists(username) || !userService.userWithUsernameExists(requestedJourneysOwnerUsername)) {
+            return ResponseEntity.badRequest().header(
+                "message", "Username does not exist")
+                .body(null)
+        }
+
+        val user = userService.findUserByUsername(requestedJourneysOwnerUsername)!!
+        var journeys = findAllByUserAndVisibilityIsIn(user, listOf(Visibility.PUBLIC, Visibility.FRIEND_ONLY))
+
+        // check if the requester and the owner are not friends. otherwise all journeys should be returned
+        if (!followService.areFriends(username, requestedJourneysOwnerUsername)) {
+            journeys = findAllByUserAndVisibility(user, Visibility.PUBLIC)
+        }
+
+        return ResponseEntity.ok().body(
+            journeys.map {
+                journeyFromEntity( it )
+            }
+        )
+    }
+
+    fun findAllByUserAndVisibility(user: UserEntity, visibility: Visibility): List<JourneyEntity> {
+        return journeyRepository.findAllByUserAndVisibility(user, visibility)
+    }
+
+    fun findAllByUserAndVisibilityIsIn(user: UserEntity, visibilities: List<Visibility>): List<JourneyEntity> {
+        return journeyRepository.findAllByUserAndVisibilityIsIn(user, visibilities)
+    }
 }

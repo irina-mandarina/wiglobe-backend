@@ -19,13 +19,13 @@ class FollowRequestController(private val followRequestService: FollowRequestSer
         return followRequestService.deleteFollowRequest(username, receiverUsername)
     }
 
-    @GetMapping("/users/me/follow-requests")
+    @GetMapping("/users/{username}/follow-requests")
     fun getFollowRequests(@RequestHeader username: String) : ResponseEntity<List<FollowRequest>> {
         return followRequestService.getFollowRequests(username)
     }
 
-    @DeleteMapping("/users/me/follow-requests/{username}")
-    fun respondToFollowRequest(@RequestHeader username: String, @PathVariable("username") requester: String,
+    @DeleteMapping("/users/{username}/follow-requests/{requesterUsername}")
+    fun respondToFollowRequest(@RequestHeader username: String, @PathVariable("requesterUsername") requester: String,
                                @RequestBody response: Boolean): ResponseEntity<Follow> {
         return followRequestService.approveFollowRequest(username, requester, response)
     }
