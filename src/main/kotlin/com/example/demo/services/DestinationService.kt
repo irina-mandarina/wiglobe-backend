@@ -5,8 +5,6 @@ import com.example.demo.models.responseModels.Destination
 import com.example.demo.repositories.DestinationRepository
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
-import java.io.FileReader
-import java.nio.charset.StandardCharsets
 
 @Service
 class DestinationService(private val destinationRepository: DestinationRepository,
@@ -39,6 +37,14 @@ class DestinationService(private val destinationRepository: DestinationRepositor
             destinationRepository.findAll().map {
                 destinationFromEntity(it)
             }
+        )
+    }
+
+    fun getDestination(destinationId: Long): ResponseEntity<Destination> {
+        return ResponseEntity.ok().body (
+            destinationFromEntity(
+                findDestinationById(destinationId)!!
+            )
         )
     }
 }

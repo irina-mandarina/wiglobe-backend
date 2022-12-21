@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @CrossOrigin
 class DestinationController(private val destinationService: DestinationService) {
-    @GetMapping("/destinations")
-    fun getDestinations(): ResponseEntity<List<Destination>> {
-        return destinationService.getDestinations();
+    @GetMapping("/destinations/{destinationId}")
+    fun getDestination(@PathVariable destinationId: Long): ResponseEntity<Destination> {
+        return destinationService.getDestination(destinationId);
     }
 }
