@@ -6,7 +6,8 @@ import com.vader.sentiment.analyzer.SentimentAnalyzer
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
-
+@RestController
+@CrossOrigin
 class FollowController(val followService: FollowService) {
 
     @GetMapping("/users/{username}/followers")

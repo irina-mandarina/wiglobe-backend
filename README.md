@@ -42,3 +42,4 @@ Front end to do list:
 11. not found
 12. notifications (after impl in the backend)
 13. explore - destinations, search, trending journeys
+14. vuelidate / vee-validate
