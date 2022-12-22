@@ -26,7 +26,7 @@ class FollowRequestController(private val followRequestService: FollowRequestSer
 
     @DeleteMapping("/users/{username}/follow-requests/{requesterUsername}")
     fun respondToFollowRequest(@RequestHeader username: String, @PathVariable("requesterUsername") requester: String,
-                               @RequestBody response: Boolean): ResponseEntity<Follow> {
+                               @RequestParam response: Boolean): ResponseEntity<Follow> {
         return followRequestService.approveFollowRequest(username, requester, response)
     }
 }

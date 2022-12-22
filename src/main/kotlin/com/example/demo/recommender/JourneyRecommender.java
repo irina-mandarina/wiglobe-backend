@@ -100,7 +100,7 @@ public class JourneyRecommender {
         return interests;
     }
 
-    public List<JourneyEntity> recommendForUser(String username) {
+    public Map<JourneyEntity, Double> recommendForUser(String username) {
         UserEntity user = userService.findUserByUsername(username);
         Map<JourneyEntity, Double> recommendationsWithScores = new HashMap<>();
         Map<String, Double> interests = analyseCommentsByUser(user);
@@ -129,6 +129,6 @@ public class JourneyRecommender {
             System.out.println(journey.getId() + ": " + score);
         }
 
-        return recommendationsWithScores.keySet().stream().toList();
+        return recommendationsWithScores;
     }
 }

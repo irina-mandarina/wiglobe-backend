@@ -3,7 +3,7 @@ package com.example.demo.services
 import com.example.demo.entities.FollowEntity
 import com.example.demo.entities.FollowRequestEntity
 import com.example.demo.models.responseModels.Follow
-import com.example.demo.models.responseModels.UserNames
+import com.example.demo.models.responseModels.UserDetails
 import com.example.demo.repositories.FollowRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -53,5 +53,47 @@ class FollowService(private val followRepository: FollowRepository, private val 
             return true;
         }
         return false;
+    }
+
+    fun getFollowers(username: String): ResponseEntity<List<UserDetails>> {
+        return ResponseEntity.ok().body(
+            findAllByFollowedUsernameOrderByFollowDate(username).map {
+                userService.userDetails(
+                    it.follower
+                )
+            }
+        )
+    }
+
+    fun getFollowing(username: String): ResponseEntity<List<UserDetails>> {
+        return ResponseEntity.ok().body(
+            findAllByFollowerUsernameOrderByFollowDate(username).map {
+                userService.userDetails(
+                    it.followed
+                )
+            }
+        )
+    }
+
+    fun getFriends(username: String): ResponseEntity<List<UserDetails>> {
+        return ResponseEntity.ok().body(
+            findAllByFollowerUsernameOrderByFollowDate(username)
+                .filter {
+                    areFriends(it.followed.username, it.follower.username)
+                }
+                .map {
+                    userService.userDetails(
+                        it.followed
+                    )
+                }
+        )
+    }
+
+    fun findAllByFollowedUsernameOrderByFollowDate(username: String): List<FollowEntity> {
+        return followRepository.findAllByFollowedUsernameOrderByFollowDate(username)
+    }
+
+    fun findAllByFollowerUsernameOrderByFollowDate(username: String): List<FollowEntity> {
+        return followRepository.findAllByFollowerUsernameOrderByFollowDate(username)
     }
 }

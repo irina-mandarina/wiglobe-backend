@@ -40,10 +40,15 @@ class JourneyController(private val journeyService: JourneyService, private val 
 
     @GetMapping("/journeys")
     fun getJourneyRecommendations(@RequestHeader username: String): List<Journey> {
-        val journeyRecommendations = journeyScoreCalculator.recommendForUser(username).map {
-            journeyService.journeyFromEntity( it )
+        val journeyRecommendations = journeyScoreCalculator.recommendForUser(username)
+            .toList().sortedByDescending { (_, value) -> value}.toMap()
+
+        for (set in journeyRecommendations) {
+            println("${set.key}: ${set.value} ")
         }
-        return journeyRecommendations
+        return journeyRecommendations.map {
+            journeyService.journeyFromEntity( it.key )
+        }
     }
 
     @GetMapping("/{username}/journeys")

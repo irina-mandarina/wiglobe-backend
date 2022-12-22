@@ -8,13 +8,14 @@ import org.springframework.stereotype.Service
 
 @Service
 class DestinationService(private val destinationRepository: DestinationRepository,
-                         private val featureCodeService: FeatureCodeService) {
+                         private val featureCodeService: FeatureCodeService,
+                         private val countryService: CountryService) {
     fun destinationFromEntity(destinationEntity: DestinationEntity): Destination {
         return Destination(
             destinationEntity.latitude,
             destinationEntity.longitude,
             destinationEntity.name,
-            destinationEntity.countryCode,
+            countryService.countryFromEntity(countryService.findCountryByCountryCode(destinationEntity.countryCode)),
             featureCodeService.findFeatureClassMeaning(destinationEntity.featureClass),
             featureCodeService.findFeatureCodeMeaning(destinationEntity.featureCode)
         )

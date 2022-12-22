@@ -1,40 +1,44 @@
 # tuesthesis
+
+Qs:
+1. what stores to use? (almost figured it out)
+2. destinations by id or name
+
+very important: fix follow requests in the backend (receiver and requester are switched)
+
 To do:
 * ~~get user (others)~~
-* pick a name & a colour palette, make a logo
+* country codes
+* pick a name & ~~a colour palette~~, make a logo
 1. ~~make it run~~
 2. update stoplight
 3. ~~use the enums~~
 4. ~~friends = mutual follows~~
 5. searches & filters
 6. replies??
-7. TESTS
+7. TESTS (in the end)
 8. security & single sign on with oauth2
 9. front end: vue
 10. machine learning:
-* recommendations based on comments *doing
+~~* recommendations based on comments~~
 * based on reviews
-* ? follow recommendations
+* ? follow recommendations (based on mutual friends)
 ~~data classes for responses~~
 * notifications
 * user details
 * default config like visibility
 
-Pages (front end):
-1. user profile (mine and not mine)
-2. ~~home - recent journeys~~
-3. single journey
-4. search
-5. ~~log in~~
-6. ~~register~~
-7. notifications
-8. settings
-9. not found
-
-How do journeys work?
-1. You click "create journey" which automatically sends some data with a post 
-request so a journey is created in the db and an id is returned to the frontend
-2. You already have an id so you can start adding some activities to the journey
-3. You are still on the 'create journey' page, so you can continue adding info that will be sent to the db with a put request
-4. When you are done, a final put request will get sent
-Finished product: activities, mapped to a journey, using its id.
+Front end to do list:
+1. finish follow requests
+2. journey adder - post to drafts
+3. activity adder
+4. comments under journeys
+5. single journey make it look ok + add activity carousel
+6. reviews under single destination
+7. comment adder
+8. review adder
+9. finish user profile
+10. settings
+11. not found
+12. notifications (after impl in the backend)
+13. explore - destinations, search, trending journeys

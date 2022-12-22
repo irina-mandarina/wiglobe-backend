@@ -16,8 +16,8 @@ class FollowRequestService(private val followRequestRepository: FollowRequestRep
                            private val followService: FollowService, private val userService: UserService) {
     fun followRequestFromEntity(followRequestEntity: FollowRequestEntity): FollowRequest {
         return FollowRequest(
-            userService.userNames(followRequestEntity.receiver),
             userService.userNames(followRequestEntity.requester),
+            userService.userNames(followRequestEntity.receiver),
             followRequestEntity.requestDate,
         )
     }

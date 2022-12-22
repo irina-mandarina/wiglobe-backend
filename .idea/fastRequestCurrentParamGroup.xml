@@ -2,13 +2,13 @@
 <project version="4">
   <component name="fastRequestCurrentParamGroup">
     <option name="className" value="com.example.demo.controllers.FollowRequestController" />
-    <option name="method" value="sendFollowRequest" />
-    <option name="methodType" value="POST" />
+    <option name="method" value="respondToFollowRequest" />
+    <option name="methodType" value="DELETE" />
     <option name="module" value="tuesthesis" />
-    <option name="originUrl" value="/users/{username}/follow" />
+    <option name="originUrl" value="/users/{username}/follow-requests/{requesterUsername}" />
     <option name="pathParamMap">
       <map>
-        <entry key="username">
+        <entry key="requesterUsername">
           <value>
             <Object />
           </value>
@@ -16,6 +16,6 @@
       </map>
     </option>
     <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
-    <option name="url" value="/users/username_vtbzn/follow" />
+    <option name="url" value="/users/{username}/follow-requests/requesterUsername_zovk9" />
   </component>
 </project>

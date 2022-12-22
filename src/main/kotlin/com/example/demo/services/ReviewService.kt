@@ -42,24 +42,7 @@ class ReviewService(private val destinationService: DestinationService, private 
         val reviews: List<ReviewEntity> = findReviewsByDestination(destinationService.findDestinationById(destinationId)!!)
 
         val getReviews: List<Review> = reviews.map {
-            Review(
-                it.id!!,
-                Destination(
-                    it.destination.latitude,
-                    it.destination.longitude,
-                    it.destination.name,
-                    it.destination.countryCode,
-                    it.destination.featureClass,
-                    it.destination.featureCode
-                ),
-                UserNames(
-                    it.user.username, it.user.firstName, it.user.lastName
-                ),
-                it.starRating,
-                it.reviewedDate,
-                it.title!!,
-                it.content!!
-            )
+            reviewFromEntity( it )
         }
 
         return ResponseEntity.ok().body(
@@ -86,24 +69,7 @@ class ReviewService(private val destinationService: DestinationService, private 
         reviewRepository.save(review)
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
-            Review(
-                review.id!!,
-                Destination(
-                    review.destination.latitude,
-                    review.destination.longitude,
-                    review.destination.name,
-                    review.destination.countryCode,
-                    review.destination.featureClass,
-                    review.destination.featureCode
-                ),
-                UserNames(
-                    review.user.username, review.user.firstName, review.user.lastName
-                ),
-                review.starRating,
-                review.reviewedDate,
-                review.title!!,
-                review.content!!
-            )
+            reviewFromEntity( review )
         )
     }
 
@@ -135,24 +101,7 @@ class ReviewService(private val destinationService: DestinationService, private 
         reviewRepository.save(review)
 
         return ResponseEntity.ok().body(
-            Review(
-                review.id!!,
-                Destination(
-                    review.destination.latitude,
-                    review.destination.longitude,
-                    review.destination.name,
-                    review.destination.countryCode,
-                    review.destination.featureClass,
-                    review.destination.featureCode
-                ),
-                UserNames(
-                    review.user.username, review.user.firstName, review.user.lastName
-                ),
-                review.starRating,
-                review.reviewedDate,
-                review.title!!,
-                review.content!!
-            )
+            reviewFromEntity( review )
         )
     }
 
