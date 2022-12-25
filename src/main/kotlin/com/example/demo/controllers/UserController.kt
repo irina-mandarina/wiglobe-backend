@@ -31,6 +31,7 @@ class UserController(private val userService: UserService) {
         return userService.getUserDetails(username)
     }
 
+
 //    @GetMapping("/users/details") // ??
 //    fun getMyDetails(@RequestHeader username: String): ResponseEntity<String> {
 //        return userService.getUserDetails(username)

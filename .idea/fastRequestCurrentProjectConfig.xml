@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="fastRequestCurrentProjectConfig">
+    <option name="cookieList">
+      <list>
+        <DataMapping>
+          <option name="type" value="http://localhost:8080" />
+          <option name="value" value="JSESSIONID=BD6AAD93211A205909C2712BCC5627C7; Path" />
+        </DataMapping>
+      </list>
+    </option>
     <option name="domain" value="http://localhost:8080" />
     <option name="enableEnv" value="local" />
     <option name="enableProject" value="tuesthesis" />

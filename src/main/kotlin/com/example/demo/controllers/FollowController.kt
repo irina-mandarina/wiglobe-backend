@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @CrossOrigin
-class FollowController(val followService: FollowService) {
+class FollowController(private val followService: FollowService) {
 
     @GetMapping("/users/{username}/followers")
     fun getFollowers(@RequestHeader username: String): ResponseEntity<List<UserDetails>> {

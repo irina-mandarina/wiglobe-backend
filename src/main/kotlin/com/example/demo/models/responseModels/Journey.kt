@@ -1,6 +1,5 @@
 package com.example.demo.models.responseModels
 
-import com.example.demo.entities.JourneyEntity
 import com.example.demo.serialization.TimestampSerializer
 import com.example.demo.types.Visibility
 import kotlinx.serialization.Serializable
