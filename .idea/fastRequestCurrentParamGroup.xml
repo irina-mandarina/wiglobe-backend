@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="fastRequestCurrentParamGroup">
-    <option name="bodyParamMap">
+    <option name="className" value="com.example.demo.controllers.FollowController" />
+    <option name="method" value="getFriends" />
+    <option name="module" value="tuesthesis" />
+    <option name="originUrl" value="/users/{username}/friends" />
+    <option name="pathParamMap">
       <map>
-        <entry key="logInRequest">
+        <entry key="username">
           <value>
             <Object />
           </value>
         </entry>
       </map>
     </option>
-    <option name="className" value="com.example.demo.controllers.UserController" />
-    <option name="method" value="logIn" />
-    <option name="methodType" value="POST" />
-    <option name="module" value="tuesthesis" />
-    <option name="originUrl" value="/users/login" />
     <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
-    <option name="url" value="/users/login" />
+    <option name="url" value="/users/username_ujfjz/friends" />
   </component>
 </project>

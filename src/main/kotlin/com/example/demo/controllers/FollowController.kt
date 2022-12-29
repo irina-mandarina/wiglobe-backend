@@ -11,17 +11,22 @@ import org.springframework.web.bind.annotation.*
 class FollowController(private val followService: FollowService) {
 
     @GetMapping("/users/{username}/followers")
-    fun getFollowers(@RequestHeader username: String): ResponseEntity<List<UserDetails>> {
+    fun getFollowers(@PathVariable username: String): ResponseEntity<List<UserDetails>> {
         return followService.getFollowers(username)
     }
 
     @GetMapping("/users/{username}/following")
-    fun getFollowing(@RequestHeader username: String): ResponseEntity<List<UserDetails>> {
+    fun getFollowing(@PathVariable username: String): ResponseEntity<List<UserDetails>> {
         return followService.getFollowing(username)
     }
 
     @GetMapping("/users/{username}/friends")
-    fun getFriends(@RequestHeader username: String): ResponseEntity<List<UserDetails>> {
+    fun getFriends(@PathVariable username: String): ResponseEntity<List<UserDetails>> {
         return followService.getFriends(username)
+    }
+
+    @DeleteMapping("/users/{username}/followers/{usernameBeingFollowed}")
+    fun unfollow(@RequestHeader username: String, @PathVariable("usernameBeingFollowed") usernameBeingFollowed: String): ResponseEntity<String> {
+        return followService.unfollow(username, usernameBeingFollowed)
     }
 }

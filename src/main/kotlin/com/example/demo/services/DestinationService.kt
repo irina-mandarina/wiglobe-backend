@@ -12,6 +12,7 @@ class DestinationService(private val destinationRepository: DestinationRepositor
                          private val countryService: CountryService) {
     fun destinationFromEntity(destinationEntity: DestinationEntity): Destination {
         return Destination(
+            destinationEntity.id!!,
             destinationEntity.latitude,
             destinationEntity.longitude,
             destinationEntity.name,

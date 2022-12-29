@@ -1,14 +1,12 @@
 # tuesthesis
 
 Qs:
-1. what stores to use? (almost figured it out)
-2. destinations by id or name
+1. profile pages in the frontend (paths)
 
-very important: fix follow requests in the backend (receiver and requester are switched)
 
 To do:
 * ~~get user (others)~~
-* country codes
+~~~~* ~~country codes~~
 * pick a name & ~~a colour palette~~, make a logo
 1. ~~make it run~~
 2. update stoplight
@@ -29,7 +27,7 @@ To do:
 * default config like visibility
 
 Front end to do list:
-1. finish follow requests
+1. ~~finish follow requests~~
 2. journey adder - post to drafts
 3. activity adder
 4. comments under journeys

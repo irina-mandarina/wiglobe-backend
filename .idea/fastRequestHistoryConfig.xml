@@ -4,6 +4,264 @@
     <option name="historyList">
       <list>
         <ResponseHistory>
+          <option name="className" value="com.example.demo.controllers.FollowController" />
+          <option name="code" value="200" />
+          <option name="enableEnv" value="local" />
+          <option name="enableProject" value="tuesthesis" />
+          <option name="method" value="getFriends" />
+          <option name="methodType" value="GET" />
+          <option name="paramGroup">
+            <ParamGroupCollection>
+              <option name="className" value="com.example.demo.controllers.FollowController" />
+              <option name="method" value="getFriends" />
+              <option name="methodDescription" value="New Request" />
+              <option name="multipartKeyValueListJson" value="[]" />
+              <option name="originUrl" value="/users/{username}/friends" />
+              <option name="pathParamsKeyValueListJson" value="[{&quot;comment&quot;:&quot;&quot;,&quot;customFlag&quot;:2,&quot;enabled&quot;:true,&quot;key&quot;:&quot;username&quot;,&quot;type&quot;:&quot;String&quot;,&quot;value&quot;:&quot;username_ujfjz&quot;}]" />
+              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
+              <option name="url" value="/users/alex/followers" />
+              <option name="urlEncodedKeyValueListJson" value="[]" />
+              <option name="urlParamsKeyValueListJson" value="[]" />
+            </ParamGroupCollection>
+          </option>
+          <option name="requestInfo" value="Request Url: http://localhost:8080/users/alex/followers&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;Request Body: &#13;&#10;    null&#13;&#10;" />
+          <option name="response" value="[{&quot;username&quot;:&quot;kiril&quot;,&quot;firstName&quot;:&quot;Kiril&quot;,&quot;lastName&quot;:&quot;Petkov&quot;,&quot;birthdate&quot;:1670364000000,&quot;biography&quot;:&quot;the biggest corny lover of all times; don't follow if you're turkish or like your tarator cucumbers chopped&quot;,&quot;registrationDate&quot;:1671480162000,&quot;gender&quot;:&quot;FEMALE&quot;}]" />
+          <option name="url" value="/users/alex/followers" />
+        </ResponseHistory>
+        <ResponseHistory>
+          <option name="className" value="com.example.demo.controllers.FollowController" />
+          <option name="code" value="200" />
+          <option name="enableEnv" value="local" />
+          <option name="enableProject" value="tuesthesis" />
+          <option name="method" value="getFriends" />
+          <option name="methodType" value="GET" />
+          <option name="paramGroup">
+            <ParamGroupCollection>
+              <option name="className" value="com.example.demo.controllers.FollowController" />
+              <option name="method" value="getFriends" />
+              <option name="methodDescription" value="New Request" />
+              <option name="multipartKeyValueListJson" value="[]" />
+              <option name="originUrl" value="/users/{username}/friends" />
+              <option name="pathParamsKeyValueListJson" value="[{&quot;comment&quot;:&quot;&quot;,&quot;customFlag&quot;:2,&quot;enabled&quot;:true,&quot;key&quot;:&quot;username&quot;,&quot;type&quot;:&quot;String&quot;,&quot;value&quot;:&quot;username_ujfjz&quot;}]" />
+              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
+              <option name="url" value="/users/alex/following" />
+              <option name="urlEncodedKeyValueListJson" value="[]" />
+              <option name="urlParamsKeyValueListJson" value="[]" />
+            </ParamGroupCollection>
+          </option>
+          <option name="requestInfo" value="Request Url: http://localhost:8080/users/alex/following&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;Request Body: &#13;&#10;    null&#13;&#10;" />
+          <option name="response" value="[{&quot;username&quot;:&quot;kiril&quot;,&quot;firstName&quot;:&quot;Kiril&quot;,&quot;lastName&quot;:&quot;Petkov&quot;,&quot;birthdate&quot;:1670364000000,&quot;biography&quot;:&quot;the biggest corny lover of all times; don't follow if you're turkish or like your tarator cucumbers chopped&quot;,&quot;registrationDate&quot;:1671480162000,&quot;gender&quot;:&quot;FEMALE&quot;}]" />
+          <option name="url" value="/users/alex/following" />
+        </ResponseHistory>
+        <ResponseHistory>
+          <option name="className" value="com.example.demo.controllers.FollowController" />
+          <option name="code" value="200" />
+          <option name="enableEnv" value="local" />
+          <option name="enableProject" value="tuesthesis" />
+          <option name="method" value="getFriends" />
+          <option name="methodType" value="GET" />
+          <option name="paramGroup">
+            <ParamGroupCollection>
+              <option name="className" value="com.example.demo.controllers.FollowController" />
+              <option name="method" value="getFriends" />
+              <option name="methodDescription" value="New Request" />
+              <option name="multipartKeyValueListJson" value="[]" />
+              <option name="originUrl" value="/users/{username}/friends" />
+              <option name="pathParamsKeyValueListJson" value="[{&quot;comment&quot;:&quot;&quot;,&quot;customFlag&quot;:2,&quot;enabled&quot;:true,&quot;key&quot;:&quot;username&quot;,&quot;type&quot;:&quot;String&quot;,&quot;value&quot;:&quot;username_ujfjz&quot;}]" />
+              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
+              <option name="url" value="/users/alex/friends" />
+              <option name="urlEncodedKeyValueListJson" value="[]" />
+              <option name="urlParamsKeyValueListJson" value="[]" />
+            </ParamGroupCollection>
+          </option>
+          <option name="requestInfo" value="Request Url: http://localhost:8080/users/alex/friends&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;Request Body: &#13;&#10;    null&#13;&#10;" />
+          <option name="response" value="[{&quot;username&quot;:&quot;alex&quot;,&quot;firstName&quot;:&quot;Alex&quot;,&quot;lastName&quot;:&quot;lastName_xox01&quot;,&quot;birthdate&quot;:1670277600000,&quot;biography&quot;:&quot;&quot;,&quot;registrationDate&quot;:1670341446000,&quot;gender&quot;:&quot;FEMALE&quot;}]" />
+          <option name="url" value="/users/alex/friends" />
+        </ResponseHistory>
+        <ResponseHistory>
+          <option name="className" value="com.example.demo.controllers.FollowController" />
+          <option name="code" value="200" />
+          <option name="enableEnv" value="local" />
+          <option name="enableProject" value="tuesthesis" />
+          <option name="method" value="getFollowing" />
+          <option name="methodType" value="GET" />
+          <option name="paramGroup">
+            <ParamGroupCollection>
+              <option name="className" value="com.example.demo.controllers.FollowController" />
+              <option name="method" value="getFollowing" />
+              <option name="methodDescription" value="New Request" />
+              <option name="multipartKeyValueListJson" value="[]" />
+              <option name="originUrl" value="/users/{username}/following" />
+              <option name="pathParamsKeyValueListJson" value="[]" />
+              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
+              <option name="url" value="/users/alex/following" />
+              <option name="urlEncodedKeyValueListJson" value="[]" />
+              <option name="urlParamsKeyValueListJson" value="[]" />
+            </ParamGroupCollection>
+          </option>
+          <option name="requestInfo" value="Request Url: http://localhost:8080/users/alex/following&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    username: alex&#13;&#10;Request Body: &#13;&#10;    null&#13;&#10;" />
+          <option name="response" value="[{&quot;username&quot;:&quot;kiril&quot;,&quot;firstName&quot;:&quot;Kiril&quot;,&quot;lastName&quot;:&quot;Petkov&quot;,&quot;birthdate&quot;:1670364000000,&quot;biography&quot;:&quot;the biggest corny lover of all times; don't follow if you're turkish or like your tarator cucumbers chopped&quot;,&quot;registrationDate&quot;:1671480162000,&quot;gender&quot;:&quot;FEMALE&quot;}]" />
+          <option name="url" value="/users/alex/following" />
+        </ResponseHistory>
+        <ResponseHistory>
+          <option name="className" value="com.example.demo.controllers.FollowRequestController" />
+          <option name="code" value="200" />
+          <option name="enableEnv" value="local" />
+          <option name="enableProject" value="tuesthesis" />
+          <option name="method" value="respondToFollowRequest" />
+          <option name="methodType" value="DELETE" />
+          <option name="paramGroup">
+            <ParamGroupCollection>
+              <option name="className" value="com.example.demo.controllers.FollowRequestController" />
+              <option name="method" value="respondToFollowRequest" />
+              <option name="methodDescription" value="New Request" />
+              <option name="methodType" value="DELETE" />
+              <option name="multipartKeyValueListJson" value="[]" />
+              <option name="originUrl" value="/users/{username}/follow-requests/{requesterUsername}" />
+              <option name="pathParamsKeyValueListJson" value="[{&quot;comment&quot;:&quot;&quot;,&quot;customFlag&quot;:2,&quot;enabled&quot;:true,&quot;key&quot;:&quot;requesterUsername&quot;,&quot;type&quot;:&quot;String&quot;,&quot;value&quot;:&quot;requesterUsername_2n43w&quot;}]" />
+              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
+              <option name="url" value="/users/gosho/follow-requests/kiril" />
+              <option name="urlEncodedKeyValueListJson" value="[{&quot;comment&quot;:&quot;&quot;,&quot;customFlag&quot;:2,&quot;enabled&quot;:true,&quot;key&quot;:&quot;response&quot;,&quot;type&quot;:&quot;Boolean&quot;,&quot;value&quot;:&quot;true&quot;}]" />
+              <option name="urlEncodedKeyValueListText" value="response=true" />
+              <option name="urlParamsKeyValueListJson" value="[]" />
+            </ParamGroupCollection>
+          </option>
+          <option name="requestInfo" value="Request Url: http://localhost:8080/users/gosho/follow-requests/kiril&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    username: gosho&#13;&#10;Request Body: &#13;&#10;    null&#13;&#10;" />
+          <option name="response" value="{&quot;follower&quot;:{&quot;username&quot;:&quot;kiril&quot;,&quot;firstName&quot;:&quot;Kiril&quot;,&quot;lastName&quot;:&quot;Petkov&quot;},&quot;followed&quot;:{&quot;username&quot;:&quot;gosho&quot;,&quot;firstName&quot;:&quot;Gosho&quot;,&quot;lastName&quot;:&quot;lastName_f7z8m&quot;},&quot;followDate&quot;:1672084268507}" />
+          <option name="url" value="/users/gosho/follow-requests/kiril" />
+        </ResponseHistory>
+        <ResponseHistory>
+          <option name="className" value="com.example.demo.controllers.FollowRequestController" />
+          <option name="code" value="200" />
+          <option name="enableEnv" value="local" />
+          <option name="enableProject" value="tuesthesis" />
+          <option name="method" value="respondToFollowRequest" />
+          <option name="methodType" value="DELETE" />
+          <option name="paramGroup">
+            <ParamGroupCollection>
+              <option name="className" value="com.example.demo.controllers.FollowRequestController" />
+              <option name="method" value="respondToFollowRequest" />
+              <option name="methodDescription" value="New Request" />
+              <option name="methodType" value="DELETE" />
+              <option name="multipartKeyValueListJson" value="[]" />
+              <option name="originUrl" value="/users/{username}/follow-requests/{requesterUsername}" />
+              <option name="pathParamsKeyValueListJson" value="[{&quot;comment&quot;:&quot;&quot;,&quot;customFlag&quot;:2,&quot;enabled&quot;:true,&quot;key&quot;:&quot;requesterUsername&quot;,&quot;type&quot;:&quot;String&quot;,&quot;value&quot;:&quot;requesterUsername_2n43w&quot;}]" />
+              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
+              <option name="url" value="/users/alex/follow-requests/kiril" />
+              <option name="urlEncodedKeyValueListJson" value="[{&quot;comment&quot;:&quot;&quot;,&quot;customFlag&quot;:2,&quot;enabled&quot;:true,&quot;key&quot;:&quot;response&quot;,&quot;type&quot;:&quot;Boolean&quot;,&quot;value&quot;:&quot;true&quot;}]" />
+              <option name="urlEncodedKeyValueListText" value="response=true" />
+              <option name="urlParamsKeyValueListJson" value="[]" />
+            </ParamGroupCollection>
+          </option>
+          <option name="requestInfo" value="Request Url: http://localhost:8080/users/alex/follow-requests/kiril&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    username: alex&#13;&#10;Request Body: &#13;&#10;    null&#13;&#10;" />
+          <option name="response" value="{&quot;follower&quot;:{&quot;username&quot;:&quot;kiril&quot;,&quot;firstName&quot;:&quot;Kiril&quot;,&quot;lastName&quot;:&quot;Petkov&quot;},&quot;followed&quot;:{&quot;username&quot;:&quot;alex&quot;,&quot;firstName&quot;:&quot;Alex&quot;,&quot;lastName&quot;:&quot;lastName_xox01&quot;},&quot;followDate&quot;:1672084256957}" />
+          <option name="url" value="/users/alex/follow-requests/kiril" />
+        </ResponseHistory>
+        <ResponseHistory>
+          <option name="className" value="com.example.demo.controllers.FollowRequestController" />
+          <option name="code" value="201" />
+          <option name="enableEnv" value="local" />
+          <option name="enableProject" value="tuesthesis" />
+          <option name="method" value="sendFollowRequest" />
+          <option name="methodType" value="POST" />
+          <option name="paramGroup">
+            <ParamGroupCollection>
+              <option name="className" value="com.example.demo.controllers.FollowRequestController" />
+              <option name="method" value="sendFollowRequest" />
+              <option name="methodDescription" value="New Request" />
+              <option name="methodType" value="POST" />
+              <option name="multipartKeyValueListJson" value="[]" />
+              <option name="originUrl" value="/users/{username}/follow-requests" />
+              <option name="pathParamsKeyValueListJson" value="[{&quot;comment&quot;:&quot;&quot;,&quot;customFlag&quot;:2,&quot;enabled&quot;:true,&quot;key&quot;:&quot;username&quot;,&quot;type&quot;:&quot;String&quot;,&quot;value&quot;:&quot;username_2ffie&quot;}]" />
+              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
+              <option name="url" value="/users/gosho/follow-requests" />
+              <option name="urlEncodedKeyValueListJson" value="[]" />
+              <option name="urlParamsKeyValueListJson" value="[]" />
+            </ParamGroupCollection>
+          </option>
+          <option name="requestInfo" value="Request Url: http://localhost:8080/users/gosho/follow-requests&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    username: kiril&#13;&#10;Request Body: &#13;&#10;    null&#13;&#10;" />
+          <option name="response" value="{&quot;requester&quot;:{&quot;username&quot;:&quot;kiril&quot;,&quot;firstName&quot;:&quot;Kiril&quot;,&quot;lastName&quot;:&quot;Petkov&quot;},&quot;receiver&quot;:{&quot;username&quot;:&quot;gosho&quot;,&quot;firstName&quot;:&quot;Gosho&quot;,&quot;lastName&quot;:&quot;lastName_f7z8m&quot;},&quot;requestDate&quot;:1672084038149}" />
+          <option name="url" value="/users/gosho/follow-requests" />
+        </ResponseHistory>
+        <ResponseHistory>
+          <option name="className" value="com.example.demo.controllers.FollowRequestController" />
+          <option name="code" value="201" />
+          <option name="enableEnv" value="local" />
+          <option name="enableProject" value="tuesthesis" />
+          <option name="method" value="sendFollowRequest" />
+          <option name="methodType" value="POST" />
+          <option name="paramGroup">
+            <ParamGroupCollection>
+              <option name="className" value="com.example.demo.controllers.FollowRequestController" />
+              <option name="method" value="sendFollowRequest" />
+              <option name="methodDescription" value="New Request" />
+              <option name="methodType" value="POST" />
+              <option name="multipartKeyValueListJson" value="[]" />
+              <option name="originUrl" value="/users/{username}/follow-requests" />
+              <option name="pathParamsKeyValueListJson" value="[{&quot;comment&quot;:&quot;&quot;,&quot;customFlag&quot;:2,&quot;enabled&quot;:true,&quot;key&quot;:&quot;username&quot;,&quot;type&quot;:&quot;String&quot;,&quot;value&quot;:&quot;username_2ffie&quot;}]" />
+              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
+              <option name="url" value="/users/kiril/follow-requests" />
+              <option name="urlEncodedKeyValueListJson" value="[]" />
+              <option name="urlParamsKeyValueListJson" value="[]" />
+            </ParamGroupCollection>
+          </option>
+          <option name="requestInfo" value="Request Url: http://localhost:8080/users/kiril/follow-requests&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    username: kiril&#13;&#10;Request Body: &#13;&#10;    null&#13;&#10;" />
+          <option name="response" value="{&quot;requester&quot;:{&quot;username&quot;:&quot;kiril&quot;,&quot;firstName&quot;:&quot;Kiril&quot;,&quot;lastName&quot;:&quot;Petkov&quot;},&quot;receiver&quot;:{&quot;username&quot;:&quot;kiril&quot;,&quot;firstName&quot;:&quot;Kiril&quot;,&quot;lastName&quot;:&quot;Petkov&quot;},&quot;requestDate&quot;:1672084016470}" />
+          <option name="url" value="/users/kiril/follow-requests" />
+        </ResponseHistory>
+        <ResponseHistory>
+          <option name="className" value="com.example.demo.controllers.FollowRequestController" />
+          <option name="code" value="201" />
+          <option name="enableEnv" value="local" />
+          <option name="enableProject" value="tuesthesis" />
+          <option name="method" value="sendFollowRequest" />
+          <option name="methodType" value="POST" />
+          <option name="paramGroup">
+            <ParamGroupCollection>
+              <option name="className" value="com.example.demo.controllers.FollowRequestController" />
+              <option name="method" value="sendFollowRequest" />
+              <option name="methodDescription" value="New Request" />
+              <option name="methodType" value="POST" />
+              <option name="multipartKeyValueListJson" value="[]" />
+              <option name="originUrl" value="/users/{username}/follow-requests" />
+              <option name="pathParamsKeyValueListJson" value="[{&quot;comment&quot;:&quot;&quot;,&quot;customFlag&quot;:2,&quot;enabled&quot;:true,&quot;key&quot;:&quot;username&quot;,&quot;type&quot;:&quot;String&quot;,&quot;value&quot;:&quot;username_2ffie&quot;}]" />
+              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
+              <option name="url" value="/users/alex/follow-requests" />
+              <option name="urlEncodedKeyValueListJson" value="[]" />
+              <option name="urlParamsKeyValueListJson" value="[]" />
+            </ParamGroupCollection>
+          </option>
+          <option name="requestInfo" value="Request Url: http://localhost:8080/users/alex/follow-requests&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    username: kiril&#13;&#10;Request Body: &#13;&#10;    null&#13;&#10;" />
+          <option name="response" value="{&quot;requester&quot;:{&quot;username&quot;:&quot;kiril&quot;,&quot;firstName&quot;:&quot;Kiril&quot;,&quot;lastName&quot;:&quot;Petkov&quot;},&quot;receiver&quot;:{&quot;username&quot;:&quot;alex&quot;,&quot;firstName&quot;:&quot;Alex&quot;,&quot;lastName&quot;:&quot;lastName_xox01&quot;},&quot;requestDate&quot;:1672084009853}" />
+          <option name="url" value="/users/alex/follow-requests" />
+        </ResponseHistory>
+        <ResponseHistory>
+          <option name="className" value="com.example.demo.controllers.FollowRequestController" />
+          <option name="code" value="201" />
+          <option name="enableEnv" value="local" />
+          <option name="enableProject" value="tuesthesis" />
+          <option name="method" value="sendFollowRequest" />
+          <option name="methodType" value="POST" />
+          <option name="paramGroup">
+            <ParamGroupCollection>
+              <option name="className" value="com.example.demo.controllers.FollowRequestController" />
+              <option name="method" value="sendFollowRequest" />
+              <option name="methodDescription" value="New Request" />
+              <option name="methodType" value="POST" />
+              <option name="multipartKeyValueListJson" value="[]" />
+              <option name="originUrl" value="/users/{username}/follow" />
+              <option name="pathParamsKeyValueListJson" value="[{&quot;comment&quot;:&quot;&quot;,&quot;customFlag&quot;:2,&quot;enabled&quot;:true,&quot;key&quot;:&quot;username&quot;,&quot;type&quot;:&quot;String&quot;,&quot;value&quot;:&quot;username_fwyd0&quot;}]" />
+              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
+              <option name="url" value="/users/gosho/follow" />
+              <option name="urlEncodedKeyValueListJson" value="[]" />
+              <option name="urlParamsKeyValueListJson" value="[]" />
+            </ParamGroupCollection>
+          </option>
+          <option name="requestInfo" value="Request Url: http://localhost:8080/users/gosho/follow&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    username: kiril&#13;&#10;Request Body: &#13;&#10;    null&#13;&#10;" />
+          <option name="response" value="{&quot;requester&quot;:{&quot;username&quot;:&quot;kiril&quot;,&quot;firstName&quot;:&quot;Kiril&quot;,&quot;lastName&quot;:&quot;Petkov&quot;},&quot;receiver&quot;:{&quot;username&quot;:&quot;gosho&quot;,&quot;firstName&quot;:&quot;Gosho&quot;,&quot;lastName&quot;:&quot;lastName_f7z8m&quot;},&quot;requestDate&quot;:1672080253058}" />
+          <option name="url" value="/users/gosho/follow" />
+        </ResponseHistory>
+        <ResponseHistory>
           <option name="className" value="com.example.demo.controllers.UserController" />
           <option name="code" value="403" />
           <option name="enableEnv" value="local" />
@@ -262,285 +520,6 @@
           <option name="requestInfo" value="Request Url: http://localhost:8080/users/kiril/follow&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    username: gosho&#13;&#10;Request Body: &#13;&#10;    null&#13;&#10;" />
           <option name="response" value="{&quot;requester&quot;:{&quot;username&quot;:&quot;kiril&quot;,&quot;firstName&quot;:&quot;Kiril&quot;,&quot;lastName&quot;:&quot;Petkov&quot;},&quot;receiver&quot;:{&quot;username&quot;:&quot;gosho&quot;,&quot;firstName&quot;:&quot;Gosho&quot;,&quot;lastName&quot;:&quot;lastName_f7z8m&quot;},&quot;requestDate&quot;:1671660813101}" />
           <option name="url" value="/users/kiril/follow" />
-        </ResponseHistory>
-        <ResponseHistory>
-          <option name="className" value="com.example.demo.controllers.JourneyController" />
-          <option name="code" value="200" />
-          <option name="enableEnv" value="local" />
-          <option name="enableProject" value="tuesthesis" />
-          <option name="method" value="createJourney" />
-          <option name="methodType" value="POST" />
-          <option name="paramGroup">
-            <ParamGroupCollection>
-              <option name="bodyKeyValueListJson" value="{&#10;  &quot;startDate&quot;: 1671453461340,&#10;  &quot;endDate&quot;: 1671453461340,&#10;  &quot;destinationId&quot;: 3,&#10;  &quot;description&quot;: &quot;description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;PRIVATE&quot;&#10;}" />
-              <option name="className" value="com.example.demo.controllers.JourneyController" />
-              <option name="jsonDocument" value="{&#10;  &quot;startDate&quot;: &quot;No comment,Value =1671453461340&quot;,&#10;  &quot;endDate&quot;: &quot;No comment,Value =1671453461340&quot;,&#10;  &quot;destinationId&quot;: &quot;No comment,Value =1&quot;,&#10;  &quot;description&quot;: &quot;No comment,Value =description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;No comment,Value =PRIVATE&quot;&#10;}" />
-              <option name="method" value="createJourney" />
-              <option name="methodDescription" value="New Request" />
-              <option name="multipartKeyValueListJson" value="[]" />
-              <option name="originUrl" value="/journeys" />
-              <option name="pathParamsKeyValueListJson" value="[]" />
-              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
-              <option name="url" value="/journeys" />
-              <option name="urlEncodedKeyValueListJson" value="[]" />
-              <option name="urlParamsKeyValueListJson" value="[]" />
-            </ParamGroupCollection>
-          </option>
-          <option name="requestInfo" value="Request Url: http://localhost:8080/journeys&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    Content-Length: 147&#13;&#10;    username: gosho&#13;&#10;    Content-Type: application/json;charset=UTF-8&#13;&#10;Request Body: &#13;&#10;    {&#10;  &quot;startDate&quot;: 1671453461340,&#10;  &quot;endDate&quot;: 1671453461340,&#10;  &quot;destinationId&quot;: 3,&#10;  &quot;description&quot;: &quot;description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;PRIVATE&quot;&#10;}&#13;&#10;" />
-          <option name="response" value="[{&quot;id&quot;:2,&quot;usernames&quot;:{&quot;username&quot;:&quot;alex&quot;,&quot;firstName&quot;:&quot;firstName_hn9cl&quot;,&quot;lastName&quot;:&quot;lastName_xox01&quot;},&quot;startDate&quot;:1670499297000,&quot;endDate&quot;:1670499297000,&quot;description&quot;:&quot;description_5lada&quot;,&quot;destination&quot;:{&quot;latitude&quot;:32.01667,&quot;longitude&quot;:49.21667,&quot;name&quot;:&quot;Raḩm Khodā&quot;,&quot;countryCode&quot;:&quot;IR&quot;,&quot;featureClass&quot;:&quot;city, village,...&quot;,&quot;featureCode&quot;:&quot;populated place&quot;},&quot;activities&quot;:[],&quot;visibility&quot;:&quot;PUBLIC&quot;},{&quot;id&quot;:1,&quot;usernames&quot;:{&quot;username&quot;:&quot;alex&quot;,&quot;firstName&quot;:&quot;firstName_hn9cl&quot;,&quot;lastName&quot;:&quot;lastName_xox01&quot;},&quot;startDate&quot;:1670440444000,&quot;endDate&quot;:1670440444000,&quot;description&quot;:&quot;description_i0jxi&quot;,&quot;destination&quot;:{&quot;latitude&quot;:32.45831,&quot;longitude&quot;:48.96335,&quot;name&quot;:&quot;Zamīn Sūkhteh&quot;,&quot;countryCode&quot;:&quot;IR&quot;,&quot;featureClass&quot;:&quot;spot, building, farm&quot;,&quot;featureCode&quot;:&quot;corral(s)&quot;},&quot;activities&quot;:[{&quot;id&quot;:1,&quot;title&quot;:&quot;title_vnze3&quot;,&quot;description&quot;:&quot;description_n9fq7&quot;,&quot;type&quot;:&quot;EXPLORE&quot;,&quot;date&quot;:1670450400000,&quot;location&quot;:&quot;location_a4tjr&quot;},{&quot;id&quot;:2,&quot;title&quot;:&quot;title_vnze3&quot;,&quot;description&quot;:&quot;description_n9fq7&quot;,&quot;type&quot;:&quot;EXPLORE&quot;,&quot;date&quot;:1670450400000,&quot;location&quot;:&quot;location_a4tjr&quot;}],&quot;visibility&quot;:&quot;PUBLIC&quot;}]" />
-          <option name="url" value="/journeys" />
-        </ResponseHistory>
-        <ResponseHistory>
-          <option name="className" value="com.example.demo.controllers.JourneyController" />
-          <option name="code" value="201" />
-          <option name="enableEnv" value="local" />
-          <option name="enableProject" value="tuesthesis" />
-          <option name="method" value="createJourney" />
-          <option name="methodType" value="POST" />
-          <option name="paramGroup">
-            <ParamGroupCollection>
-              <option name="bodyKeyValueListJson" value="{&#10;  &quot;startDate&quot;: 1671453461340,&#10;  &quot;endDate&quot;: 1671453461340,&#10;  &quot;destinationId&quot;: 3,&#10;  &quot;description&quot;: &quot;description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;PRIVATE&quot;&#10;}" />
-              <option name="className" value="com.example.demo.controllers.JourneyController" />
-              <option name="jsonDocument" value="{&#10;  &quot;startDate&quot;: &quot;No comment,Value =1671453461340&quot;,&#10;  &quot;endDate&quot;: &quot;No comment,Value =1671453461340&quot;,&#10;  &quot;destinationId&quot;: &quot;No comment,Value =1&quot;,&#10;  &quot;description&quot;: &quot;No comment,Value =description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;No comment,Value =PRIVATE&quot;&#10;}" />
-              <option name="method" value="createJourney" />
-              <option name="methodDescription" value="New Request" />
-              <option name="methodType" value="POST" />
-              <option name="multipartKeyValueListJson" value="[]" />
-              <option name="originUrl" value="/journeys" />
-              <option name="pathParamsKeyValueListJson" value="[]" />
-              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
-              <option name="url" value="/journeys" />
-              <option name="urlEncodedKeyValueListJson" value="[]" />
-              <option name="urlParamsKeyValueListJson" value="[]" />
-            </ParamGroupCollection>
-          </option>
-          <option name="requestInfo" value="Request Url: http://localhost:8080/journeys&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    Content-Length: 147&#13;&#10;    username: gosho&#13;&#10;    Content-Type: application/json;charset=UTF-8&#13;&#10;Request Body: &#13;&#10;    {&#10;  &quot;startDate&quot;: 1671453461340,&#10;  &quot;endDate&quot;: 1671453461340,&#10;  &quot;destinationId&quot;: 3,&#10;  &quot;description&quot;: &quot;description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;PRIVATE&quot;&#10;}&#13;&#10;" />
-          <option name="response" value="{&quot;id&quot;:13,&quot;usernames&quot;:{&quot;username&quot;:&quot;gosho&quot;,&quot;firstName&quot;:&quot;firstName_n31vk&quot;,&quot;lastName&quot;:&quot;lastName_f7z8m&quot;},&quot;startDate&quot;:1671453461340,&quot;endDate&quot;:1671453461340,&quot;description&quot;:&quot;description_5xvrz&quot;,&quot;destination&quot;:{&quot;latitude&quot;:32.45831,&quot;longitude&quot;:48.96335,&quot;name&quot;:&quot;Zamīn Sūkhteh&quot;,&quot;countryCode&quot;:&quot;IR&quot;,&quot;featureClass&quot;:&quot;spot, building, farm&quot;,&quot;featureCode&quot;:&quot;corral(s)&quot;},&quot;activities&quot;:[],&quot;visibility&quot;:&quot;PUBLIC&quot;}" />
-          <option name="url" value="/journeys" />
-        </ResponseHistory>
-        <ResponseHistory>
-          <option name="className" value="com.example.demo.controllers.JourneyController" />
-          <option name="code" value="500" />
-          <option name="enableEnv" value="local" />
-          <option name="enableProject" value="tuesthesis" />
-          <option name="method" value="createJourney" />
-          <option name="methodType" value="POST" />
-          <option name="paramGroup">
-            <ParamGroupCollection>
-              <option name="bodyKeyValueListJson" value="{&#10;  &quot;startDate&quot;: 1671453461340,&#10;  &quot;endDate&quot;: 1671453461340,&#10;  &quot;destinationId&quot;: 3,&#10;  &quot;description&quot;: &quot;description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;PRIVATE&quot;&#10;}" />
-              <option name="className" value="com.example.demo.controllers.JourneyController" />
-              <option name="jsonDocument" value="{&#10;  &quot;startDate&quot;: &quot;No comment,Value =1671453461340&quot;,&#10;  &quot;endDate&quot;: &quot;No comment,Value =1671453461340&quot;,&#10;  &quot;destinationId&quot;: &quot;No comment,Value =1&quot;,&#10;  &quot;description&quot;: &quot;No comment,Value =description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;No comment,Value =PRIVATE&quot;&#10;}" />
-              <option name="method" value="createJourney" />
-              <option name="methodDescription" value="New Request" />
-              <option name="methodType" value="POST" />
-              <option name="multipartKeyValueListJson" value="[]" />
-              <option name="originUrl" value="/journeys" />
-              <option name="pathParamsKeyValueListJson" value="[]" />
-              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
-              <option name="url" value="/journeys" />
-              <option name="urlEncodedKeyValueListJson" value="[]" />
-              <option name="urlParamsKeyValueListJson" value="[]" />
-            </ParamGroupCollection>
-          </option>
-          <option name="requestInfo" value="Request Url: http://localhost:8080/journeys&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    Content-Length: 147&#13;&#10;    username: gosho&#13;&#10;    Content-Type: application/json;charset=UTF-8&#13;&#10;Request Body: &#13;&#10;    {&#10;  &quot;startDate&quot;: 1671453461340,&#10;  &quot;endDate&quot;: 1671453461340,&#10;  &quot;destinationId&quot;: 3,&#10;  &quot;description&quot;: &quot;description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;PRIVATE&quot;&#10;}&#13;&#10;" />
-          <option name="response" value="{&quot;timestamp&quot;:&quot;2022-12-19T12:48:57.228+00:00&quot;,&quot;status&quot;:500,&quot;error&quot;:&quot;Internal Server Error&quot;,&quot;path&quot;:&quot;/journeys&quot;}" />
-          <option name="url" value="/journeys" />
-        </ResponseHistory>
-        <ResponseHistory>
-          <option name="className" value="com.example.demo.controllers.JourneyController" />
-          <option name="code" value="500" />
-          <option name="enableEnv" value="local" />
-          <option name="enableProject" value="tuesthesis" />
-          <option name="method" value="createJourney" />
-          <option name="methodType" value="POST" />
-          <option name="paramGroup">
-            <ParamGroupCollection>
-              <option name="bodyKeyValueListJson" value="{&#10;  &quot;startDate&quot;: 1671453461340,&#10;  &quot;endDate&quot;: 1671453461340,&#10;  &quot;destinationId&quot;: 3,&#10;  &quot;description&quot;: &quot;description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;PRIVATE&quot;&#10;}" />
-              <option name="className" value="com.example.demo.controllers.JourneyController" />
-              <option name="jsonDocument" value="{&#10;  &quot;startDate&quot;: &quot;No comment,Value =1671453461340&quot;,&#10;  &quot;endDate&quot;: &quot;No comment,Value =1671453461340&quot;,&#10;  &quot;destinationId&quot;: &quot;No comment,Value =1&quot;,&#10;  &quot;description&quot;: &quot;No comment,Value =description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;No comment,Value =PRIVATE&quot;&#10;}" />
-              <option name="method" value="createJourney" />
-              <option name="methodDescription" value="New Request" />
-              <option name="methodType" value="POST" />
-              <option name="multipartKeyValueListJson" value="[]" />
-              <option name="originUrl" value="/journeys" />
-              <option name="pathParamsKeyValueListJson" value="[]" />
-              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
-              <option name="url" value="/journeys" />
-              <option name="urlEncodedKeyValueListJson" value="[]" />
-              <option name="urlParamsKeyValueListJson" value="[]" />
-            </ParamGroupCollection>
-          </option>
-          <option name="requestInfo" value="Request Url: http://localhost:8080/journeys&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    Content-Length: 147&#13;&#10;    username: gosho&#13;&#10;    Content-Type: application/json;charset=UTF-8&#13;&#10;Request Body: &#13;&#10;    {&#10;  &quot;startDate&quot;: 1671453461340,&#10;  &quot;endDate&quot;: 1671453461340,&#10;  &quot;destinationId&quot;: 3,&#10;  &quot;description&quot;: &quot;description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;PRIVATE&quot;&#10;}&#13;&#10;" />
-          <option name="response" value="{&quot;timestamp&quot;:&quot;2022-12-19T12:48:35.187+00:00&quot;,&quot;status&quot;:500,&quot;error&quot;:&quot;Internal Server Error&quot;,&quot;path&quot;:&quot;/journeys&quot;}" />
-          <option name="url" value="/journeys" />
-        </ResponseHistory>
-        <ResponseHistory>
-          <option name="className" value="com.example.demo.controllers.JourneyController" />
-          <option name="code" value="500" />
-          <option name="enableEnv" value="local" />
-          <option name="enableProject" value="tuesthesis" />
-          <option name="method" value="createJourney" />
-          <option name="methodType" value="POST" />
-          <option name="paramGroup">
-            <ParamGroupCollection>
-              <option name="bodyKeyValueListJson" value="{&#10;  &quot;startDate&quot;: 1671453461340,&#10;  &quot;endDate&quot;: 1671453461340,&#10;  &quot;destinationId&quot;: 3,&#10;  &quot;description&quot;: &quot;description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;PRIVATE&quot;&#10;}" />
-              <option name="className" value="com.example.demo.controllers.JourneyController" />
-              <option name="jsonDocument" value="{&#10;  &quot;startDate&quot;: &quot;No comment,Value =1671453461340&quot;,&#10;  &quot;endDate&quot;: &quot;No comment,Value =1671453461340&quot;,&#10;  &quot;destinationId&quot;: &quot;No comment,Value =1&quot;,&#10;  &quot;description&quot;: &quot;No comment,Value =description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;No comment,Value =PRIVATE&quot;&#10;}" />
-              <option name="method" value="createJourney" />
-              <option name="methodDescription" value="New Request" />
-              <option name="methodType" value="POST" />
-              <option name="multipartKeyValueListJson" value="[]" />
-              <option name="originUrl" value="/journeys" />
-              <option name="pathParamsKeyValueListJson" value="[]" />
-              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
-              <option name="url" value="/journeys" />
-              <option name="urlEncodedKeyValueListJson" value="[]" />
-              <option name="urlParamsKeyValueListJson" value="[]" />
-            </ParamGroupCollection>
-          </option>
-          <option name="requestInfo" value="Request Url: http://localhost:8080/journeys&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    Content-Length: 147&#13;&#10;    username: gosho&#13;&#10;    Content-Type: application/json;charset=UTF-8&#13;&#10;Request Body: &#13;&#10;    {&#10;  &quot;startDate&quot;: 1671453461340,&#10;  &quot;endDate&quot;: 1671453461340,&#10;  &quot;destinationId&quot;: 3,&#10;  &quot;description&quot;: &quot;description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;PRIVATE&quot;&#10;}&#13;&#10;" />
-          <option name="response" value="{&quot;timestamp&quot;:&quot;2022-12-19T12:47:32.960+00:00&quot;,&quot;status&quot;:500,&quot;error&quot;:&quot;Internal Server Error&quot;,&quot;path&quot;:&quot;/journeys&quot;}" />
-          <option name="url" value="/journeys" />
-        </ResponseHistory>
-        <ResponseHistory>
-          <option name="className" value="com.example.demo.controllers.JourneyController" />
-          <option name="code" value="500" />
-          <option name="enableEnv" value="local" />
-          <option name="enableProject" value="tuesthesis" />
-          <option name="method" value="createJourney" />
-          <option name="methodType" value="POST" />
-          <option name="paramGroup">
-            <ParamGroupCollection>
-              <option name="bodyKeyValueListJson" value="{&#10;  &quot;startDate&quot;: 1671453461340,&#10;  &quot;endDate&quot;: 1671453461340,&#10;  &quot;destinationId&quot;: 6,&#10;  &quot;description&quot;: &quot;description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;PRIVATE&quot;&#10;}" />
-              <option name="className" value="com.example.demo.controllers.JourneyController" />
-              <option name="jsonDocument" value="{&#10;  &quot;startDate&quot;: &quot;No comment,Value =1671453461340&quot;,&#10;  &quot;endDate&quot;: &quot;No comment,Value =1671453461340&quot;,&#10;  &quot;destinationId&quot;: &quot;No comment,Value =1&quot;,&#10;  &quot;description&quot;: &quot;No comment,Value =description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;No comment,Value =PRIVATE&quot;&#10;}" />
-              <option name="method" value="createJourney" />
-              <option name="methodDescription" value="New Request" />
-              <option name="methodType" value="POST" />
-              <option name="multipartKeyValueListJson" value="[]" />
-              <option name="originUrl" value="/journeys" />
-              <option name="pathParamsKeyValueListJson" value="[]" />
-              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
-              <option name="url" value="/journeys" />
-              <option name="urlEncodedKeyValueListJson" value="[]" />
-              <option name="urlParamsKeyValueListJson" value="[]" />
-            </ParamGroupCollection>
-          </option>
-          <option name="requestInfo" value="Request Url: http://localhost:8080/journeys&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    Content-Length: 147&#13;&#10;    username: gosho&#13;&#10;    Content-Type: application/json;charset=UTF-8&#13;&#10;Request Body: &#13;&#10;    {&#10;  &quot;startDate&quot;: 1671453461340,&#10;  &quot;endDate&quot;: 1671453461340,&#10;  &quot;destinationId&quot;: 6,&#10;  &quot;description&quot;: &quot;description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;PRIVATE&quot;&#10;}&#13;&#10;" />
-          <option name="response" value="{&quot;timestamp&quot;:&quot;2022-12-19T12:47:12.078+00:00&quot;,&quot;status&quot;:500,&quot;error&quot;:&quot;Internal Server Error&quot;,&quot;path&quot;:&quot;/journeys&quot;}" />
-          <option name="url" value="/journeys" />
-        </ResponseHistory>
-        <ResponseHistory>
-          <option name="className" value="com.example.demo.controllers.JourneyController" />
-          <option name="code" value="500" />
-          <option name="enableEnv" value="local" />
-          <option name="enableProject" value="tuesthesis" />
-          <option name="method" value="createJourney" />
-          <option name="methodType" value="POST" />
-          <option name="paramGroup">
-            <ParamGroupCollection>
-              <option name="bodyKeyValueListJson" value="{&#10;  &quot;startDate&quot;: 1671453461340,&#10;  &quot;endDate&quot;: 1671453461340,&#10;  &quot;destinationId&quot;: 180,&#10;  &quot;description&quot;: &quot;description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;PRIVATE&quot;&#10;}" />
-              <option name="className" value="com.example.demo.controllers.JourneyController" />
-              <option name="jsonDocument" value="{&#10;  &quot;startDate&quot;: &quot;No comment,Value =1671453461340&quot;,&#10;  &quot;endDate&quot;: &quot;No comment,Value =1671453461340&quot;,&#10;  &quot;destinationId&quot;: &quot;No comment,Value =1&quot;,&#10;  &quot;description&quot;: &quot;No comment,Value =description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;No comment,Value =PRIVATE&quot;&#10;}" />
-              <option name="method" value="createJourney" />
-              <option name="methodDescription" value="New Request" />
-              <option name="methodType" value="POST" />
-              <option name="multipartKeyValueListJson" value="[]" />
-              <option name="originUrl" value="/journeys" />
-              <option name="pathParamsKeyValueListJson" value="[]" />
-              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
-              <option name="url" value="/journeys" />
-              <option name="urlEncodedKeyValueListJson" value="[]" />
-              <option name="urlParamsKeyValueListJson" value="[]" />
-            </ParamGroupCollection>
-          </option>
-          <option name="requestInfo" value="Request Url: http://localhost:8080/journeys&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    Content-Length: 149&#13;&#10;    username: gosho&#13;&#10;    Content-Type: application/json;charset=UTF-8&#13;&#10;Request Body: &#13;&#10;    {&#10;  &quot;startDate&quot;: 1671453461340,&#10;  &quot;endDate&quot;: 1671453461340,&#10;  &quot;destinationId&quot;: 180,&#10;  &quot;description&quot;: &quot;description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;PRIVATE&quot;&#10;}&#13;&#10;" />
-          <option name="response" value="{&quot;timestamp&quot;:&quot;2022-12-19T12:46:15.480+00:00&quot;,&quot;status&quot;:500,&quot;error&quot;:&quot;Internal Server Error&quot;,&quot;path&quot;:&quot;/journeys&quot;}" />
-          <option name="url" value="/journeys" />
-        </ResponseHistory>
-        <ResponseHistory>
-          <option name="className" value="com.example.demo.controllers.JourneyController" />
-          <option name="code" value="500" />
-          <option name="enableEnv" value="local" />
-          <option name="enableProject" value="tuesthesis" />
-          <option name="method" value="createJourney" />
-          <option name="methodType" value="POST" />
-          <option name="paramGroup">
-            <ParamGroupCollection>
-              <option name="bodyKeyValueListJson" value="{&#10;  &quot;startDate&quot;: 1671453461340,&#10;  &quot;endDate&quot;: 1671453461340,&#10;  &quot;destinationId&quot;: 180,&#10;  &quot;description&quot;: &quot;description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;PRIVATE&quot;&#10;}" />
-              <option name="className" value="com.example.demo.controllers.JourneyController" />
-              <option name="jsonDocument" value="{&#10;  &quot;startDate&quot;: &quot;No comment,Value =1671453461340&quot;,&#10;  &quot;endDate&quot;: &quot;No comment,Value =1671453461340&quot;,&#10;  &quot;destinationId&quot;: &quot;No comment,Value =1&quot;,&#10;  &quot;description&quot;: &quot;No comment,Value =description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;No comment,Value =PRIVATE&quot;&#10;}" />
-              <option name="method" value="createJourney" />
-              <option name="methodDescription" value="New Request" />
-              <option name="methodType" value="POST" />
-              <option name="multipartKeyValueListJson" value="[]" />
-              <option name="originUrl" value="/journeys" />
-              <option name="pathParamsKeyValueListJson" value="[]" />
-              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
-              <option name="url" value="/journeys" />
-              <option name="urlEncodedKeyValueListJson" value="[]" />
-              <option name="urlParamsKeyValueListJson" value="[]" />
-            </ParamGroupCollection>
-          </option>
-          <option name="requestInfo" value="Request Url: http://localhost:8080/journeys&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    Content-Length: 149&#13;&#10;    username: gosho&#13;&#10;    Content-Type: application/json;charset=UTF-8&#13;&#10;Request Body: &#13;&#10;    {&#10;  &quot;startDate&quot;: 1671453461340,&#10;  &quot;endDate&quot;: 1671453461340,&#10;  &quot;destinationId&quot;: 180,&#10;  &quot;description&quot;: &quot;description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;PRIVATE&quot;&#10;}&#13;&#10;" />
-          <option name="response" value="{&quot;timestamp&quot;:&quot;2022-12-19T12:43:37.521+00:00&quot;,&quot;status&quot;:500,&quot;error&quot;:&quot;Internal Server Error&quot;,&quot;path&quot;:&quot;/journeys&quot;}" />
-          <option name="url" value="/journeys" />
-        </ResponseHistory>
-        <ResponseHistory>
-          <option name="className" value="com.example.demo.controllers.JourneyController" />
-          <option name="code" value="500" />
-          <option name="enableEnv" value="local" />
-          <option name="enableProject" value="tuesthesis" />
-          <option name="method" value="createJourney" />
-          <option name="methodType" value="POST" />
-          <option name="paramGroup">
-            <ParamGroupCollection>
-              <option name="bodyKeyValueListJson" value="{&#10;  &quot;startDate&quot;: 1671453461340,&#10;  &quot;endDate&quot;: 1671453461340,&#10;  &quot;destinationId&quot;: 180,&#10;  &quot;description&quot;: &quot;description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;PRIVATE&quot;&#10;}" />
-              <option name="className" value="com.example.demo.controllers.JourneyController" />
-              <option name="jsonDocument" value="{&#10;  &quot;startDate&quot;: &quot;No comment,Value =1671453461340&quot;,&#10;  &quot;endDate&quot;: &quot;No comment,Value =1671453461340&quot;,&#10;  &quot;destinationId&quot;: &quot;No comment,Value =1&quot;,&#10;  &quot;description&quot;: &quot;No comment,Value =description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;No comment,Value =PRIVATE&quot;&#10;}" />
-              <option name="method" value="createJourney" />
-              <option name="methodDescription" value="New Request" />
-              <option name="methodType" value="POST" />
-              <option name="multipartKeyValueListJson" value="[]" />
-              <option name="originUrl" value="/journeys" />
-              <option name="pathParamsKeyValueListJson" value="[]" />
-              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
-              <option name="url" value="/journeys" />
-              <option name="urlEncodedKeyValueListJson" value="[]" />
-              <option name="urlParamsKeyValueListJson" value="[]" />
-            </ParamGroupCollection>
-          </option>
-          <option name="requestInfo" value="Request Url: http://localhost:8080/journeys&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    Content-Length: 149&#13;&#10;    username: gosho&#13;&#10;    Content-Type: application/json;charset=UTF-8&#13;&#10;Request Body: &#13;&#10;    {&#10;  &quot;startDate&quot;: 1671453461340,&#10;  &quot;endDate&quot;: 1671453461340,&#10;  &quot;destinationId&quot;: 180,&#10;  &quot;description&quot;: &quot;description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;PRIVATE&quot;&#10;}&#13;&#10;" />
-          <option name="response" value="{&quot;timestamp&quot;:&quot;2022-12-19T12:41:59.041+00:00&quot;,&quot;status&quot;:500,&quot;error&quot;:&quot;Internal Server Error&quot;,&quot;path&quot;:&quot;/journeys&quot;}" />
-          <option name="url" value="/journeys" />
-        </ResponseHistory>
-        <ResponseHistory>
-          <option name="className" value="com.example.demo.controllers.JourneyController" />
-          <option name="code" value="500" />
-          <option name="enableEnv" value="local" />
-          <option name="enableProject" value="tuesthesis" />
-          <option name="method" value="createJourney" />
-          <option name="methodType" value="POST" />
-          <option name="paramGroup">
-            <ParamGroupCollection>
-              <option name="bodyKeyValueListJson" value="{&#10;  &quot;startDate&quot;: 1671453461340,&#10;  &quot;endDate&quot;: 1671453461340,&#10;  &quot;destinationId&quot;: 179,&#10;  &quot;description&quot;: &quot;description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;PRIVATE&quot;&#10;}" />
-              <option name="className" value="com.example.demo.controllers.JourneyController" />
-              <option name="jsonDocument" value="{&#10;  &quot;startDate&quot;: &quot;No comment,Value =1671453461340&quot;,&#10;  &quot;endDate&quot;: &quot;No comment,Value =1671453461340&quot;,&#10;  &quot;destinationId&quot;: &quot;No comment,Value =1&quot;,&#10;  &quot;description&quot;: &quot;No comment,Value =description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;No comment,Value =PRIVATE&quot;&#10;}" />
-              <option name="method" value="createJourney" />
-              <option name="methodDescription" value="New Request" />
-              <option name="methodType" value="POST" />
-              <option name="multipartKeyValueListJson" value="[]" />
-              <option name="originUrl" value="/journeys" />
-              <option name="pathParamsKeyValueListJson" value="[]" />
-              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
-              <option name="url" value="/journeys" />
-              <option name="urlEncodedKeyValueListJson" value="[]" />
-              <option name="urlParamsKeyValueListJson" value="[]" />
-            </ParamGroupCollection>
-          </option>
-          <option name="requestInfo" value="Request Url: http://localhost:8080/journeys&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    Content-Length: 149&#13;&#10;    username: gosho&#13;&#10;    Content-Type: application/json;charset=UTF-8&#13;&#10;Request Body: &#13;&#10;    {&#10;  &quot;startDate&quot;: 1671453461340,&#10;  &quot;endDate&quot;: 1671453461340,&#10;  &quot;destinationId&quot;: 179,&#10;  &quot;description&quot;: &quot;description_5xvrz&quot;,&#10;  &quot;visibility&quot;: &quot;PRIVATE&quot;&#10;}&#13;&#10;" />
-          <option name="response" value="{&quot;timestamp&quot;:&quot;2022-12-19T12:41:33.519+00:00&quot;,&quot;status&quot;:500,&quot;error&quot;:&quot;Internal Server Error&quot;,&quot;path&quot;:&quot;/journeys&quot;}" />
-          <option name="url" value="/journeys" />
         </ResponseHistory>
       </list>
     </option>

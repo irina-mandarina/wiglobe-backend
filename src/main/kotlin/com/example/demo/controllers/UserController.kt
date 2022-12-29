@@ -28,7 +28,7 @@ class UserController(private val userService: UserService) {
     @GetMapping("/users/{username}")
     fun getUserDetails(@RequestHeader username: String,
                        @PathVariable("username") otherUserUsername: String): ResponseEntity<UserDetails> {
-        return userService.getUserDetails(username)
+        return userService.getUserDetails(username, otherUserUsername)
     }
 
 

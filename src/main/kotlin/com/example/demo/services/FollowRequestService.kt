@@ -52,6 +52,14 @@ class FollowRequestService(private val followRequestRepository: FollowRequestRep
         )
     }
 
+    fun getSentFollowRequests(username: String): ResponseEntity<List<FollowRequest>> {
+        return ResponseEntity.ok().body(
+            findAllByRequesterUsername(username).map {
+                followRequestFromEntity( it )
+            }
+        )
+    }
+
     fun deleteFollowRequest(username: String, receiverUsername: String): ResponseEntity<String> {
         if (!userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
@@ -70,28 +78,13 @@ class FollowRequestService(private val followRequestRepository: FollowRequestRep
         ).body(null)
     }
 
-    fun getFollowRequests(username: String): ResponseEntity<List<FollowRequest>> {
+    fun getReceivedFollowRequests(username: String): ResponseEntity<List<FollowRequest>> {
         if (!userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
                 "message", "Username does not exist"
             ).body(null)
         }
 
-        val response = findAllByReceiverUsername(username).map {
-            FollowRequest (
-                UserNames(
-                    it.requester.username,
-                    it.requester.firstName,
-                    it.requester.lastName
-                ),
-                UserNames(
-                    it.receiver.username,
-                    it.receiver.firstName,
-                    it.receiver.lastName
-                ),
-                it.requestDate
-            )
-        }
         return ResponseEntity.ok().body(
             findAllByReceiverUsername(username).map {
                 followRequestFromEntity( it )
@@ -145,5 +138,9 @@ class FollowRequestService(private val followRequestRepository: FollowRequestRep
 
     fun findAllByReceiverUsername(receiverUsername: String): List<FollowRequestEntity> {
         return followRequestRepository.findAllByReceiverUsername(receiverUsername)
+    }
+
+    fun findAllByRequesterUsername(requesterUsername: String): List<FollowRequestEntity> {
+        return followRequestRepository.findAllByRequesterUsername(requesterUsername)
     }
 }

@@ -133,15 +133,15 @@ import org.springframework.stereotype.Service
         }
     }
 
-    fun getUserDetails(username: String): ResponseEntity<UserDetails> {
-        if (!userWithUsernameExists(username)) {
+    fun getUserDetails(username: String, otherUserUsername: String): ResponseEntity<UserDetails> {
+        if (!userWithUsernameExists(username) || !userWithUsernameExists(otherUserUsername)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .header(
                 "message", "User with username: " + username + "does not exist")
                 .body(null)
         }
 
-        val user = findUserByUsername(username)!!
+        val user = findUserByUsername(otherUserUsername)!!
         return ResponseEntity.ok().body(
             userDetails(
                 user
