@@ -16,7 +16,7 @@ class UserController(private val userService: UserService) {
     }
 
     @PostMapping("/users/signup")
-    fun signUp(@RequestBody signUpRequest: SignUpRequest): ResponseEntity<UserDetails> {
+    fun signUp(@RequestBody signUpRequest: SignUpRequest): ResponseEntity<UserDetails> { // taken user details
         return userService.signUp(signUpRequest)
     }
 

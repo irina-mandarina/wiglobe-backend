@@ -4,6 +4,62 @@
     <option name="historyList">
       <list>
         <ResponseHistory>
+          <option name="className" value="com.example.demo.controllers.UserController" />
+          <option name="code" value="400" />
+          <option name="enableEnv" value="local" />
+          <option name="enableProject" value="tuesthesis" />
+          <option name="method" value="signUp" />
+          <option name="methodType" value="POST" />
+          <option name="paramGroup">
+            <ParamGroupCollection>
+              <option name="bodyKeyValueListJson" value="{&#10;  &quot;username&quot;: &quot;username_0wgq9&quot;,&#10;  &quot;email&quot;: &quot;boiko@gmail.com&quot;,&#10;  &quot;password&quot;: &quot;password_538z2&quot;,&#10;  &quot;firstName&quot;: &quot;firstName_94fmr&quot;,&#10;  &quot;lastName&quot;: &quot;lastName_km0tc&quot;,&#10;  &quot;birthdate&quot;: &quot;2023-01-11&quot;,&#10;  &quot;gender&quot;: &quot;MALE&quot;&#10;}" />
+              <option name="className" value="com.example.demo.controllers.UserController" />
+              <option name="jsonDocument" value="{&#10;  &quot;username&quot;: &quot;No comment,Value =username_0wgq9&quot;,&#10;  &quot;email&quot;: &quot;No comment,Value =email_4yuhb&quot;,&#10;  &quot;password&quot;: &quot;No comment,Value =password_538z2&quot;,&#10;  &quot;firstName&quot;: &quot;No comment,Value =firstName_94fmr&quot;,&#10;  &quot;lastName&quot;: &quot;No comment,Value =lastName_km0tc&quot;,&#10;  &quot;birthdate&quot;: &quot;No comment,Value =2023-01-11 14:08:36&quot;,&#10;  &quot;gender&quot;: &quot;No comment,Value =MALE&quot;&#10;}" />
+              <option name="method" value="signUp" />
+              <option name="methodDescription" value="New Request" />
+              <option name="methodType" value="POST" />
+              <option name="multipartKeyValueListJson" value="[]" />
+              <option name="originUrl" value="/users/signup" />
+              <option name="pathParamsKeyValueListJson" value="[]" />
+              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
+              <option name="url" value="/users/signup" />
+              <option name="urlEncodedKeyValueListJson" value="[]" />
+              <option name="urlParamsKeyValueListJson" value="[]" />
+            </ParamGroupCollection>
+          </option>
+          <option name="requestInfo" value="Request Url: http://localhost:8080/users/signup&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    Authentication: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhbGV4IiwiaWF0IjoxNjcxNDM5ODQ4LCJleHAiOjE2NzE0NDM0NDh9.uXluVum8rdRvEdIDaPuMeTBnLMJUn_7NOJiC7tdXQSafzOGeI0KbVk6fO2JAYogJ&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    Content-Length: 211&#13;&#10;    Content-Type: application/json;charset=UTF-8&#13;&#10;Request Body: &#13;&#10;    {&#10;  &quot;username&quot;: &quot;username_0wgq9&quot;,&#10;  &quot;email&quot;: &quot;boiko@gmail.com&quot;,&#10;  &quot;password&quot;: &quot;password_538z2&quot;,&#10;  &quot;firstName&quot;: &quot;firstName_94fmr&quot;,&#10;  &quot;lastName&quot;: &quot;lastName_km0tc&quot;,&#10;  &quot;birthdate&quot;: &quot;2023-01-11&quot;,&#10;  &quot;gender&quot;: &quot;MALE&quot;&#10;}&#13;&#10;" />
+          <option name="response" value="Error request, response status: 400" />
+          <option name="url" value="/users/signup" />
+        </ResponseHistory>
+        <ResponseHistory>
+          <option name="className" value="com.example.demo.controllers.UserController" />
+          <option name="code" value="400" />
+          <option name="enableEnv" value="local" />
+          <option name="enableProject" value="tuesthesis" />
+          <option name="method" value="signUp" />
+          <option name="methodType" value="POST" />
+          <option name="paramGroup">
+            <ParamGroupCollection>
+              <option name="bodyKeyValueListJson" value="{&#10;  &quot;username&quot;: &quot;username_0wgq9&quot;,&#10;  &quot;email&quot;: &quot;boiko@gmail.com&quot;,&#10;  &quot;password&quot;: &quot;password_538z2&quot;,&#10;  &quot;firstName&quot;: &quot;firstName_94fmr&quot;,&#10;  &quot;lastName&quot;: &quot;lastName_km0tc&quot;,&#10;  &quot;birthdate&quot;: &quot;2023-01-11 14:08:36&quot;,&#10;  &quot;gender&quot;: &quot;MALE&quot;&#10;}" />
+              <option name="className" value="com.example.demo.controllers.UserController" />
+              <option name="jsonDocument" value="{&#10;  &quot;username&quot;: &quot;No comment,Value =username_0wgq9&quot;,&#10;  &quot;email&quot;: &quot;No comment,Value =email_4yuhb&quot;,&#10;  &quot;password&quot;: &quot;No comment,Value =password_538z2&quot;,&#10;  &quot;firstName&quot;: &quot;No comment,Value =firstName_94fmr&quot;,&#10;  &quot;lastName&quot;: &quot;No comment,Value =lastName_km0tc&quot;,&#10;  &quot;birthdate&quot;: &quot;No comment,Value =2023-01-11 14:08:36&quot;,&#10;  &quot;gender&quot;: &quot;No comment,Value =MALE&quot;&#10;}" />
+              <option name="method" value="signUp" />
+              <option name="methodDescription" value="New Request" />
+              <option name="methodType" value="POST" />
+              <option name="multipartKeyValueListJson" value="[]" />
+              <option name="originUrl" value="/users/signup" />
+              <option name="pathParamsKeyValueListJson" value="[]" />
+              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
+              <option name="url" value="/users/signup" />
+              <option name="urlEncodedKeyValueListJson" value="[]" />
+              <option name="urlParamsKeyValueListJson" value="[]" />
+            </ParamGroupCollection>
+          </option>
+          <option name="requestInfo" value="Request Url: http://localhost:8080/users/signup&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    Authentication: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhbGV4IiwiaWF0IjoxNjcxNDM5ODQ4LCJleHAiOjE2NzE0NDM0NDh9.uXluVum8rdRvEdIDaPuMeTBnLMJUn_7NOJiC7tdXQSafzOGeI0KbVk6fO2JAYogJ&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    Content-Length: 220&#13;&#10;    Content-Type: application/json;charset=UTF-8&#13;&#10;Request Body: &#13;&#10;    {&#10;  &quot;username&quot;: &quot;username_0wgq9&quot;,&#10;  &quot;email&quot;: &quot;boiko@gmail.com&quot;,&#10;  &quot;password&quot;: &quot;password_538z2&quot;,&#10;  &quot;firstName&quot;: &quot;firstName_94fmr&quot;,&#10;  &quot;lastName&quot;: &quot;lastName_km0tc&quot;,&#10;  &quot;birthdate&quot;: &quot;2023-01-11 14:08:36&quot;,&#10;  &quot;gender&quot;: &quot;MALE&quot;&#10;}&#13;&#10;" />
+          <option name="response" value="{&quot;timestamp&quot;:&quot;2023-01-11T12:09:06.209+00:00&quot;,&quot;status&quot;:400,&quot;error&quot;:&quot;Bad Request&quot;,&quot;path&quot;:&quot;/users/signup&quot;}" />
+          <option name="url" value="/users/signup" />
+        </ResponseHistory>
+        <ResponseHistory>
           <option name="className" value="com.example.demo.controllers.FollowController" />
           <option name="code" value="200" />
           <option name="enableEnv" value="local" />
@@ -468,58 +524,6 @@
           <option name="requestInfo" value="Request Url: http://localhost:8080/journeys&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    username: alex&#13;&#10;Request Body: &#13;&#10;    null&#13;&#10;" />
           <option name="response" value="[{&quot;id&quot;:4,&quot;usernames&quot;:{&quot;username&quot;:&quot;gosho&quot;,&quot;firstName&quot;:&quot;Gosho&quot;,&quot;lastName&quot;:&quot;lastName_f7z8m&quot;},&quot;startDate&quot;:1671285325000,&quot;endDate&quot;:1671285325000,&quot;description&quot;:&quot;775eyhsduh&quot;,&quot;destination&quot;:{&quot;latitude&quot;:35.54669,&quot;longitude&quot;:52.3522,&quot;name&quot;:&quot;Kūh-e Nārenj Qoleh&quot;,&quot;countryCode&quot;:&quot;IR&quot;,&quot;featureClass&quot;:&quot;mountain,hill,rock,...&quot;,&quot;featureCode&quot;:&quot;mountain&quot;},&quot;activities&quot;:[{&quot;id&quot;:3,&quot;title&quot;:&quot;title_17tqa&quot;,&quot;description&quot;:&quot;description_xvkl5&quot;,&quot;type&quot;:&quot;EXPLORE&quot;,&quot;date&quot;:1671228000000,&quot;location&quot;:&quot;location_j5l4l&quot;},{&quot;id&quot;:4,&quot;title&quot;:&quot;title_17tqa&quot;,&quot;description&quot;:&quot;description_xvkl5&quot;,&quot;type&quot;:&quot;EXPLORE&quot;,&quot;date&quot;:1671228000000,&quot;location&quot;:&quot;location_j5l4l&quot;},{&quot;id&quot;:5,&quot;title&quot;:&quot;title_17tqa&quot;,&quot;description&quot;:&quot;description_xvkl5&quot;,&quot;type&quot;:&quot;EXPLORE&quot;,&quot;date&quot;:1671228000000,&quot;location&quot;:&quot;location_j5l4l&quot;},{&quot;id&quot;:6,&quot;title&quot;:&quot;title_17tqa&quot;,&quot;description&quot;:&quot;description_xvkl5&quot;,&quot;type&quot;:&quot;EXPLORE&quot;,&quot;date&quot;:1671228000000,&quot;location&quot;:&quot;location_j5l4l&quot;},{&quot;id&quot;:7,&quot;title&quot;:&quot;title_17tqa&quot;,&quot;description&quot;:&quot;description_xvkl5&quot;,&quot;type&quot;:&quot;EXPLORE&quot;,&quot;date&quot;:1671228000000,&quot;location&quot;:&quot;location_j5l4l&quot;},{&quot;id&quot;:8,&quot;title&quot;:&quot;title_17tqa&quot;,&quot;description&quot;:&quot;description_xvkl5&quot;,&quot;type&quot;:&quot;EXPLORE&quot;,&quot;date&quot;:1671228000000,&quot;location&quot;:&quot;location_j5l4l&quot;},{&quot;id&quot;:9,&quot;title&quot;:&quot;title_17tqa&quot;,&quot;description&quot;:&quot;description_xvkl5&quot;,&quot;type&quot;:&quot;EXPLORE&quot;,&quot;date&quot;:1671228000000,&quot;location&quot;:&quot;location_j5l4l&quot;},{&quot;id&quot;:10,&quot;title&quot;:&quot;title_17tqa&quot;,&quot;description&quot;:&quot;description_xvkl5&quot;,&quot;type&quot;:&quot;EXPLORE&quot;,&quot;date&quot;:1671228000000,&quot;location&quot;:&quot;location_j5l4l&quot;},{&quot;id&quot;:11,&quot;title&quot;:&quot;title_17tqa&quot;,&quot;description&quot;:&quot;description_xvkl5&quot;,&quot;type&quot;:&quot;EXPLORE&quot;,&quot;date&quot;:1671228000000,&quot;location&quot;:&quot;location_j5l4l&quot;},{&quot;id&quot;:12,&quot;title&quot;:&quot;title_17tqa&quot;,&quot;description&quot;:&quot;description_xvkl5&quot;,&quot;type&quot;:&quot;EXPLORE&quot;,&quot;date&quot;:1671228000000,&quot;location&quot;:&quot;location_j5l4l&quot;},{&quot;id&quot;:13,&quot;title&quot;:&quot;title_17tqa&quot;,&quot;description&quot;:&quot;description_xvkl5&quot;,&quot;type&quot;:&quot;EXPLORE&quot;,&quot;date&quot;:1671228000000,&quot;location&quot;:&quot;location_j5l4l&quot;},{&quot;id&quot;:14,&quot;title&quot;:&quot;title_17tqa&quot;,&quot;description&quot;:&quot;description_xvkl5&quot;,&quot;type&quot;:&quot;EXPLORE&quot;,&quot;date&quot;:1671228000000,&quot;location&quot;:&quot;location_j5l4l&quot;},{&quot;id&quot;:15,&quot;title&quot;:&quot;title_17tqa&quot;,&quot;description&quot;:&quot;description_xvkl5&quot;,&quot;type&quot;:&quot;EXPLORE&quot;,&quot;date&quot;:1671228000000,&quot;location&quot;:&quot;location_j5l4l&quot;},{&quot;id&quot;:16,&quot;title&quot;:&quot;title_17tqa&quot;,&quot;description&quot;:&quot;description_xvkl5&quot;,&quot;type&quot;:&quot;EXPLORE&quot;,&quot;date&quot;:1671228000000,&quot;location&quot;:&quot;location_j5l4l&quot;}],&quot;visibility&quot;:&quot;PUBLIC&quot;},{&quot;id&quot;:5,&quot;usernames&quot;:{&quot;username&quot;:&quot;gosho&quot;,&quot;firstName&quot;:&quot;Gosho&quot;,&quot;lastName&quot;:&quot;lastName_f7z8m&quot;},&quot;startDate&quot;:1671453461000,&quot;endDate&quot;:1671453461000,&quot;description&quot;:&quot;description_5xvrz&quot;,&quot;destination&quot;:{&quot;latitude&quot;:32.5804,&quot;longitude&quot;:48.5627,&quot;name&quot;:&quot;Tappehhā-ye Golzalar&quot;,&quot;countryCode&quot;:&quot;IR&quot;,&quot;featureClass&quot;:&quot;mountain,hill,rock,...&quot;,&quot;featureCode&quot;:&quot;mountains&quot;},&quot;activities&quot;:[],&quot;visibility&quot;:&quot;PUBLIC&quot;},{&quot;id&quot;:7,&quot;usernames&quot;:{&quot;username&quot;:&quot;gosho&quot;,&quot;firstName&quot;:&quot;Gosho&quot;,&quot;lastName&quot;:&quot;lastName_f7z8m&quot;},&quot;startDate&quot;:1671453461000,&quot;endDate&quot;:1671453461000,&quot;description&quot;:&quot;description_5xvrz&quot;,&quot;destination&quot;:{&quot;latitude&quot;:32.8318,&quot;longitude&quot;:48.7552,&quot;name&quot;:&quot;Āb-e Sūrī&quot;,&quot;countryCode&quot;:&quot;IR&quot;,&quot;featureClass&quot;:&quot;stream, lake, ...&quot;,&quot;featureCode&quot;:&quot;intermittent stream&quot;},&quot;activities&quot;:[],&quot;visibility&quot;:&quot;PUBLIC&quot;},{&quot;id&quot;:9,&quot;usernames&quot;:{&quot;username&quot;:&quot;gosho&quot;,&quot;firstName&quot;:&quot;Gosho&quot;,&quot;lastName&quot;:&quot;lastName_f7z8m&quot;},&quot;startDate&quot;:1671453461000,&quot;endDate&quot;:1671453461000,&quot;description&quot;:&quot;description_5xvrz&quot;,&quot;destination&quot;:{&quot;latitude&quot;:32.8,&quot;longitude&quot;:48.8,&quot;name&quot;:&quot;Āb-e Yasī&quot;,&quot;countryCode&quot;:&quot;IR&quot;,&quot;featureClass&quot;:&quot;stream, lake, ...&quot;,&quot;featureCode&quot;:&quot;stream&quot;},&quot;activities&quot;:[],&quot;visibility&quot;:&quot;PUBLIC&quot;},{&quot;id&quot;:6,&quot;usernames&quot;:{&quot;username&quot;:&quot;gosho&quot;,&quot;firstName&quot;:&quot;Gosho&quot;,&quot;lastName&quot;:&quot;lastName_f7z8m&quot;},&quot;startDate&quot;:1671453461000,&quot;endDate&quot;:1671453461000,&quot;description&quot;:&quot;description_5xvrz&quot;,&quot;destination&quot;:{&quot;latitude&quot;:32.8318,&quot;longitude&quot;:48.7552,&quot;name&quot;:&quot;Āb-e Sūrī&quot;,&quot;countryCode&quot;:&quot;IR&quot;,&quot;featureClass&quot;:&quot;stream, lake, ...&quot;,&quot;featureCode&quot;:&quot;intermittent stream&quot;},&quot;activities&quot;:[],&quot;visibility&quot;:&quot;PUBLIC&quot;},{&quot;id&quot;:3,&quot;usernames&quot;:{&quot;username&quot;:&quot;gosho&quot;,&quot;firstName&quot;:&quot;Gosho&quot;,&quot;lastName&quot;:&quot;lastName_f7z8m&quot;},&quot;startDate&quot;:1671285325000,&quot;endDate&quot;:1671285325000,&quot;description&quot;:&quot;775eyhsduh&quot;,&quot;destination&quot;:{&quot;latitude&quot;:32.8,&quot;longitude&quot;:48.8,&quot;name&quot;:&quot;Āb-e Yasī&quot;,&quot;countryCode&quot;:&quot;IR&quot;,&quot;featureClass&quot;:&quot;stream, lake, ...&quot;,&quot;featureCode&quot;:&quot;stream&quot;},&quot;activities&quot;:[],&quot;visibility&quot;:&quot;PUBLIC&quot;},{&quot;id&quot;:8,&quot;usernames&quot;:{&quot;username&quot;:&quot;gosho&quot;,&quot;firstName&quot;:&quot;Gosho&quot;,&quot;lastName&quot;:&quot;lastName_f7z8m&quot;},&quot;startDate&quot;:1671453461000,&quot;endDate&quot;:1671453461000,&quot;description&quot;:&quot;description_5xvrz&quot;,&quot;destination&quot;:{&quot;latitude&quot;:32.8318,&quot;longitude&quot;:48.7552,&quot;name&quot;:&quot;Āb-e Sūrī&quot;,&quot;countryCode&quot;:&quot;IR&quot;,&quot;featureClass&quot;:&quot;stream, lake, ...&quot;,&quot;featureCode&quot;:&quot;intermittent stream&quot;},&quot;activities&quot;:[],&quot;visibility&quot;:&quot;PUBLIC&quot;},{&quot;id&quot;:12,&quot;usernames&quot;:{&quot;username&quot;:&quot;gosho&quot;,&quot;firstName&quot;:&quot;Gosho&quot;,&quot;lastName&quot;:&quot;lastName_f7z8m&quot;},&quot;startDate&quot;:1671453461000,&quot;endDate&quot;:1671453461000,&quot;description&quot;:&quot;description_5xvrz&quot;,&quot;destination&quot;:{&quot;latitude&quot;:32.45831,&quot;longitude&quot;:48.96335,&quot;name&quot;:&quot;Zamīn Sūkhteh&quot;,&quot;countryCode&quot;:&quot;IR&quot;,&quot;featureClass&quot;:&quot;spot, building, farm&quot;,&quot;featureCode&quot;:&quot;corral(s)&quot;},&quot;activities&quot;:[],&quot;visibility&quot;:&quot;PUBLIC&quot;},{&quot;id&quot;:13,&quot;usernames&quot;:{&quot;username&quot;:&quot;gosho&quot;,&quot;firstName&quot;:&quot;Gosho&quot;,&quot;lastName&quot;:&quot;lastName_f7z8m&quot;},&quot;startDate&quot;:1671453461000,&quot;endDate&quot;:1671453461000,&quot;description&quot;:&quot;description_5xvrz&quot;,&quot;destination&quot;:{&quot;latitude&quot;:32.45831,&quot;longitude&quot;:48.96335,&quot;name&quot;:&quot;Zamīn Sūkhteh&quot;,&quot;countryCode&quot;:&quot;IR&quot;,&quot;featureClass&quot;:&quot;spot, building, farm&quot;,&quot;featureCode&quot;:&quot;corral(s)&quot;},&quot;activities&quot;:[],&quot;visibility&quot;:&quot;PUBLIC&quot;},{&quot;id&quot;:10,&quot;usernames&quot;:{&quot;username&quot;:&quot;gosho&quot;,&quot;firstName&quot;:&quot;Gosho&quot;,&quot;lastName&quot;:&quot;lastName_f7z8m&quot;},&quot;startDate&quot;:1671453461000,&quot;endDate&quot;:1671453461000,&quot;description&quot;:&quot;description_5xvrz&quot;,&quot;destination&quot;:{&quot;latitude&quot;:32.45831,&quot;longitude&quot;:48.96335,&quot;name&quot;:&quot;Zamīn Sūkhteh&quot;,&quot;countryCode&quot;:&quot;IR&quot;,&quot;featureClass&quot;:&quot;spot, building, farm&quot;,&quot;featureCode&quot;:&quot;corral(s)&quot;},&quot;activities&quot;:[],&quot;visibility&quot;:&quot;PUBLIC&quot;},{&quot;id&quot;:11,&quot;usernames&quot;:{&quot;username&quot;:&quot;gosho&quot;,&quot;firstName&quot;:&quot;Gosho&quot;,&quot;lastName&quot;:&quot;lastName_f7z8m&quot;},&quot;startDate&quot;:1671453461000,&quot;endDate&quot;:1671453461000,&quot;description&quot;:&quot;description_5xvrz&quot;,&quot;destination&quot;:{&quot;latitude&quot;:32.45831,&quot;longitude&quot;:48.96335,&quot;name&quot;:&quot;Zamīn Sūkhteh&quot;,&quot;countryCode&quot;:&quot;IR&quot;,&quot;featureClass&quot;:&quot;spot, building, farm&quot;,&quot;featureCode&quot;:&quot;corral(s)&quot;},&quot;activities&quot;:[],&quot;visibility&quot;:&quot;PUBLIC&quot;}]" />
           <option name="url" value="/journeys" />
-        </ResponseHistory>
-        <ResponseHistory>
-          <option name="className" value="com.example.demo.controllers.FollowRequestController" />
-          <option name="code" value="201" />
-          <option name="enableEnv" value="local" />
-          <option name="enableProject" value="tuesthesis" />
-          <option name="method" value="sendFollowRequest" />
-          <option name="methodType" value="POST" />
-          <option name="paramGroup">
-            <ParamGroupCollection>
-              <option name="className" value="com.example.demo.controllers.FollowRequestController" />
-              <option name="method" value="sendFollowRequest" />
-              <option name="methodDescription" value="New Request" />
-              <option name="methodType" value="POST" />
-              <option name="multipartKeyValueListJson" value="[]" />
-              <option name="originUrl" value="/users/{username}/follow" />
-              <option name="pathParamsKeyValueListJson" value="[{&quot;comment&quot;:&quot;&quot;,&quot;customFlag&quot;:2,&quot;enabled&quot;:true,&quot;key&quot;:&quot;username&quot;,&quot;type&quot;:&quot;String&quot;,&quot;value&quot;:&quot;username_vtbzn&quot;}]" />
-              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
-              <option name="url" value="/users/kiril/follow" />
-              <option name="urlEncodedKeyValueListJson" value="[]" />
-              <option name="urlParamsKeyValueListJson" value="[]" />
-            </ParamGroupCollection>
-          </option>
-          <option name="requestInfo" value="Request Url: http://localhost:8080/users/kiril/follow&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    username: alex&#13;&#10;Request Body: &#13;&#10;    null&#13;&#10;" />
-          <option name="response" value="{&quot;requester&quot;:{&quot;username&quot;:&quot;kiril&quot;,&quot;firstName&quot;:&quot;Kiril&quot;,&quot;lastName&quot;:&quot;Petkov&quot;},&quot;receiver&quot;:{&quot;username&quot;:&quot;alex&quot;,&quot;firstName&quot;:&quot;Alex&quot;,&quot;lastName&quot;:&quot;lastName_xox01&quot;},&quot;requestDate&quot;:1671660821908}" />
-          <option name="url" value="/users/kiril/follow" />
-        </ResponseHistory>
-        <ResponseHistory>
-          <option name="className" value="com.example.demo.controllers.FollowRequestController" />
-          <option name="code" value="201" />
-          <option name="enableEnv" value="local" />
-          <option name="enableProject" value="tuesthesis" />
-          <option name="method" value="sendFollowRequest" />
-          <option name="methodType" value="POST" />
-          <option name="paramGroup">
-            <ParamGroupCollection>
-              <option name="className" value="com.example.demo.controllers.FollowRequestController" />
-              <option name="method" value="sendFollowRequest" />
-              <option name="methodDescription" value="New Request" />
-              <option name="methodType" value="POST" />
-              <option name="multipartKeyValueListJson" value="[]" />
-              <option name="originUrl" value="/users/{username}/follow" />
-              <option name="pathParamsKeyValueListJson" value="[{&quot;comment&quot;:&quot;&quot;,&quot;customFlag&quot;:2,&quot;enabled&quot;:true,&quot;key&quot;:&quot;username&quot;,&quot;type&quot;:&quot;String&quot;,&quot;value&quot;:&quot;username_vtbzn&quot;}]" />
-              <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
-              <option name="url" value="/users/kiril/follow" />
-              <option name="urlEncodedKeyValueListJson" value="[]" />
-              <option name="urlParamsKeyValueListJson" value="[]" />
-            </ParamGroupCollection>
-          </option>
-          <option name="requestInfo" value="Request Url: http://localhost:8080/users/kiril/follow&#13;&#10;Request Headers: &#13;&#10;    Accept: application/json,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#13;&#10;    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 Hutool&#13;&#10;    Accept-Encoding: gzip, deflate&#13;&#10;    Accept-Language: zh-CN,zh;q=0.8&#13;&#10;    username: gosho&#13;&#10;Request Body: &#13;&#10;    null&#13;&#10;" />
-          <option name="response" value="{&quot;requester&quot;:{&quot;username&quot;:&quot;kiril&quot;,&quot;firstName&quot;:&quot;Kiril&quot;,&quot;lastName&quot;:&quot;Petkov&quot;},&quot;receiver&quot;:{&quot;username&quot;:&quot;gosho&quot;,&quot;firstName&quot;:&quot;Gosho&quot;,&quot;lastName&quot;:&quot;lastName_f7z8m&quot;},&quot;requestDate&quot;:1671660813101}" />
-          <option name="url" value="/users/kiril/follow" />
         </ResponseHistory>
       </list>
     </option>
