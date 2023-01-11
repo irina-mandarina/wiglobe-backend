@@ -3,6 +3,7 @@ package com.example.demo.controllers
 import com.example.demo.models.requestModels.ActivityRequest
 import com.example.demo.models.responseModels.Activity
 import com.example.demo.services.ActivityService
+import com.example.demo.types.ActivityTypes
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -31,6 +32,11 @@ class ActivityController(private val activityService: ActivityService) {
     fun getActivitiesForJourney(@RequestHeader username: String,
                                 @PathVariable journeyId: Long): ResponseEntity<List<Activity>> {
         return activityService.getActivitiesForJourney(username, journeyId)
+    }
+
+    @GetMapping("/activities")
+    fun getAllActivityTypes(): ResponseEntity<List<ActivityTypes>> {
+        return activityService.getAllActivityTypes();
     }
 
 }

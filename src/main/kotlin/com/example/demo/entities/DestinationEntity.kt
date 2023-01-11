@@ -24,8 +24,9 @@ class DestinationEntity {
     @Column(name = "feature_code")
     var featureCode: String = ""
 
-    @Column(name = "country_code")
-    var countryCode: String = ""
+    @ManyToOne
+    @JoinColumn(name = "country_code")
+    lateinit var country: CountryEntity
 
     @OneToMany(mappedBy = "destination")
     var reviews: List<ReviewEntity> = listOf()

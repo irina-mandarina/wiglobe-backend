@@ -5,12 +5,7 @@ import javax.persistence.*
 @Entity
 @Table(name = "countries")
 class CountryEntity {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    var id: Long? = null
-
     @Column(name = "country_code", nullable = false)
     var countryCode: String = ""
 
@@ -25,4 +20,7 @@ class CountryEntity {
 
     @Column(name = "continent")
     var continent: String = ""
+
+//    @OneToMany(mappedBy = "country")
+//    lateinit var destinationEntity: List<DestinationEntity>
 }

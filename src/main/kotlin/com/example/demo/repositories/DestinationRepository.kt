@@ -7,7 +7,8 @@ import org.springframework.stereotype.Repository
 @Repository
 interface DestinationRepository: JpaRepository<DestinationEntity, Long> {
     fun findDestinationById(id: Long): DestinationEntity?
-    fun findDestinationByName(name: String): DestinationEntity?
+//    fun findDestinationByNameLikeOrCountryCodeCoun(name: String): DestinationEntity?
+//    fun findDestinationEntitiesByNameLikeOrCountryContryNameLike()
     fun findAllByFeatureClass(featureClass: String): List<DestinationEntity>
     fun findAllByFeatureCode(featureCode: String): List<DestinationEntity>
 }

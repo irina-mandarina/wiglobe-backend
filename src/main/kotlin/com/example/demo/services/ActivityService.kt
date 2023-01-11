@@ -5,6 +5,7 @@ import com.example.demo.entities.JourneyEntity
 import com.example.demo.repositories.ActivityRepository
 import com.example.demo.models.requestModels.ActivityRequest
 import com.example.demo.models.responseModels.Activity
+import com.example.demo.types.ActivityTypes
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.springframework.http.HttpStatus
@@ -149,6 +150,12 @@ class ActivityService(
 
         return ResponseEntity.status(HttpStatus.OK).body(
             activities
+        )
+    }
+
+    fun getAllActivityTypes(): ResponseEntity<List<ActivityTypes>> {
+        return ResponseEntity.ok().body(
+            ActivityTypes.values().toList()
         )
     }
 }

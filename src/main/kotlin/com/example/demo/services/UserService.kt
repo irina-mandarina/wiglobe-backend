@@ -6,6 +6,7 @@ import com.example.demo.models.requestModels.LogInRequest
 import com.example.demo.models.requestModels.SignUpRequest
 import com.example.demo.models.responseModels.UserDetails
 import com.example.demo.models.responseModels.UserNames
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
@@ -73,14 +74,18 @@ import org.springframework.stereotype.Service
 
     fun signUp(signUpRequest: SignUpRequest): ResponseEntity<UserDetails> {
         if (userWithUsernameExists(signUpRequest.username)) {
-            return ResponseEntity.badRequest().header(
-                "message", "User with username: " + signUpRequest.username + " already exists")
+            var headers = HttpHeaders()
+            headers.set("usernameTaken", "User with username: " + signUpRequest.username + " already exists")
+            return ResponseEntity.badRequest()
+                .headers(headers)
                 .body(null)
         }
 
         if (userWithEmailExists(signUpRequest.email)) {
-            return ResponseEntity.badRequest().header(
-                "message", "User with email: " + signUpRequest.email + " already exists")
+            var headers = HttpHeaders()
+            headers.set("emailTaken", "User with email: " + signUpRequest.email + " already exists")
+            return ResponseEntity.badRequest()
+                .headers(headers)
                 .body(null)
         }
 

@@ -16,7 +16,7 @@ class DestinationService(private val destinationRepository: DestinationRepositor
             destinationEntity.latitude,
             destinationEntity.longitude,
             destinationEntity.name,
-            countryService.countryFromEntity(countryService.findCountryByCountryCode(destinationEntity.countryCode)),
+            countryService.countryFromEntity(countryService.findCountryByCountryCode(destinationEntity.country.countryCode)),
             featureCodeService.findFeatureClassMeaning(destinationEntity.featureClass),
             featureCodeService.findFeatureCodeMeaning(destinationEntity.featureCode)
         )
@@ -30,9 +30,9 @@ class DestinationService(private val destinationRepository: DestinationRepositor
         return destinationRepository.findDestinationById(id)
     }
 
-    fun findDestinationByName(name: String): DestinationEntity? {
-        return destinationRepository.findDestinationByName(name)
-    }
+//    fun findDestinationByName(name: String): DestinationEntity? {
+//        return destinationRepository.findDestinationByName(name)
+//    }
 
     fun getDestinations(): ResponseEntity<List<Destination>> {
         return ResponseEntity.ok().body(

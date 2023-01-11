@@ -45,12 +45,12 @@ public class JourneyRecommender {
 //            positive sentiment: compound score >= 0.05
 //            neutral sentiment: (compound score > -0.05) and (compound score < 0.05)
 //            negative sentiment: compound score <= -0.05
-            if (interests.containsKey(journey.getDestination().getCountryCode())) {
-                interests.put( journey.getDestination().getCountryCode(),
-                        (interests.get(journey.getDestination().getCountryCode())*commentCounter + sentimentPolarities.getCompoundPolarity()) / (commentCounter+1) );
+            if (interests.containsKey(journey.getDestination().getCountry().getCountryCode())) {
+                interests.put( journey.getDestination().getCountry().getCountryCode(),
+                        (interests.get(journey.getDestination().getCountry().getCountryCode())*commentCounter + sentimentPolarities.getCompoundPolarity()) / (commentCounter+1) );
             }
             else {
-                interests.put( journey.getDestination().getCountryCode(),
+                interests.put( journey.getDestination().getCountry().getCountryCode(),
                         (double) sentimentPolarities.getCompoundPolarity());
             }
 
@@ -111,8 +111,8 @@ public class JourneyRecommender {
         for (JourneyEntity journey: journeys) {
             double score = 0.0;
             // for each journey characteristic, add the corresponding compound score from the interests map
-            if (interests.containsKey( journey.getDestination().getCountryCode()) ) {
-                score += interests.get( journey.getDestination().getCountryCode() );
+            if (interests.containsKey( journey.getDestination().getCountry().getCountryCode()) ) {
+                score += interests.get( journey.getDestination().getCountry().getCountryCode() );
             }
             if (interests.containsKey( journey.getDestination().getFeatureClass()) ) {
                 score += interests.get( journey.getDestination().getFeatureClass() );
