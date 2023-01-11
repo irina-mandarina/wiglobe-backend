@@ -1,6 +1,7 @@
 package com.example.demo.entities
 
 import javax.persistence.*
+//import org.springframework.data.relational.core.mapping.Table
 
 @Entity
 @Table(name = "geonames")
@@ -17,6 +18,12 @@ class DestinationEntity {
 
     @Column(name = "name")
     var name: String = ""
+
+    @Column(name = "asciiname")
+    var asciiName: String = ""
+
+    @Column(name = "alternatenames")
+    var alternateNames: String = ""
 
     @Column(name = "feature_class")
     var featureClass: String = ""

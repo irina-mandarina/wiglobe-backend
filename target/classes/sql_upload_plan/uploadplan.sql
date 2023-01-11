@@ -9,3 +9,9 @@ alter table geonames
     add constraint geonames_country_code_fk
         foreign key (country_code) references countries (country_code);
 
+
+create index geonames_name_index
+    on geonames (name);
+
+create index geonames_asciiname_index
+    on geonames (asciiname);

@@ -84,7 +84,8 @@ import org.springframework.stereotype.Service
         if (userWithEmailExists(signUpRequest.email)) {
             var headers = HttpHeaders()
             headers.set("emailTaken", "User with email: " + signUpRequest.email + " already exists")
-            return ResponseEntity.badRequest()
+            return ResponseEntity
+                .status(HttpStatus.CONFLICT)
                 .headers(headers)
                 .body(null)
         }

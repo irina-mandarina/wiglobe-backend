@@ -30,9 +30,9 @@ class DestinationService(private val destinationRepository: DestinationRepositor
         return destinationRepository.findDestinationById(id)
     }
 
-//    fun findDestinationByName(name: String): DestinationEntity? {
-//        return destinationRepository.findDestinationByName(name)
-//    }
+    fun findDestinationEntitiesByNameLikeOrCountryCountryNameLikeOrCountryCountryCodeLikeOrAsciiNameLike(search: String): List<DestinationEntity> {
+        return destinationRepository.findDestinationEntitiesByNameLikeOrCountryCountryNameLikeOrCountryCountryCodeLikeOrAsciiNameLike(search, search, search, search)
+    }
 
     fun getDestinations(): ResponseEntity<List<Destination>> {
         return ResponseEntity.ok().body(
@@ -47,6 +47,13 @@ class DestinationService(private val destinationRepository: DestinationRepositor
             destinationFromEntity(
                 findDestinationById(destinationId)!!
             )
+        )
+    }
+
+    fun searchDestinations(search: String): ResponseEntity<List<Destination>> {
+        return ResponseEntity.ok().body(
+            findDestinationEntitiesByNameLikeOrCountryCountryNameLikeOrCountryCountryCodeLikeOrAsciiNameLike(search)
+                .map { it -> destinationFromEntity( it ) }
         )
     }
 }

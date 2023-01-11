@@ -12,4 +12,9 @@ class DestinationController(private val destinationService: DestinationService) 
     fun getDestination(@PathVariable destinationId: Long): ResponseEntity<Destination> {
         return destinationService.getDestination(destinationId);
     }
+
+    @GetMapping("/destinations")
+    fun searchDestinations(@RequestParam search: String): ResponseEntity<List<Destination>> {
+        return destinationService.searchDestinations(search);
+    }
 }
