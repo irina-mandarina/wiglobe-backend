@@ -4,6 +4,7 @@ import com.example.demo.entities.UserEntity
 import com.example.demo.repositories.UserRepository
 import com.example.demo.models.requestModels.LogInRequest
 import com.example.demo.models.requestModels.SignUpRequest
+import com.example.demo.models.responseModels.SignUpResponse
 import com.example.demo.models.responseModels.UserDetails
 import com.example.demo.models.responseModels.UserNames
 import org.springframework.http.HttpHeaders
@@ -72,22 +73,32 @@ import org.springframework.stereotype.Service
             .body(null)
     }
 
-    fun signUp(signUpRequest: SignUpRequest): ResponseEntity<UserDetails> {
+    fun signUp(signUpRequest: SignUpRequest): ResponseEntity<SignUpResponse> {
         if (userWithUsernameExists(signUpRequest.username)) {
-            var headers = HttpHeaders()
-            headers.set("usernameTaken", "User with username: " + signUpRequest.username + " already exists")
-            return ResponseEntity.badRequest()
-                .headers(headers)
-                .body(null)
+//            var headers = HttpHeaders()
+//            headers.set("usernameTaken", "User with username: " + signUpRequest.username + " already exists")
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(
+                    SignUpResponse(
+                        emailTaken = true,
+                        null,
+                        null
+                    )
+                )
         }
 
         if (userWithEmailExists(signUpRequest.email)) {
-            var headers = HttpHeaders()
-            headers.set("emailTaken", "User with email: " + signUpRequest.email + " already exists")
+//            var headers = HttpHeaders()
+//            headers.set("emailTaken", "User with email: " + signUpRequest.email + " already exists")
             return ResponseEntity
                 .status(HttpStatus.CONFLICT)
-                .headers(headers)
-                .body(null)
+                .body(
+                    SignUpResponse(
+                        usernameTaken = true,
+                        emailTaken = null,
+                        userDetails = null
+                    )
+                )
         }
 
         val user = UserEntity(signUpRequest)
@@ -95,8 +106,10 @@ import org.springframework.stereotype.Service
         userRepository.save(user)
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
-            userDetails(
-                user
+            SignUpResponse(
+                emailTaken = false,
+                usernameTaken = false,
+                userDetails = userDetails(user)
             )
         )
     }

@@ -6,9 +6,6 @@ import javax.persistence.*
 @Table(name="feature_codes")
 class FeatureCode {
     @Id
-    @Column(name = "id", nullable = false)
-    var id: Long? = null
-
     @Column(name = "code")
     var code: String = ""
 

@@ -30,7 +30,7 @@ class UserEntity() {
     @Column(name = "first_name", nullable = false)
     var firstName: String = ""
 
-    @Column(name = "last_name", nullable = false)
+    @Column(name = "last_name")
     var lastName: String = ""
 
     @Column(name = "biography")

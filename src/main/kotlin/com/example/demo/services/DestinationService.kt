@@ -2,6 +2,7 @@ package com.example.demo.services
 
 import com.example.demo.entities.DestinationEntity
 import com.example.demo.models.responseModels.Destination
+import com.example.demo.models.responseModels.DestinationSearchResult
 import com.example.demo.repositories.DestinationRepository
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
@@ -22,6 +23,15 @@ class DestinationService(private val destinationRepository: DestinationRepositor
         )
     }
 
+    fun destinationSearchResultFromEntity(destinationEntity: DestinationEntity): DestinationSearchResult {
+        return DestinationSearchResult(
+            destinationEntity.id!!,
+            featureCodeService.findFeatureClassMeaning(destinationEntity.featureClass),
+            destinationEntity.name,
+            destinationEntity.country.countryName
+        )
+    }
+
     fun destinationWithIdExists(id: Long): Boolean {
         return (findDestinationById(id) != null)
     }
@@ -32,6 +42,9 @@ class DestinationService(private val destinationRepository: DestinationRepositor
 
     fun findDestinationEntitiesByNameLikeOrCountryCountryNameLikeOrCountryCountryCodeLikeOrAsciiNameLike(search: String): List<DestinationEntity> {
         return destinationRepository.findDestinationEntitiesByNameLikeOrCountryCountryNameLikeOrCountryCountryCodeLikeOrAsciiNameLike(search, search, search, search)
+    }
+    fun findDestinationIdAndNameAndCountryByKeyword(keyword: String): List<DestinationSearchResult> {
+        return destinationRepository.findDestinationIdAndNameAndCountryByKeyword(keyword);
     }
 
     fun getDestinations(): ResponseEntity<List<Destination>> {
@@ -50,10 +63,9 @@ class DestinationService(private val destinationRepository: DestinationRepositor
         )
     }
 
-    fun searchDestinations(search: String): ResponseEntity<List<Destination>> {
+    fun searchDestinations(search: String): ResponseEntity<List<DestinationSearchResult>> {
         return ResponseEntity.ok().body(
-            findDestinationEntitiesByNameLikeOrCountryCountryNameLikeOrCountryCountryCodeLikeOrAsciiNameLike(search)
-                .map { it -> destinationFromEntity( it ) }
+            findDestinationIdAndNameAndCountryByKeyword(search)
         )
     }
 }

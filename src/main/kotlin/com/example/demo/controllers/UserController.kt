@@ -2,6 +2,7 @@ package com.example.demo.controllers
 
 import com.example.demo.models.requestModels.LogInRequest
 import com.example.demo.models.requestModels.SignUpRequest
+import com.example.demo.models.responseModels.SignUpResponse
 import com.example.demo.models.responseModels.UserDetails
 import com.example.demo.services.UserService
 import org.springframework.http.ResponseEntity
@@ -16,7 +17,7 @@ class UserController(private val userService: UserService) {
     }
 
     @PostMapping("/users/signup")
-    fun signUp(@RequestBody signUpRequest: SignUpRequest): ResponseEntity<UserDetails> { // taken user details
+    fun signUp(@RequestBody signUpRequest: SignUpRequest): ResponseEntity<SignUpResponse> { // taken user details
         return userService.signUp(signUpRequest)
     }
 
