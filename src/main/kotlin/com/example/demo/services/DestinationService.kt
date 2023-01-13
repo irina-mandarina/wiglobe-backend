@@ -1,6 +1,7 @@
 package com.example.demo.services
 
 import com.example.demo.entities.DestinationEntity
+import com.example.demo.models.projections.DestinationSearchProjection
 import com.example.demo.models.responseModels.Destination
 import com.example.demo.models.responseModels.DestinationSearchResult
 import com.example.demo.repositories.DestinationRepository
@@ -23,6 +24,15 @@ class DestinationService(private val destinationRepository: DestinationRepositor
         )
     }
 
+    private fun destinationSearchResultFromProjection(destinationSearchProjection: DestinationSearchProjection): DestinationSearchResult {
+        return DestinationSearchResult(
+            destinationSearchProjection.id,
+            featureCodeService.findFeatureCodeMeaning(destinationSearchProjection.featureCode.toString()),
+            destinationSearchProjection.name,
+            destinationSearchProjection.countryCountryName
+        )
+    }
+
     fun destinationSearchResultFromEntity(destinationEntity: DestinationEntity): DestinationSearchResult {
         return DestinationSearchResult(
             destinationEntity.id!!,
@@ -40,11 +50,16 @@ class DestinationService(private val destinationRepository: DestinationRepositor
         return destinationRepository.findDestinationById(id)
     }
 
-    fun findDestinationEntitiesByNameLikeOrCountryCountryNameLikeOrCountryCountryCodeLikeOrAsciiNameLike(search: String): List<DestinationEntity> {
-        return destinationRepository.findDestinationEntitiesByNameLikeOrCountryCountryNameLikeOrCountryCountryCodeLikeOrAsciiNameLike(search, search, search, search)
+    private fun findDestinationsByAsciiNameStartingWith(keyword: String): List<DestinationSearchProjection> {
+        return destinationRepository.findDestinationsByAsciiNameStartingWith(keyword)
     }
-    fun findDestinationIdAndNameAndCountryByKeyword(keyword: String): List<DestinationSearchResult> {
-        return destinationRepository.findDestinationIdAndNameAndCountryByKeyword(keyword);
+
+    private fun findDestinationsByCountryNameStartingWith(keyword: String): List<DestinationSearchProjection> {
+        return destinationRepository.findDestinationsByCountryCountryNameStartingWith(keyword)
+    }
+
+    private fun findDestinationsByCountryCodeStartingWith(keyword: String): List<DestinationSearchProjection> {
+        return destinationRepository.findDestinationsByCountryCountryCodeStartingWith(keyword)
     }
 
     fun getDestinations(): ResponseEntity<List<Destination>> {
@@ -63,9 +78,13 @@ class DestinationService(private val destinationRepository: DestinationRepositor
         )
     }
 
-    fun searchDestinations(search: String): ResponseEntity<List<DestinationSearchResult>> {
+    fun searchDestinations(keyword: String): ResponseEntity<List<DestinationSearchResult>> {
         return ResponseEntity.ok().body(
-            findDestinationIdAndNameAndCountryByKeyword(search)
+            (findDestinationsByAsciiNameStartingWith(keyword) +
+            findDestinationsByCountryCodeStartingWith(keyword) +
+            findDestinationsByCountryNameStartingWith(keyword)).map{
+                destinationSearchResultFromProjection(it)
+            }
         )
     }
 }

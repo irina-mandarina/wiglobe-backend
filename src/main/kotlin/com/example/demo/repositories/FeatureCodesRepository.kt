@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface FeatureCodesRepository: JpaRepository<FeatureCode, Long> {
-    fun findFeatureCodeByCode(code: String): FeatureCode
-    fun findFirstByFeatureClass(featureClass: String): FeatureCode
+    fun findFeatureCodeByCode(code: String): FeatureCode?
+    fun findFirstByFeatureClass(featureClass: String): FeatureCode?
 }

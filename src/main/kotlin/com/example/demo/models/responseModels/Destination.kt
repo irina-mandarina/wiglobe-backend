@@ -9,6 +9,6 @@ data class Destination( val id: Long,
                         val longitude: Double,
                         val name: String,
                         val country: Country,
-                        val featureClass: String,
-                        val featureCode: String,
+                        val featureClass: String?,
+                        val featureCode: String?,
                        )

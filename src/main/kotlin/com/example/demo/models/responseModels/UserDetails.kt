@@ -10,9 +10,9 @@ import java.sql.Timestamp
 @Serializable
 data class UserDetails(val username: String,
                        val firstName: String,
-                       val lastName: String,
+                       val lastName: String?,
                        @Serializable(DateSerializer::class)
-                               val birthdate: Date,
+                               val birthdate: Date?,
                        val biography: String,
                        @Serializable(TimestampSerializer::class)
                                val registrationDate: Timestamp,

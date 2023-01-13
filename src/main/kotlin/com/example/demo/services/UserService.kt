@@ -75,27 +75,23 @@ import org.springframework.stereotype.Service
 
     fun signUp(signUpRequest: SignUpRequest): ResponseEntity<SignUpResponse> {
         if (userWithUsernameExists(signUpRequest.username)) {
-//            var headers = HttpHeaders()
-//            headers.set("usernameTaken", "User with username: " + signUpRequest.username + " already exists")
             return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(
                     SignUpResponse(
-                        emailTaken = true,
-                        null,
-                        null
+                        usernameTaken = true,
+                        emailTaken = null,
+                        userDetails = null
                     )
                 )
         }
 
         if (userWithEmailExists(signUpRequest.email)) {
-//            var headers = HttpHeaders()
-//            headers.set("emailTaken", "User with email: " + signUpRequest.email + " already exists")
             return ResponseEntity
                 .status(HttpStatus.CONFLICT)
                 .body(
                     SignUpResponse(
-                        usernameTaken = true,
-                        emailTaken = null,
+                        usernameTaken = false,
+                        emailTaken = true,
                         userDetails = null
                     )
                 )

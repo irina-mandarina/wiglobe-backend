@@ -31,7 +31,7 @@ class UserEntity() {
     var firstName: String = ""
 
     @Column(name = "last_name")
-    var lastName: String = ""
+    var lastName: String? = ""
 
     @Column(name = "biography")
     var biography: String = ""
@@ -40,11 +40,11 @@ class UserEntity() {
     var gender: Gender = Gender.OTHER
 
     @Serializable(TimestampSerializer::class)
-    @Column(name = "registration_date", nullable = false)
+    @Column(name = "registration_date")
     var registrationDate: Timestamp = Timestamp.valueOf(LocalDateTime.now())
 
-    @Column(name = "birthdate", nullable = false)
-    var birthdate: Date = Date.valueOf(LocalDate.now())
+    @Column(name = "birthdate")
+    var birthdate: Date? = Date.valueOf(LocalDate.now())
 
     @OneToMany(mappedBy="user")
     var journeys: List<JourneyEntity> = listOf()
