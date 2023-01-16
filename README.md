@@ -46,6 +46,6 @@ Front end to do list:
 16. notification pop ups\
 
 must haves:
-1. post journey
+1. ~~post journey~~
 2. save user profile from google
 3. 

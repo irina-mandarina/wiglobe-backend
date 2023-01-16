@@ -6,7 +6,6 @@ import com.example.demo.repositories.JourneyRepository
 import com.example.demo.models.responseModels.Journey
 import com.example.demo.models.requestModels.JourneyRequest
 import com.example.demo.models.responseModels.Activity
-import com.example.demo.models.responseModels.UserNames
 import com.example.demo.types.Visibility
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -21,7 +20,8 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
         return Journey (
             journeyEntity.id!!,
             userService.userNames(journeyEntity.user),
-            journeyEntity.startDate, journeyEntity.endDate!!,
+            journeyEntity.startDate,
+            journeyEntity.endDate,
             journeyEntity.description,
             destinationService.destinationFromEntity(journeyEntity.destination),
             journeyEntity.activities.map {
@@ -54,7 +54,7 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
         return findJourneyById(id) != null
     }
 
-    fun createJourney(username: String, journeyRequest: JourneyRequest): ResponseEntity<Journey> {
+    fun createJourney(username: String, journeyRequest: JourneyRequest): ResponseEntity<Journey?> {
         if (username.isBlank()) {
             return ResponseEntity.badRequest().header(
                 "message", "Missing request parameter: username")
@@ -67,9 +67,16 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
                 .body(null)
         }
 
+        if (journeyRequest.visibility != Visibility.DRAFT &&
+            (journeyRequest.startDate == null || journeyRequest.endDate == null || journeyRequest.destinationId == null)
+        ){
+            // nulls are not ok
+            return ResponseEntity.badRequest().body(null)
+        }
+
         val journey = JourneyEntity()
         journey.user = userService.findUserByUsername(username)!!
-        journey.destination = destinationService.findDestinationById(journeyRequest.destinationId)!!
+        journey.destination = destinationService.findDestinationById(journeyRequest.destinationId!!)
         journey.startDate = journeyRequest.startDate
         journey.endDate = journeyRequest.endDate
         journey.description = journeyRequest.description
@@ -114,6 +121,13 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
             ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
                 "message", "Journey does not exist")
                 .body(null)
+
+        if (journeyRequest.visibility != Visibility.DRAFT &&
+            (journeyRequest.startDate == null || journeyRequest.endDate == null || journeyRequest.destinationId == null)
+        ){
+            // nulls are not ok
+            return ResponseEntity.badRequest().body(null)
+        }
 
         journey.description = journeyRequest.description
         journey.destination = destinationService.findDestinationById(journeyRequest.destinationId)!!

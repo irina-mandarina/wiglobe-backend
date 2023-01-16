@@ -1,7 +1,7 @@
 package com.example.demo.entities
 
 import com.example.demo.models.requestModels.ActivityRequest
-import com.example.demo.types.ActivityTypes
+import com.example.demo.types.ActivityType
 import java.sql.Timestamp
 import java.time.LocalDateTime
 import javax.persistence.*
@@ -19,19 +19,19 @@ class ActivityEntity() {
     lateinit var journey: JourneyEntity
 
     @Column(name = "date", nullable = false)
-    var date: Timestamp = Timestamp.valueOf(LocalDateTime.now())
+    var date: Timestamp? = Timestamp.valueOf(LocalDateTime.now())
 
-    @Column(name = "title", nullable = false)
-    var title: String = ""
+    @Column(name = "title")
+    var title: String? = ""
 
-    @Column(name = "type", nullable = false)
-    var type: ActivityTypes = ActivityTypes.OTHER
+    @Column(name = "type")
+    var type: ActivityType? = ActivityType.OTHER
 
     @Column(name = "description")
-    var description: String = ""
+    var description: String? = ""
 
-    @Column(name = "location", nullable = false)
-    var location: String = ""
+    @Column(name = "location")
+    var location: String? = ""
 
     constructor(postActivity: ActivityRequest, journey: JourneyEntity) : this() {
         this.date = postActivity.date
@@ -39,6 +39,6 @@ class ActivityEntity() {
         this.title = postActivity.title
         this.location = postActivity.location
         this.description = postActivity.description
-        this.type = postActivity.type
+        this.type = postActivity.type!!
     }
 }

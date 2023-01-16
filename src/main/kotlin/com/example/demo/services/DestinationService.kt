@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service
 class DestinationService(private val destinationRepository: DestinationRepository,
                          private val featureCodeService: FeatureCodeService,
                          private val countryService: CountryService) {
-    fun destinationFromEntity(destinationEntity: DestinationEntity): Destination {
+    fun destinationFromEntity(destinationEntity: DestinationEntity?): Destination? {
+        if ( destinationEntity == null )
+            return null
         return Destination(
             destinationEntity.id!!,
             destinationEntity.latitude,
@@ -46,7 +48,7 @@ class DestinationService(private val destinationRepository: DestinationRepositor
         return (findDestinationById(id) != null)
     }
 
-    fun findDestinationById(id: Long): DestinationEntity? {
+    fun findDestinationById(id: Long?): DestinationEntity? {
         return destinationRepository.findDestinationById(id)
     }
 
@@ -65,7 +67,7 @@ class DestinationService(private val destinationRepository: DestinationRepositor
     fun getDestinations(): ResponseEntity<List<Destination>> {
         return ResponseEntity.ok().body(
             destinationRepository.findAll().map {
-                destinationFromEntity(it)
+                destinationFromEntity(it)!!
             }
         )
     }

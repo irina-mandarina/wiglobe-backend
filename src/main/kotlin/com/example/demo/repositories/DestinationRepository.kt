@@ -3,12 +3,11 @@ package com.example.demo.repositories
 import com.example.demo.entities.DestinationEntity
 import com.example.demo.models.projections.DestinationSearchProjection
 import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 
 @Repository
 interface DestinationRepository: JpaRepository<DestinationEntity, Long> {
-    fun findDestinationById(id: Long): DestinationEntity?
+    fun findDestinationById(id: Long?): DestinationEntity?
     fun findDestinationEntitiesByNameLikeOrCountryCountryNameLikeOrCountryCountryCodeLikeOrAsciiNameLike(
         name: String,
         countryCountryName: String,

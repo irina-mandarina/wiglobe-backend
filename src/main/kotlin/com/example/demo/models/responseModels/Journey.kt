@@ -8,10 +8,10 @@ import java.sql.Timestamp
 @Serializable
 data class Journey(val id: Long,
                    val usernames: UserNames,
-                   @Serializable(TimestampSerializer::class) val startDate: Timestamp,
-                   @Serializable(TimestampSerializer::class) val endDate: Timestamp,
-                   val description: String,
-                   val destination: Destination,
+                   @Serializable(TimestampSerializer::class) val startDate: Timestamp?,
+                   @Serializable(TimestampSerializer::class) val endDate: Timestamp?,
+                   val description: String?,
+                   val destination: Destination?,
                    val activities: List<Activity>,
                    val visibility: Visibility
 )

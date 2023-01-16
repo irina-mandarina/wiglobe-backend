@@ -16,18 +16,18 @@ class JourneyEntity {
     @ManyToOne
     lateinit var user: UserEntity
 
-    @Column(name = "start_date", nullable = false)
-    lateinit var startDate: Timestamp
+    @Column(name = "start_date")
+    var startDate: Timestamp? = null
 
-    @Column(name = "end_date", nullable = true)
+    @Column(name = "end_date")
     var endDate: Timestamp? = null
 
-    @JoinColumn(name = "destination_id", nullable = false)
+    @JoinColumn(name = "destination_id")
     @ManyToOne
-    lateinit var destination: DestinationEntity
+    var destination: DestinationEntity? = null
 
     @Column(name = "description", nullable = true)
-    var description: String = ""
+    var description: String? = ""
 
     @Column(name = "visibility")
     var visibility: Visibility = Visibility.PUBLIC

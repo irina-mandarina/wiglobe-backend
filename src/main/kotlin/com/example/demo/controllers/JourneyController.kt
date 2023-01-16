@@ -16,7 +16,7 @@ class JourneyController(private val journeyService: JourneyService, private val 
 ) {
     @PostMapping("/journeys")
     fun createJourney(@RequestHeader username: String,
-                      @RequestBody journeyRequest: JourneyRequest): ResponseEntity<Journey>  {
+                      @RequestBody journeyRequest: JourneyRequest): ResponseEntity<Journey?>  {
         return journeyService.createJourney(username, journeyRequest)
     }
 

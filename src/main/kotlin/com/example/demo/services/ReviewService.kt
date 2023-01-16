@@ -6,8 +6,6 @@ import com.example.demo.entities.UserEntity
 import com.example.demo.repositories.ReviewRepository
 import com.example.demo.models.responseModels.Review
 import com.example.demo.models.requestModels.ReviewRequest
-import com.example.demo.models.responseModels.Destination
-import com.example.demo.models.responseModels.UserNames
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
@@ -19,7 +17,7 @@ class ReviewService(private val destinationService: DestinationService, private 
     fun reviewFromEntity(reviewEntity: ReviewEntity): Review {
         return Review (
             reviewEntity.id!!,
-            destinationService.destinationFromEntity(reviewEntity.destination),
+            destinationService.destinationFromEntity(reviewEntity.destination)!!,
             userService.userNames(reviewEntity.user),
             reviewEntity.starRating,
             reviewEntity.reviewedDate,

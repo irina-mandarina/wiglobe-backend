@@ -5,7 +5,7 @@ import com.example.demo.entities.JourneyEntity
 import com.example.demo.repositories.ActivityRepository
 import com.example.demo.models.requestModels.ActivityRequest
 import com.example.demo.models.responseModels.Activity
-import com.example.demo.types.ActivityTypes
+import com.example.demo.types.ActivityType
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.springframework.http.HttpStatus
@@ -27,7 +27,7 @@ class ActivityService(
             activityEntity.location
         )
     }
-    fun addActivityToJourney(username: String, postActivity: ActivityRequest,
+    fun addActivityToJourney(username: String, activityRequest: ActivityRequest,
                              journeyId: Long): ResponseEntity<String> {
         if (!userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
@@ -43,7 +43,7 @@ class ActivityService(
 
         val journey = journeyService.findJourneyById(journeyId)!!
 
-        val activity = ActivityEntity(postActivity, journey)
+        val activity = ActivityEntity(activityRequest, journey)
         activityRepository.save(activity)
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
@@ -81,11 +81,11 @@ class ActivityService(
         }
 
         val activity = findActivityById(activityId)!!
-        activity.description = activityRequest.description
-        activity.location = activityRequest.location
-        activity.title = activityRequest.title
-        activity.type = activityRequest.type
-        activity.date = activityRequest.date
+        activity.description = activityRequest.description.toString()
+        activity.location = activityRequest.location.toString()
+        activity.title = activityRequest.title.toString()
+        activity.type = activityRequest.type!!
+        activity.date = activityRequest.date!!
 
         activityRepository.save(activity)
 
@@ -153,9 +153,9 @@ class ActivityService(
         )
     }
 
-    fun getAllActivityTypes(): ResponseEntity<List<ActivityTypes>> {
+    fun getAllActivityTypes(): ResponseEntity<List<ActivityType>> {
         return ResponseEntity.ok().body(
-            ActivityTypes.values().toList()
+            ActivityType.values().toList()
         )
     }
 }
