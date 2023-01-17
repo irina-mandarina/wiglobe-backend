@@ -1,13 +1,13 @@
 # tuesthesis
 
 Qs:
-1. headers for 400
+1. posting to drafts on description change
 
 
 To do:
 * ~~get user (others)~~
 * ~~country codes~~
-* pick a name & ~~a colour palette~~, make a logo
+* ~~pick a name~~ & ~~a colour palette~~, make a logo
 1. ~~make it run~~
 2. update stoplight
 3. ~~use the enums~~

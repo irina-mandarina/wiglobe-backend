@@ -87,6 +87,11 @@ class FollowService(private val followRepository: FollowRepository, private val 
         )
     }
 
+    fun isFollowing(follower: String, followed: String): Boolean {
+        return followRepository.findByFollowerUsernameAndFollowedUsername(follower, followed) != null
+
+    }
+
     fun findAllByFollowedUsernameOrderByFollowDate(username: String): List<FollowEntity> {
         return followRepository.findAllByFollowedUsernameOrderByFollowDate(username)
     }

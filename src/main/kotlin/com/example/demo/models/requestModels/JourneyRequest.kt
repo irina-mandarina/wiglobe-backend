@@ -5,4 +5,4 @@ import java.sql.Timestamp
 
 data class JourneyRequest(val startDate: Timestamp?, val endDate: Timestamp?,
                           val destinationId: Long?, val description: String?,
-                          val visibility: Visibility = Visibility.PUBLIC)
+                          val visibility: Visibility?)

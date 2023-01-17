@@ -38,22 +38,6 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
         )
     }
 
-    fun findJourneyById(id: Long): JourneyEntity? {
-        return journeyRepository.findJourneysById(id)
-    }
-
-    fun findJourneysByUser(user: UserEntity): List<JourneyEntity> {
-        return journeyRepository.findJourneysByUser(user)
-    }
-
-    fun findJourneyEntitiesByUserNot(user: UserEntity): List<JourneyEntity> {
-        return journeyRepository.findJourneyEntitiesByUserNot(user)
-    }
-
-    fun journeyWithIdExists(id: Long): Boolean {
-        return findJourneyById(id) != null
-    }
-
     fun createJourney(username: String, journeyRequest: JourneyRequest): ResponseEntity<Journey?> {
         if (username.isBlank()) {
             return ResponseEntity.badRequest().header(
@@ -81,6 +65,12 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
         journey.endDate = journeyRequest.endDate
         journey.description = journeyRequest.description
 
+        if (journeyRequest.visibility == null) {
+            journey.visibility = Visibility.PRIVATE
+        }
+        else {
+            journey.visibility = journeyRequest.visibility
+        }
         journeyRepository.save(journey)
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
@@ -150,26 +140,24 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
                 "message", "Journey does not exist")
                 .body(null)
 
-       if (journey.visibility != Visibility.PUBLIC) {
-           if (journey.visibility == Visibility.DRAFT) {
-               return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
-                "message", "Journey is still a draft")
+       if (journey.visibility != Visibility.PUBLIC && journey.user.username != username) {
+           if (journey.visibility == Visibility.DRAFT ) {
+               return ResponseEntity.status(HttpStatus.FORBIDDEN)
                    .body(null)
            }
            if (journey.visibility == Visibility.FRIEND_ONLY) {
-               if (username != journey.user.username && !followService.areFriends(username, journey.user.username)) {
-                   return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
-                "message", "Journey is visible only by $username's friends")
+               if (!followService.areFriends(username, journey.user.username)) {
+                   return ResponseEntity.status(HttpStatus.FORBIDDEN)
                        .body(null)
                }
            }
            if (journey.visibility == Visibility.PRIVATE) {
-               if (username != journey.user.username) {
-                   return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
-                "message", "Journey is private")
+               if (!followService.isFollowing(username, journey.user.username)) {
+                   return ResponseEntity.status(HttpStatus.FORBIDDEN)
                        .body(null)
                }
            }
+
        }
 
         return ResponseEntity.ok().body(
@@ -184,13 +172,19 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
                 .body(null)
         }
 
-        val user = userService.findUserByUsername(requestedJourneysOwnerUsername)!!
-        var journeys = findAllByUserAndVisibilityIsIn(user, listOf(Visibility.PUBLIC, Visibility.FRIEND_ONLY))
-
-        // check if the requester and the owner are not friends. otherwise all journeys should be returned
-        if (!followService.areFriends(username, requestedJourneysOwnerUsername)) {
-            journeys = findAllByUserAndVisibility(user, Visibility.PUBLIC)
-        }
+        val journeys: List<JourneyEntity> =
+            if (!followService.areFriends(username, requestedJourneysOwnerUsername)) {
+                // check if the requester and the owner are friends. otherwise all journeys should be returned
+                findJourneyEntitiesByUserUsernameAndVisibility(username, Visibility.PUBLIC)
+            }
+            else if (username === requestedJourneysOwnerUsername) {
+                // requester requests their own journeys
+                findJourneysByUserUsername(username)
+            }
+            else {
+                // they are friends
+                findAllByUserUsernameAndVisibilityIsIn(username, listOf(Visibility.PUBLIC, Visibility.FRIEND_ONLY))
+            }
 
         return ResponseEntity.ok().body(
             journeys.map {
@@ -199,11 +193,36 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
         )
     }
 
-    fun findAllByUserAndVisibility(user: UserEntity, visibility: Visibility): List<JourneyEntity> {
-        return journeyRepository.findAllByUserAndVisibility(user, visibility)
+    fun getDrafts(username: String): ResponseEntity<List<Journey>> {
+        return ResponseEntity.ok().body(
+            findJourneyEntitiesByUserUsernameAndVisibility(username, Visibility.DRAFT)
+                .map {
+                    journeyFromEntity(it)
+                }
+        )
     }
 
-    fun findAllByUserAndVisibilityIsIn(user: UserEntity, visibilities: List<Visibility>): List<JourneyEntity> {
-        return journeyRepository.findAllByUserAndVisibilityIsIn(user, visibilities)
+    private fun findAllByUserUsernameAndVisibilityIsIn(username: String, visibilities: List<Visibility>): List<JourneyEntity> {
+        return journeyRepository.findAllByUserUsernameAndVisibilityIsIn(username, visibilities)
+    }
+
+    private fun findJourneyEntitiesByUserUsernameAndVisibility(username: String, visibility: Visibility): List<JourneyEntity> {
+        return journeyRepository.findJourneyEntitiesByUserUsernameAndVisibility(username, visibility)
+    }
+
+    fun findJourneyById(id: Long): JourneyEntity? {
+        return journeyRepository.findJourneysById(id)
+    }
+
+    fun findJourneysByUserUsername(username: String): List<JourneyEntity> {
+        return journeyRepository.findJourneysByUserUsername(username)
+    }
+
+    fun findJourneyEntitiesByUserNot(user: UserEntity): List<JourneyEntity> {
+        return journeyRepository.findJourneyEntitiesByUserNot(user)
+    }
+
+    fun journeyWithIdExists(id: Long): Boolean {
+        return findJourneyById(id) != null
     }
 }
