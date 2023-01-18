@@ -19,13 +19,13 @@ class ActivityEntity() {
     lateinit var journey: JourneyEntity
 
     @Column(name = "date", nullable = false)
-    var date: Timestamp? = Timestamp.valueOf(LocalDateTime.now())
+    var date: Timestamp? = null
 
     @Column(name = "title")
     var title: String? = ""
 
     @Column(name = "type")
-    var type: ActivityType? = ActivityType.OTHER
+    var type: ActivityType? = null
 
     @Column(name = "description")
     var description: String? = ""
@@ -33,12 +33,17 @@ class ActivityEntity() {
     @Column(name = "location")
     var location: String? = ""
 
-    constructor(postActivity: ActivityRequest, journey: JourneyEntity) : this() {
-        this.date = postActivity.date
+    constructor(activityRequest: ActivityRequest, journey: JourneyEntity) : this() {
+        this.date = activityRequest.date
         this.journey = journey
-        this.title = postActivity.title
-        this.location = postActivity.location
-        this.description = postActivity.description
-        this.type = postActivity.type!!
+        this.title = activityRequest.title
+        this.location = activityRequest.location
+        this.description = activityRequest.description
+        if (activityRequest.type == null) {
+           this.type = ActivityType.OTHER
+        }
+        else {
+            this.type = activityRequest.type
+        }
     }
 }

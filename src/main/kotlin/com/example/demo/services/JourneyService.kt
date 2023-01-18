@@ -58,9 +58,22 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
             return ResponseEntity.badRequest().body(null)
         }
 
-        val journey = JourneyEntity()
-        journey.user = userService.findUserByUsername(username)!!
-        journey.destination = destinationService.findDestinationById(journeyRequest.destinationId!!)
+        val journey: JourneyEntity
+        if (journeyRequest.id != null) {
+            if (findJourneyById(journeyRequest.id) != null){
+                journey = findJourneyById(journeyRequest.id)!!
+            }
+            else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
+            }
+        } else {
+            journey = JourneyEntity()
+            journey.user = userService.findUserByUsername(username)!!
+        }
+
+        if (journeyRequest.destinationId != null) {
+            journey.destination = destinationService.findDestinationById(journeyRequest.destinationId!!)
+        }
         journey.startDate = journeyRequest.startDate
         journey.endDate = journeyRequest.endDate
         journey.description = journeyRequest.description
@@ -173,17 +186,19 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
         }
 
         val journeys: List<JourneyEntity> =
-            if (!followService.areFriends(username, requestedJourneysOwnerUsername)) {
-                // check if the requester and the owner are friends. otherwise all journeys should be returned
-                findJourneyEntitiesByUserUsernameAndVisibility(username, Visibility.PUBLIC)
+            if (followService.areFriends(username, requestedJourneysOwnerUsername)) {
+                // they are friends
+                findAllByUserUsernameAndVisibilityIsIn(requestedJourneysOwnerUsername, listOf(Visibility.PUBLIC, Visibility.FRIEND_ONLY, Visibility.PRIVATE))
             }
             else if (username === requestedJourneysOwnerUsername) {
                 // requester requests their own journeys
-                findJourneysByUserUsername(username)
+                findJourneysByUserUsername(requestedJourneysOwnerUsername)
+            }
+            else if (followService.isFollowing(username, requestedJourneysOwnerUsername)) {
+                findAllByUserUsernameAndVisibilityIsIn(requestedJourneysOwnerUsername, listOf(Visibility.PUBLIC, Visibility.PRIVATE))
             }
             else {
-                // they are friends
-                findAllByUserUsernameAndVisibilityIsIn(username, listOf(Visibility.PUBLIC, Visibility.FRIEND_ONLY))
+                findJourneyEntitiesByUserUsernameAndVisibility(requestedJourneysOwnerUsername, Visibility.PUBLIC)
             }
 
         return ResponseEntity.ok().body(
@@ -207,19 +222,19 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
     }
 
     private fun findJourneyEntitiesByUserUsernameAndVisibility(username: String, visibility: Visibility): List<JourneyEntity> {
-        return journeyRepository.findJourneyEntitiesByUserUsernameAndVisibility(username, visibility)
+        return journeyRepository.findAllByUserUsernameAndVisibility(username, visibility)
     }
 
     fun findJourneyById(id: Long): JourneyEntity? {
-        return journeyRepository.findJourneysById(id)
+        return journeyRepository.findJourneyEntityById(id)
     }
 
     fun findJourneysByUserUsername(username: String): List<JourneyEntity> {
-        return journeyRepository.findJourneysByUserUsername(username)
+        return journeyRepository.findAllByUserUsername(username)
     }
 
-    fun findJourneyEntitiesByUserNot(user: UserEntity): List<JourneyEntity> {
-        return journeyRepository.findJourneyEntitiesByUserNot(user)
+    fun findAllByUserNotAndVisibility(user: UserEntity, visibility: Visibility): List<JourneyEntity> {
+        return journeyRepository.findAllByUserNotAndVisibility(user, visibility)
     }
 
     fun journeyWithIdExists(id: Long): Boolean {

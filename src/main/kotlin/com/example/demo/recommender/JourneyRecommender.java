@@ -7,6 +7,7 @@ import com.example.demo.entities.UserEntity;
 import com.example.demo.services.CommentService;
 import com.example.demo.services.JourneyService;
 import com.example.demo.services.UserService;
+import com.example.demo.types.Visibility;
 import com.vader.sentiment.analyzer.SentimentAnalyzer;
 import com.vader.sentiment.analyzer.SentimentPolarities;
 import lombok.RequiredArgsConstructor;
@@ -104,9 +105,9 @@ public class JourneyRecommender {
         UserEntity user = userService.findUserByUsername(username);
         Map<JourneyEntity, Double> recommendationsWithScores = new HashMap<>();
         Map<String, Double> interests = analyseCommentsByUser(user);
-        // find journeys that are not created by this user
+        // find journeys that are not created by this user and are accessible by him
         assert user != null;
-        List<JourneyEntity> journeys = journeyService.findJourneyEntitiesByUserNot(user);
+        List<JourneyEntity> journeys = journeyService.findAllByUserNotAndVisibility(user, Visibility.PUBLIC);
         // find scores for journeys
         for (JourneyEntity journey: journeys) {
             double score = 0.0;

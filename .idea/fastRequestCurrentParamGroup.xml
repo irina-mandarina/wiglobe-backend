@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="fastRequestCurrentParamGroup">
-    <option name="className" value="com.example.demo.controllers.JourneyController" />
-    <option name="method" value="getDrafts" />
+    <option name="className" value="com.example.demo.controllers.FollowController" />
+    <option name="method" value="getFriends" />
     <option name="module" value="tuesthesis" />
-    <option name="originUrl" value="/{username}/journeys/drafts" />
+    <option name="originUrl" value="/users/{username}/friends" />
+    <option name="pathParamMap">
+      <map>
+        <entry key="username">
+          <value>
+            <Object />
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="returnDocument" value="{&#10;&#9;&quot;status&quot;:{},&#10;&#9;&quot;body&quot;:{}&#10;}" />
-    <option name="url" value="/{username}/journeys/drafts" />
+    <option name="url" value="/users/kiril/friends" />
   </component>
 </project>
