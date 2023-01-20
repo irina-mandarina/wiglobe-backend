@@ -25,7 +25,7 @@ class FollowService(private val followRepository: FollowRepository, private val 
                 "message", "Username does not exist").body(null)
         }
 
-        val follow = findByFollowerUsernameAndAndFollowedUsername(username, usernameBeingFollowed)
+        val follow = findByFollowerUsernameAndFollowedUsername(username, usernameBeingFollowed)
             ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
                 "message", "$username is not following them").body(null)
 
@@ -35,19 +35,19 @@ class FollowService(private val followRepository: FollowRepository, private val 
     }
 
     fun saveFollow(followRequest: FollowRequestEntity): FollowEntity? {
-        if (findByFollowerUsernameAndAndFollowedUsername(followRequest.requester.username, followRequest.receiver.username) != null) {
+        if (findByFollowerUsernameAndFollowedUsername(followRequest.requester.username, followRequest.receiver.username) != null) {
             return null
         }
         val follow = FollowEntity(followRequest)
         return followRepository.save(follow)
     }
 
-    fun findByFollowerUsernameAndAndFollowedUsername(follower: String, followed: String): FollowEntity? {
-        return followRepository.findByFollowerUsernameAndAndFollowedUsername(follower, followed)
+    fun findByFollowerUsernameAndFollowedUsername(follower: String, followed: String): FollowEntity? {
+        return followRepository.findByFollowerUsernameAndFollowedUsername(follower, followed)
     }
 
     fun areFriends(username1: String, username2: String): Boolean {
-        if (findByFollowerUsernameAndAndFollowedUsername(username1, username2) != null && findByFollowerUsernameAndAndFollowedUsername(username2, username1) != null) {
+        if (findByFollowerUsernameAndFollowedUsername(username1, username2) != null && findByFollowerUsernameAndFollowedUsername(username2, username1) != null) {
             return true
         }
         return false
@@ -77,11 +77,13 @@ class FollowService(private val followRepository: FollowRepository, private val 
         return ResponseEntity.ok().body(
             findAllByFollowerUsernameOrderByFollowDate(username)
                 .filter {
-                    areFriends(it.followed.username, it.follower.username)
+                    // for every person that USERNAME is following,
+                    // check if they are following USERNAME
+                    isFollowing(it.followed.username, username)
                 }
                 .map {
                     userService.userDetails(
-                        it.follower
+                        it.followed
                     )
                 }
         )

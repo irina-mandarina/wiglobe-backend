@@ -25,15 +25,15 @@ To do:
 ~~data classes for responses~~
 * notifications
 * user details
-* default config like visibility
+* default config like visibility (settings)
 
 Front end to do list:
 1. ~~finish follow requests~~
-2. search destinations
-3. journey adder - post to drafts
+2. ~~search destinations~~
+3. ~~journey adder - post to drafts~~
 4. activity adder - add more
 5. ~~comments under journeys~~
-6. single journey make it look ok + add activity carousel
+6. ~~single journey make it look ok + add activity carousel~~
 7. ~~reviews under single destination~~
 8. ~~comment adder~~
 9. ~~review adder~~
@@ -43,9 +43,25 @@ Front end to do list:
 13. notifications (after impl in the backend)
 14. explore - destinations, search, trending journeys
 15. ~~vuelidate / vee-validate~~
-16. notification pop ups\
+16. notification pop ups
+17. application config
+18. axios interceptors
+19. journey manager
+
+Recommendations:
+* cosine similarity: https://stackoverflow.com/questions/520241/how-do-i-calculate-the-cosine-similarity-of-two-vectors
+* normalise the compound scores of each user using the total of their comments
+* DB!!
+
+https://sylhare.github.io/2021/07/19/Openapi-swagger-codegen-with-kotlin.html
 
 must haves:
 1. ~~post journey~~
 2. save user profile from google
-3. 
+3. session
+4. jwt
+5. notifications
+6. tests
+7. images: https://www.bezkoder.com/vue-upload-image-axios/ relative!
+8. documentation
+9. rec: weight of params

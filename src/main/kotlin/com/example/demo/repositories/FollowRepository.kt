@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface FollowRepository: JpaRepository<FollowEntity, Long> {
-    fun findByFollowerUsernameAndAndFollowedUsername(follower: String, followed: String): FollowEntity?
     fun findAllByFollowedUsernameOrderByFollowDate(username: String): List<FollowEntity>
     fun findAllByFollowerUsernameOrderByFollowDate(username: String): List<FollowEntity>
     fun findByFollowerUsernameAndFollowedUsername(follower: String, followed: String): FollowEntity?
