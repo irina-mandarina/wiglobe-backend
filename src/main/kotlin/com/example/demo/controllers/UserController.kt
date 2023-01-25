@@ -5,8 +5,11 @@ import com.example.demo.models.requestModels.SignUpRequest
 import com.example.demo.models.responseModels.SignUpResponse
 import com.example.demo.models.responseModels.UserDetails
 import com.example.demo.services.UserService
+import com.example.demo.types.Gender
+import com.example.demo.types.ProfilePrivacy
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.sql.Date
 
 @RestController
 @CrossOrigin
@@ -32,19 +35,33 @@ class UserController(private val userService: UserService) {
         return userService.getUserDetails(username, otherUserUsername)
     }
 
-
-//    @GetMapping("/users/details") // ??
-//    fun getMyDetails(@RequestHeader username: String): ResponseEntity<String> {
-//        return userService.getUserDetails(username)
-//    }
-
     @DeleteMapping("/users/{username}")
     fun deleteAccount(@RequestHeader username: String): ResponseEntity<String> {
         return userService.deleteAccount(username)
     }
 
     @PutMapping("/users/{username}/bio")
-    fun editBio(@RequestHeader username: String, @RequestBody bio: String): ResponseEntity<String> {
+    fun editBio(@RequestHeader username: String, @RequestBody bio: String): ResponseEntity<UserDetails> {
         return userService.setBio(username, bio)
+    }
+
+    @PutMapping("/users/{username}/residence")
+    fun editResidence(@RequestHeader username: String, @RequestBody destinationId: Long): ResponseEntity<UserDetails> {
+        return userService.setResidence(username, destinationId)
+    }
+
+    @PutMapping("/users/{username}/privacy")
+    fun editProfilePrivacy(@RequestHeader username: String, @RequestBody privacy: ProfilePrivacy): ResponseEntity<UserDetails> {
+        return userService.setProfilePrivacy(username, privacy)
+    }
+
+    @PutMapping("/users/{username}/gender")
+    fun editGender(@RequestHeader username: String, @RequestBody gender: Gender): ResponseEntity<UserDetails> {
+        return userService.setGender(username, gender)
+    }
+
+    @PutMapping("/users/{username}/birthdate")
+    fun editBirthdate(@RequestHeader username: String, @RequestBody birthdate: Date): ResponseEntity<UserDetails> {
+        return userService.setBirthdate(username, birthdate)
     }
 }

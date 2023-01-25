@@ -33,18 +33,9 @@ class UserEntity() {
     @Column(name = "last_name")
     var lastName: String? = ""
 
-    @Column(name = "biography")
-    var biography: String = ""
-
-    @Column(name = "gender")
-    var gender: Gender = Gender.OTHER
-
-    @Serializable(TimestampSerializer::class)
-    @Column(name = "registration_date")
-    var registrationDate: Timestamp = Timestamp.valueOf(LocalDateTime.now())
-
-    @Column(name = "birthdate")
-    var birthdate: Date? = Date.valueOf(LocalDate.now())
+    @OneToOne
+    @JoinColumn(name = "details_id", referencedColumnName = "id")
+    lateinit var userDetails: UserDetailsEntity
 
     @OneToMany(mappedBy="user")
     var journeys: List<JourneyEntity> = listOf()
@@ -71,9 +62,14 @@ class UserEntity() {
         this.username = signUpRequest.username
         this.email = signUpRequest.email
         this.password = signUpRequest.password
-        this.birthdate = signUpRequest.birthdate
         this.firstName = signUpRequest.firstName
         this.lastName = signUpRequest.lastName
+    }
+
+    fun isFollowing(userEntity: UserEntity): Boolean {
+        return this.following.any {
+            it.followed === userEntity
+        }
     }
 }
 

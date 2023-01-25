@@ -4,16 +4,20 @@ import com.example.demo.entities.UserEntity
 import com.example.demo.repositories.UserRepository
 import com.example.demo.models.requestModels.LogInRequest
 import com.example.demo.models.requestModels.SignUpRequest
+import com.example.demo.models.responseModels.Destination
 import com.example.demo.models.responseModels.SignUpResponse
 import com.example.demo.models.responseModels.UserDetails
 import com.example.demo.models.responseModels.UserNames
-import org.springframework.http.HttpHeaders
+import com.example.demo.types.Gender
+import com.example.demo.types.ProfilePrivacy
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
+import java.sql.Date
 
 @Service
- class UserService(private val userRepository: UserRepository) {
+ class UserService(private val userRepository: UserRepository, private val userDetailsService: UserDetailsService,
+                   private val destinationService: DestinationService) {
 
     fun userNames(user: UserEntity): UserNames {
         return UserNames(
@@ -24,14 +28,21 @@ import org.springframework.stereotype.Service
     }
 
     fun userDetails(user: UserEntity): UserDetails {
+//        val userDetails: UserDetailsEntity = userDetailsService.findByUserUsername(user.username)
+        var residence: Destination? = null
+        if (user.userDetails.residence !== null) {
+            residence = destinationService.destinationFromEntity(user.userDetails.residence!!)
+        }
         return UserDetails(
             user.username,
             user.firstName,
             user.lastName,
-            user.birthdate,
-            user.biography,
-            user.registrationDate,
-            user.gender
+            user.userDetails.birthdate,
+            user.userDetails.biography,
+            user.userDetails.registrationTimestamp,
+            user.userDetails.gender,
+            residence,
+            user.userDetails.privacy
         )
     }
 
@@ -41,10 +52,6 @@ import org.springframework.stereotype.Service
 
     fun userWithEmailExists(email: String): Boolean {
         return ((userRepository.findUserByEmail(email)) != null)
-    }
-
-    fun findUserById(id: Long): UserEntity? {
-        return userRepository.findUserById(id)
     }
 
     fun findUserByUsername(username: String): UserEntity? {
@@ -97,9 +104,10 @@ import org.springframework.stereotype.Service
                 )
         }
 
-        val user = UserEntity(signUpRequest)
+        var user = UserEntity(signUpRequest)
 
-        userRepository.save(user)
+        user = userRepository.save(user)
+        userDetailsService.save(signUpRequest)
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
             SignUpResponse(
@@ -131,20 +139,22 @@ import org.springframework.stereotype.Service
 
     }
 
-    fun setBio(username: String, bio: String): ResponseEntity<String> {
+    fun setBio(username: String, bio: String): ResponseEntity<UserDetails> {
         return if (!userWithUsernameExists(username)) {
             ResponseEntity.status(HttpStatus.NOT_FOUND).header(
                 "message", "User with username: " + username + "does not exist")
                 .body(null)
         } else {
-            val user = findUserByUsername(username)
-            if (user != null) {
-                user.biography = bio
-                userRepository.save(user)
-            }
-            ResponseEntity.ok().header(
-                "message", "Changed biography for account with username: $username to: $bio")
-                .body(bio)
+            val userDetails = userDetailsService.findByUserUsername(username)
+            userDetails.biography = bio
+            userDetailsService.save(userDetails)
+
+            ResponseEntity.ok()
+                .body(
+                    userDetails(
+                        findUserByUsername(username)!!
+                    )
+                )
         }
     }
 
@@ -155,12 +165,75 @@ import org.springframework.stereotype.Service
                 "message", "User with username: " + username + "does not exist")
                 .body(null)
         }
-
-        val user = findUserByUsername(otherUserUsername)!!
+        val requestedDetailsOwner = findUserByUsername(otherUserUsername)!!
+        if (requestedDetailsOwner.userDetails.privacy == ProfilePrivacy.PRIVATE) {
+            if (! findUserByUsername(username)!!.isFollowing(requestedDetailsOwner)) {
+                // can't
+                return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT).body(
+                    UserDetails(
+                        requestedDetailsOwner.username,
+                        requestedDetailsOwner.firstName,
+                        requestedDetailsOwner.lastName,
+                        null, null, null,
+                        requestedDetailsOwner.userDetails.gender, null,
+                        requestedDetailsOwner.userDetails.privacy
+                    )
+                )
+            }
+            // else ok
+        }
         return ResponseEntity.ok().body(
             userDetails(
-                user
+                requestedDetailsOwner
             )
         )
+    }
+
+    fun setResidence(username: String, destinationId: Long): ResponseEntity<UserDetails> {
+        val userDetails = userDetailsService.findByUserUsername(username)
+        userDetails.residence = destinationService.findDestinationById(destinationId)
+        userDetailsService.save(userDetails)
+        return ResponseEntity.ok()
+            .body(
+                userDetails(
+                    findUserByUsername(username)!!
+                )
+            )
+    }
+
+    fun setProfilePrivacy(username: String, privacy: ProfilePrivacy): ResponseEntity<UserDetails> {
+        val userDetails = userDetailsService.findByUserUsername(username)
+        userDetails.privacy = privacy
+        userDetailsService.save(userDetails)
+        return ResponseEntity.ok()
+            .body(
+                userDetails(
+                    findUserByUsername(username)!!
+                )
+            )
+    }
+
+    fun setBirthdate(username: String, birthdate: Date): ResponseEntity<UserDetails> {
+        val userDetails = userDetailsService.findByUserUsername(username)
+        userDetails.birthdate = birthdate
+        userDetailsService.save(userDetails)
+        return ResponseEntity.ok()
+            .body(
+                userDetails(
+                    findUserByUsername(username)!!
+                )
+            )
+    }
+
+    fun setGender(username: String, gender: Gender): ResponseEntity<UserDetails> {
+        val userDetails = userDetailsService.findByUserUsername(username)
+        userDetails.gender = gender
+        userDetailsService.save(userDetails)
+        return ResponseEntity.ok()
+            .body(
+                userDetails(
+                    findUserByUsername(username)!!
+                )
+            )
     }
 }
