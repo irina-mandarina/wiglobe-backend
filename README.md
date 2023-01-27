@@ -24,7 +24,7 @@ To do:
 * ? follow recommendations (based on mutual friends)
 ~~data classes for responses~~
 * notifications
-* user details
+* ~~user details~~
 * default config like visibility (settings)
 
 Front end to do list:

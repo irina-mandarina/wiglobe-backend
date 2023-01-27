@@ -28,7 +28,7 @@ class ActivityService(
         )
     }
     fun addActivityToJourney(username: String, activityRequest: ActivityRequest,
-                             journeyId: Long): ResponseEntity<String> {
+                             journeyId: Long): ResponseEntity<Activity> {
         if (!userService.userWithUsernameExists(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
                 "message","Username does not exist")
@@ -47,9 +47,7 @@ class ActivityService(
         activityRepository.save(activity)
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
-            Json.encodeToString(
-                activityFromEntity(activity)
-            )
+            activityFromEntity(activity)
         )
     }
 

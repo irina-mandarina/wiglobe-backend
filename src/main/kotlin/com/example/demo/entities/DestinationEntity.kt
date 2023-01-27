@@ -33,7 +33,7 @@ class DestinationEntity {
 
     @ManyToOne
     @JoinColumn(name = "country_code")
-    lateinit var country: CountryEntity
+    var country: CountryEntity? = null
 
     @OneToMany(mappedBy = "destination")
     var reviews: List<ReviewEntity> = listOf()

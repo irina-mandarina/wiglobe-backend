@@ -11,4 +11,5 @@ interface CommentRepository: JpaRepository<CommentEntity, Long> {
     fun findCommentsByJourney(journey: JourneyEntity): List<CommentEntity>
     fun findCommentById(id: Long): CommentEntity?
     fun findAllByUser(user: UserEntity): List<CommentEntity>
+    fun findAllByUserAndIdGreaterThan(user: UserEntity, id: Long): List<CommentEntity>
 }

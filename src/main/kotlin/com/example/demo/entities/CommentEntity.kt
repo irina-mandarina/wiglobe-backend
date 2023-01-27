@@ -11,7 +11,7 @@ class CommentEntity() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    var id: Long? = null
+    var id: Long = -1
 
     @JoinColumn(name = "journey_id", nullable = false)
     @ManyToOne

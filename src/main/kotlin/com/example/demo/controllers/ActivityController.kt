@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*
 class ActivityController(private val activityService: ActivityService) {
     @PostMapping("/journeys/{journeyId}/activities")
     fun addActivityToJourney(@RequestHeader username: String, @RequestBody activityRequest: ActivityRequest,
-                             @PathVariable journeyId: Long): ResponseEntity<String> {
+                             @PathVariable journeyId: Long): ResponseEntity<Activity> {
         return activityService.addActivityToJourney(username, activityRequest, journeyId)
     }
 

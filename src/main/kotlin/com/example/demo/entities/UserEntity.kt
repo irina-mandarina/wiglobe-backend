@@ -71,6 +71,12 @@ class UserEntity() {
             it.followed === userEntity
         }
     }
+
+    fun isFriendsWith(userEntity: UserEntity): Boolean {
+        return this.followers.any {
+            isFollowing(it.follower)
+        }
+    }
 }
 
 

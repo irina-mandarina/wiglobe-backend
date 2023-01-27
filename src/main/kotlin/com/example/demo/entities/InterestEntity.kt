@@ -4,22 +4,32 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "interests")
-class InterestEntity {
+class InterestEntity() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    var id: Long? = null
+    var id: Long = -1
 
     @JoinColumn(name = "user_id", nullable = false)
-    @OneToOne
+    @ManyToOne
     lateinit var user: UserEntity
 
-    @Column(name = "key")
+    @Column(name = "interest_key")
     lateinit var key: String
 
     @Column(name = "value")
     var value: Double = 0.0
 
     @Column(name = "count")
-    val count: Int = 0
+    var count: Int = 0
+
+    @Column(name = "last_comment_id")
+    var lastCommentId: Long = -1
+
+    constructor(user: UserEntity, key: String, value: Double): this() {
+        this.value = value
+        this.key = key
+        this.user = user
+        this.count = 0
+    }
 }

@@ -11,7 +11,10 @@ class CountryService(private val countryRepository: CountryRepository) {
         return countryRepository.findCountryByCountryCode(countryCode)
     }
 
-    fun countryFromEntity(country: CountryEntity): Country {
+    fun countryFromEntity(country: CountryEntity?): Country? {
+        if (country == null) {
+            return null
+        }
         return Country (
             country.countryCode,
             country.countryName,

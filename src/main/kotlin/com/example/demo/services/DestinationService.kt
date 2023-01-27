@@ -20,7 +20,7 @@ class DestinationService(private val destinationRepository: DestinationRepositor
             destinationEntity.latitude,
             destinationEntity.longitude,
             destinationEntity.name,
-            countryService.countryFromEntity(countryService.findCountryByCountryCode(destinationEntity.country.countryCode)),
+            countryService.countryFromEntity(destinationEntity.country),
             featureCodeService.findFeatureClassMeaning(destinationEntity.featureClass),
             featureCodeService.findFeatureCodeMeaning(destinationEntity.featureCode)
         )
@@ -36,11 +36,19 @@ class DestinationService(private val destinationRepository: DestinationRepositor
     }
 
     fun destinationSearchResultFromEntity(destinationEntity: DestinationEntity): DestinationSearchResult {
+        if (destinationEntity.country == null) {
+            return DestinationSearchResult(
+                destinationEntity.id!!,
+                featureCodeService.findFeatureClassMeaning(destinationEntity.featureClass),
+                destinationEntity.name,
+                null
+            )
+        }
         return DestinationSearchResult(
             destinationEntity.id!!,
             featureCodeService.findFeatureClassMeaning(destinationEntity.featureClass),
             destinationEntity.name,
-            destinationEntity.country.countryName
+            destinationEntity.country!!.countryName
         )
     }
 

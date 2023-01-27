@@ -18,7 +18,7 @@ class CommentService(
 
     fun commentFromEntity(commentEntity: CommentEntity): Comment {
         return Comment(
-            commentEntity.id!!,
+            commentEntity.id,
             userService.userNames(commentEntity.user),
             commentEntity.datePosted,
             commentEntity.content
@@ -154,6 +154,10 @@ class CommentService(
 
     fun findAllByUser(user: UserEntity): List<CommentEntity> {
         return commentRepository.findAllByUser(user)
+    }
+
+    fun findAllByUserAndIdGreaterThan(user: UserEntity, id: Long): List<CommentEntity> {
+        return commentRepository.findAllByUserAndIdGreaterThan(user, id)
     }
 
 }
