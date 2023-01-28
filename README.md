@@ -1,8 +1,8 @@
 # tuesthesis
 
 Qs:
-1. posting to drafts on description change
-
+1. names of tests
+2. services return response entity
 
 To do:
 * ~~get user (others)~~
@@ -62,11 +62,12 @@ must haves:
 4. repair get journeys by user (not showing drafts)
 5. session
 6. jwt
-7. notifications
-8. tests
-9. images: https://www.bezkoder.com/vue-upload-image-axios/ relative!
-10. documentation
-11. rec: weight of params
+7. security: checks for username there
+8. notifications
+9. tests
+10. images: https://www.bezkoder.com/vue-upload-image-axios/ relative!
+11. documentation
+12. rec: weight of params
 
 Future improvements (good to have):
 * elastic search db for destinations

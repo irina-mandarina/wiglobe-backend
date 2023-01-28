@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @CrossOrigin
-class JourneyController(private val journeyService: JourneyService, private val commentService: CommentService,
-                        private val userService: UserService, private val journeyScoreCalculator: JourneyRecommender
+class JourneyController(private val journeyService: JourneyService,
+                        private val journeyScoreCalculator: JourneyRecommender
 ) {
     @PostMapping("/journeys")
     fun createJourney(@RequestHeader username: String,
@@ -27,8 +27,8 @@ class JourneyController(private val journeyService: JourneyService, private val 
     }
 
     @PutMapping("/journeys/{journeyId}")
-    fun editJourney(@RequestHeader username: String, @RequestBody journeyRequest: JourneyRequest,
-                    @PathVariable journeyId: Long): ResponseEntity<Journey> {
+    fun editJourney(@RequestHeader username: String, @PathVariable journeyId: Long,
+                    @RequestBody journeyRequest: JourneyRequest): ResponseEntity<Journey> {
         return journeyService.editJourney(username, journeyId, journeyRequest)
     }
 
