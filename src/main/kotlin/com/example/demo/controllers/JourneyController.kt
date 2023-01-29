@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@CrossOrigin
+@CrossOrigin("http://localhost:3000")
 class JourneyController(private val journeyService: JourneyService,
                         private val journeyScoreCalculator: JourneyRecommender
 ) {

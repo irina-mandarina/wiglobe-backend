@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@CrossOrigin
+@CrossOrigin("http://localhost:3000")
 class ReviewController(private val reviewService: ReviewService) {
     @GetMapping("/destinations/{destinationId}/reviews")
     fun getReviewsForDestination(@RequestHeader username: String,

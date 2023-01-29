@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@CrossOrigin
+@CrossOrigin("http://localhost:3000")
 class DestinationController(private val destinationService: DestinationService) {
     @GetMapping("/destinations/{destinationId}")
     fun getDestination(@PathVariable destinationId: Long): ResponseEntity<Destination> {

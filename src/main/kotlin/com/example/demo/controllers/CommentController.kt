@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@CrossOrigin
+@CrossOrigin("http://localhost:3000")
 class CommentController(private val commentService: CommentService) {
     @GetMapping("/journeys/{journeyId}/comments")
     fun getCommentsForJourney(@RequestHeader username: String,

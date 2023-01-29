@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@CrossOrigin
+@CrossOrigin("http://localhost:3000")
 class ActivityController(private val activityService: ActivityService) {
     @PostMapping("/journeys/{journeyId}/activities")
     fun addActivityToJourney(@RequestHeader username: String, @RequestBody activityRequest: ActivityRequest,

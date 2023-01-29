@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*
 import java.sql.Date
 
 @RestController
-@CrossOrigin
+@CrossOrigin("http://localhost:3000")
 class UserController(private val userService: UserService) {
     @PostMapping("/users/login")
     fun logIn(@RequestBody logInRequest: LogInRequest): ResponseEntity<UserDetails> {
