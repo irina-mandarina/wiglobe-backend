@@ -2,6 +2,7 @@ package com.example.demo.controllers
 
 import com.example.demo.models.requestModels.LogInRequest
 import com.example.demo.models.requestModels.SignUpRequest
+import com.example.demo.models.responseModels.LogInResponse
 import com.example.demo.models.responseModels.SignUpResponse
 import com.example.demo.models.responseModels.UserDetails
 import com.example.demo.services.UserService
@@ -15,7 +16,7 @@ import java.sql.Date
 @CrossOrigin("http://localhost:3000")
 class UserController(private val userService: UserService) {
     @PostMapping("/users/login")
-    fun logIn(@RequestBody logInRequest: LogInRequest): ResponseEntity<UserDetails> {
+    fun logIn(@RequestBody logInRequest: LogInRequest): ResponseEntity<LogInResponse> {
         return userService.logIn(logInRequest)
     }
 

@@ -4,10 +4,7 @@ import com.example.demo.entities.UserEntity
 import com.example.demo.repositories.UserRepository
 import com.example.demo.models.requestModels.LogInRequest
 import com.example.demo.models.requestModels.SignUpRequest
-import com.example.demo.models.responseModels.Destination
-import com.example.demo.models.responseModels.SignUpResponse
-import com.example.demo.models.responseModels.UserDetails
-import com.example.demo.models.responseModels.UserNames
+import com.example.demo.models.responseModels.*
 import com.example.demo.types.Gender
 import com.example.demo.types.ProfilePrivacy
 import org.springframework.http.HttpStatus
@@ -17,7 +14,7 @@ import java.sql.Date
 
 @Service
  class UserService(private val userRepository: UserRepository, private val userDetailsService: UserDetailsService,
-                   private val destinationService: DestinationService) {
+                   private val destinationService: DestinationService, private val sessionService: SessionService) {
 
     fun userNames(user: UserEntity): UserNames {
         return UserNames(
@@ -58,7 +55,7 @@ import java.sql.Date
         return userRepository.findUserByUsername(username)
     }
 
-    fun logIn(logInRequest: LogInRequest): ResponseEntity<UserDetails> {
+    fun logIn(logInRequest: LogInRequest): ResponseEntity<LogInResponse> {
         if (userWithUsernameExists(logInRequest.username!!)) {
             val user = findUserByUsername(logInRequest.username)!!
             return if (user.password != logInRequest.password) {
@@ -69,8 +66,11 @@ import java.sql.Date
                 ResponseEntity.ok().header(
                     "message", "Successfully logged in")
                     .body(
-                        userDetails(
-                            user
+                        LogInResponse(
+                            userDetails(
+                                user
+                            ),
+                            sessionService.issueJWT(logInRequest.username)
                         )
                     )
             }
