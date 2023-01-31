@@ -10,25 +10,25 @@ import org.springframework.web.bind.annotation.*
 @CrossOrigin("http://localhost:3000")
 class ReviewController(private val reviewService: ReviewService) {
     @GetMapping("/destinations/{destinationId}/reviews")
-    fun getReviewsForDestination(@RequestHeader username: String,
+    fun getReviewsForDestination(@RequestAttribute username: String,
                                  @PathVariable destinationId: Long): ResponseEntity<List<Review>> {
         return reviewService.getReviewsForDestination(username, destinationId)
     }
 
     @PostMapping("/destinations/{destinationId}/reviews")
-    fun reviewDestination(@RequestHeader username: String, @PathVariable destinationId: Long,
+    fun reviewDestination(@RequestAttribute username: String, @PathVariable destinationId: Long,
                       @RequestBody reviewRequest: ReviewRequest): ResponseEntity<Review> {
         return reviewService.reviewDestination(username, destinationId, reviewRequest)
     }
 
     @PutMapping("/destinations/{destinationId}/reviews/{reviewId}")
-    fun editReview(@RequestHeader username: String, @PathVariable reviewId: Long,
+    fun editReview(@RequestAttribute username: String, @PathVariable reviewId: Long,
                    @RequestBody reviewRequest: ReviewRequest): ResponseEntity<Review> {
         return reviewService.editReview(username, reviewId, reviewRequest)
     }
 
     @DeleteMapping("/destinations/{destinationId}/reviews/{reviewId}")
-    fun deleteReview(@RequestHeader username: String, @PathVariable destinationId: Long,
+    fun deleteReview(@RequestAttribute username: String, @PathVariable destinationId: Long,
                      @PathVariable reviewId: Long): ResponseEntity<String> {
         return reviewService.deleteReview(username, reviewId)
     }

@@ -26,7 +26,7 @@ class FollowController(private val followService: FollowService) {
     }
 
     @DeleteMapping("/users/{username}/followers/{usernameBeingFollowed}")
-    fun unfollow(@RequestHeader username: String, @PathVariable("usernameBeingFollowed") usernameBeingFollowed: String): ResponseEntity<String> {
+    fun unfollow(@RequestAttribute username: String, @PathVariable("usernameBeingFollowed") usernameBeingFollowed: String): ResponseEntity<String> {
         return followService.unfollow(username, usernameBeingFollowed)
     }
 }

@@ -15,31 +15,31 @@ class JourneyController(private val journeyService: JourneyService,
                         private val journeyScoreCalculator: JourneyRecommender
 ) {
     @PostMapping("/journeys")
-    fun createJourney(@RequestHeader username: String,
+    fun createJourney(@RequestAttribute username: String,
                       @RequestBody journeyRequest: JourneyRequest): ResponseEntity<Journey?>  {
         return journeyService.createJourney(username, journeyRequest)
     }
 
     @DeleteMapping("/journeys/{journeyId}")
-    fun deleteJourney(@RequestHeader username: String,
+    fun deleteJourney(@RequestAttribute username: String,
                       @PathVariable journeyId: Long): ResponseEntity<String>  {
         return journeyService.deleteJourney(username, journeyId)
     }
 
     @PutMapping("/journeys/{journeyId}")
-    fun editJourney(@RequestHeader username: String, @PathVariable journeyId: Long,
+    fun editJourney(@RequestAttribute username: String, @PathVariable journeyId: Long,
                     @RequestBody journeyRequest: JourneyRequest): ResponseEntity<Journey> {
         return journeyService.editJourney(username, journeyId, journeyRequest)
     }
 
     @GetMapping("/journeys/{journeyId}")
-    fun getJourney(@RequestHeader username: String,
+    fun getJourney(@RequestAttribute username: String,
                    @PathVariable journeyId: Long): ResponseEntity<Journey> {
         return journeyService.getJourney(username, journeyId)
     }
 
     @GetMapping("/journeys")
-    fun getJourneyRecommendations(@RequestHeader username: String): List<Journey> {
+    fun getJourneyRecommendations(@RequestAttribute username: String): List<Journey> {
         val journeyRecommendations = journeyScoreCalculator.recommendForUser(username)
             .toList().sortedByDescending { (_, value) -> value}.toMap()
 
@@ -52,13 +52,13 @@ class JourneyController(private val journeyService: JourneyService,
     }
 
     @GetMapping("/{username}/journeys")
-    fun getJourneysByUser(@RequestHeader username: String,
+    fun getJourneysByUser(@RequestAttribute username: String,
                           @PathVariable("username") requestedJourneysOwnerUsername: String): ResponseEntity<List<Journey>> {
         return journeyService.getJourneysByUser(username, requestedJourneysOwnerUsername)
     }
 
     @GetMapping("/{username}/journeys/drafts")
-    fun getDrafts(@RequestHeader username: String): ResponseEntity<List<Journey>> {
+    fun getDrafts(@RequestAttribute username: String): ResponseEntity<List<Journey>> {
         return journeyService.getDrafts(username)
     }
 }
