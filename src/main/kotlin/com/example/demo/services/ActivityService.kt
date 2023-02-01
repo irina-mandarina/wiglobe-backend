@@ -29,12 +29,6 @@ class ActivityService(
     }
     fun addActivityToJourney(username: String, activityRequest: ActivityRequest,
                              journeyId: Long): ResponseEntity<Activity> {
-        if (!userService.userWithUsernameExists(username)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
-                "message","Username does not exist")
-                .body(null)
-        }
-
         if (!journeyService.journeyWithIdExists(journeyId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
                 "message","Journey does not exist")
@@ -53,12 +47,6 @@ class ActivityService(
 
     fun editActivityForJourney(username: String, activityRequest: ActivityRequest, journeyId: Long,
                                activityId: Long): ResponseEntity<Activity> {
-        if (!userService.userWithUsernameExists(username)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
-                "message","Username does not exist")
-                .body(null)
-        }
-
         if (!journeyService.journeyWithIdExists(journeyId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
                 "message","Journey does not exist")
@@ -93,12 +81,6 @@ class ActivityService(
     }
 
     fun deleteActivityFromJourney(username: String, journeyId: Long, activityId: Long): ResponseEntity<String> {
-        if (!userService.userWithUsernameExists(username)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
-                "message","Username does not exist")
-                .body(null)
-        }
-
         if (!journeyService.journeyWithIdExists(journeyId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
                 "message","Journey does not exist")
@@ -134,10 +116,6 @@ class ActivityService(
     }
 
     fun getActivitiesForJourney(username: String, journeyId: Long): ResponseEntity<List<Activity>> {
-        if (!userService.userWithUsernameExists(username)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null)
-        }
-
         if (!journeyService.journeyWithIdExists(journeyId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
         }

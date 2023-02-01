@@ -20,6 +20,7 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
         return Journey (
             journeyEntity.id!!,
             userService.userNames(journeyEntity.user),
+            journeyEntity.postedOn,
             journeyEntity.startDate,
             journeyEntity.endDate,
             journeyEntity.description,
@@ -39,18 +40,6 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
     }
 
     fun createJourney(username: String, journeyRequest: JourneyRequest): ResponseEntity<Journey?> {
-        if (username.isBlank()) {
-            return ResponseEntity.badRequest().header(
-                "message", "Missing request parameter: username")
-                .body(null)
-        }
-
-        if (!userService.userWithUsernameExists(username)) {
-            return ResponseEntity.badRequest().header(
-                "message", "Username does not exist")
-                .body(null)
-        }
-
         if (journeyRequest.visibility != Visibility.DRAFT &&
             (journeyRequest.startDate == null || journeyRequest.endDate == null || journeyRequest.destinationId == null)
         ){
@@ -92,12 +81,6 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
     }
 
     fun deleteJourney(username: String, journeyId: Long): ResponseEntity<String> {
-        if (!userService.userWithUsernameExists(username)) {
-            return ResponseEntity.badRequest().header(
-                "message", "Username does not exist")
-                .body(null)
-        }
-
         val journey: JourneyEntity = findJourneyById(journeyId)
             ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
                 "message", "Journey does not exist")
@@ -114,12 +97,6 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
         journeyId: Long,
         journeyRequest: JourneyRequest
     ): ResponseEntity<Journey> {
-        if (!userService.userWithUsernameExists(username)) {
-            return ResponseEntity.badRequest().header(
-                "message", "Username does not exist")
-                .body(null)
-        }
-
         val journey: JourneyEntity = findJourneyById(journeyId)
             ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
                 "message", "Journey does not exist")
@@ -179,20 +156,20 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
     }
 
     fun getJourneysByUser(username: String, requestedJourneysOwnerUsername: String): ResponseEntity<List<Journey>> {
-        if (!userService.userWithUsernameExists(username) || !userService.userWithUsernameExists(requestedJourneysOwnerUsername)) {
+        if (!userService.userWithUsernameExists(requestedJourneysOwnerUsername)) {
             return ResponseEntity.badRequest().header(
                 "message", "Username does not exist")
                 .body(null)
         }
 
         val journeys: List<JourneyEntity> =
-            if (followService.areFriends(username, requestedJourneysOwnerUsername)) {
-                // they are friends
-                findAllByUserUsernameAndVisibilityIsIn(requestedJourneysOwnerUsername, listOf(Visibility.PUBLIC, Visibility.FRIEND_ONLY, Visibility.PRIVATE))
-            }
-            else if (username === requestedJourneysOwnerUsername) {
+            if (username == requestedJourneysOwnerUsername) {
                 // requester requests their own journeys
                 findAllByUserUsername(requestedJourneysOwnerUsername)
+            }
+            else if (followService.areFriends(username, requestedJourneysOwnerUsername)) {
+                // they are friends
+                findAllByUserUsernameAndVisibilityIsIn(requestedJourneysOwnerUsername, listOf(Visibility.PUBLIC, Visibility.FRIEND_ONLY, Visibility.PRIVATE))
             }
             else if (followService.isFollowing(username, requestedJourneysOwnerUsername)) {
                 findAllByUserUsernameAndVisibilityIsIn(requestedJourneysOwnerUsername, listOf(Visibility.PUBLIC, Visibility.PRIVATE))

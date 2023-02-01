@@ -60,9 +60,8 @@ must haves:
 2. save user profile from google
 3. lock user profiles
 4. repair get journeys by user (not showing drafts)
-5. session
-6. jwt
-7. security: checks for username there
+~~6. jwt~~
+~~7. security: checks for username there~~
 8. notifications
 9. tests
 10. images: https://www.bezkoder.com/vue-upload-image-axios/ relative!

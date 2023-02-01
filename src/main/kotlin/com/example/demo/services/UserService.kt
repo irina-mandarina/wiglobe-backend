@@ -122,49 +122,30 @@ import java.sql.Date
         TODO("Not yet implemented")
     }
 
-    fun deleteAccount(username: String): ResponseEntity<String> {
-        return if (!userWithUsernameExists(username)) {
-            ResponseEntity.status(HttpStatus.NOT_FOUND).header(
-                "message", "User $username does not exist")
-                .body(null)
-        } else {
-            val user = findUserByUsername(username)
-            if (user != null) {
-                userRepository.delete(user)
-            }
-            ResponseEntity.ok().header(
-                "message", "Deleted account with username: $username")
-                .body(null)
+fun deleteAccount(username: String): ResponseEntity<String> {
+        val user = findUserByUsername(username)
+        if (user != null) {
+            userRepository.delete(user)
         }
-
+        return ResponseEntity.ok().header(
+            "message", "Deleted account with username: $username")
+            .body(null)
     }
 
     fun setBio(username: String, bio: String): ResponseEntity<UserDetails> {
-        return if (!userWithUsernameExists(username)) {
-            ResponseEntity.status(HttpStatus.NOT_FOUND).header(
-                "message", "User with username: " + username + "does not exist")
-                .body(null)
-        } else {
-            val userDetails = userDetailsService.findByUserUsername(username)
-            userDetails.biography = bio
-            userDetailsService.save(userDetails)
+        val userDetails = userDetailsService.findByUserUsername(username)
+        userDetails.biography = bio
+        userDetailsService.save(userDetails)
 
-            ResponseEntity.ok()
-                .body(
-                    userDetails(
-                        findUserByUsername(username)!!
-                    )
+        return ResponseEntity.ok()
+            .body(
+                userDetails(
+                    findUserByUsername(username)!!
                 )
-        }
+            )
     }
 
     fun getUserDetails(username: String, otherUserUsername: String): ResponseEntity<UserDetails> {
-        if (!userWithUsernameExists(username) || !userWithUsernameExists(otherUserUsername)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .header(
-                "message", "User with username: " + username + "does not exist")
-                .body(null)
-        }
         val requestedDetailsOwner = findUserByUsername(otherUserUsername)!!
         if (requestedDetailsOwner.userDetails.privacy == ProfilePrivacy.PRIVATE) {
             if (! findUserByUsername(username)!!.isFollowing(requestedDetailsOwner)) {

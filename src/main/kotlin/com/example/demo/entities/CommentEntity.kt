@@ -21,8 +21,8 @@ class CommentEntity() {
     @ManyToOne
     lateinit var user: UserEntity
 
-    @Column(name = "date_posted", nullable = false)
-    var datePosted: Timestamp = Timestamp.valueOf(LocalDateTime.now())
+    @Column(name = "posted_on", nullable = false)
+    var postedOn: Timestamp = Timestamp.valueOf(LocalDateTime.now())
 
     @Column(name = "content", nullable = false)
     var content: String = ""
@@ -31,7 +31,7 @@ class CommentEntity() {
                 user: UserEntity) : this() {
         this.user = user
         this.journey = journey
-        this.datePosted = Timestamp.valueOf(LocalDateTime.now())
+        this.postedOn = Timestamp.valueOf(LocalDateTime.now())
         this.content = commentRequest.content
     }
 

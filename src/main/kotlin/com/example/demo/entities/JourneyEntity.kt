@@ -1,7 +1,9 @@
 package com.example.demo.entities
 
 import com.example.demo.types.Visibility
+import java.util.Date
 import java.sql.Timestamp
+import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
@@ -15,6 +17,9 @@ class JourneyEntity {
     @JoinColumn(name = "user_id", nullable = false)
     @ManyToOne
     lateinit var user: UserEntity
+
+    @Column(name = "posted_on", nullable = false)
+    var postedOn: Timestamp = Timestamp.valueOf(LocalDateTime.now())
 
     @Column(name = "start_date")
     var startDate: Timestamp? = null

@@ -61,12 +61,6 @@ class FollowRequestService(private val followRequestRepository: FollowRequestRep
     }
 
     fun deleteFollowRequest(username: String, receiverUsername: String): ResponseEntity<String> {
-        if (!userService.userWithUsernameExists(username)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
-                "message", "Username does not exist"
-            ).body(null)
-        }
-
         val request = findByReceiverUsernameAndAndRequesterUsername(receiverUsername, username)
             ?: return ResponseEntity.status(HttpStatus.CREATED).header(
                 "message", "$username has not requested to follow $receiverUsername"
@@ -93,12 +87,6 @@ class FollowRequestService(private val followRequestRepository: FollowRequestRep
     }
 
     fun approveFollowRequest(username: String, requesterUsername: String, response: Boolean): ResponseEntity<Follow> {
-        if (!userService.userWithUsernameExists(username)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
-                "message","Username does not exist"
-            ).body(null)
-        }
-
         val request = findByReceiverUsernameAndAndRequesterUsername(username, requesterUsername)
             ?: return ResponseEntity.status(HttpStatus.CREATED).header(
                 "message","$username has not requested to follow that user"

@@ -1,6 +1,7 @@
 package com.example.demo.security.filters
 
 import com.example.demo.services.JWTService
+import com.example.demo.services.UserService
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 import java.lang.Exception
@@ -9,26 +10,28 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Component
-class AuthenticationFilter(private val jwtService: JWTService): OncePerRequestFilter() {
+class AuthenticationFilter(private val jwtService: JWTService, private val userService: UserService): OncePerRequestFilter() {
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
         if (!request.requestURI.contains("login") && !request.requestURI.contains("signup")) {
-            println(request.requestURI)
-            println( request.getHeader("Authentication"))
             try {
-                println("!!!!!!!!!!" + request.getHeader("Authentication").replace("Bearer ", ""))
                 if (!jwtService.JWTisValid(request.getHeader("Authentication").replace("Bearer ", ""))) {
                     response.status = 401
                     return
                 }
                 else {
+                    val username = jwtService.getSubject(
+                        request.getHeader("Authentication").removePrefix("Bearer "))
+                    if (!userService.userWithUsernameExists(username)) {
+                        response.status = 401
+                        return
+                    }
                     request
                         .setAttribute("username",
-                            jwtService.getSubject(
-                                request.getHeader("Authentication").removePrefix("Bearer "))
+                            username
                         )
                 }
             }

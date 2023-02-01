@@ -8,6 +8,6 @@ import java.sql.Timestamp
 data class Comment(val id: Long,
                    val userNames: UserNames,
                    @Serializable(TimestampSerializer::class)
-                           val datePosted: Timestamp,
+                           val postedOn: Timestamp,
                    val content: String
                    )

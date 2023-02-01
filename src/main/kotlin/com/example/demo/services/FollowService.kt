@@ -20,11 +20,6 @@ class FollowService(private val followRepository: FollowRepository, private val 
     }
 
     fun unfollow(username: String, usernameBeingFollowed: String): ResponseEntity<String> {
-        if (!userService.userWithUsernameExists(username) || !userService.userWithUsernameExists(usernameBeingFollowed)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
-                "message", "Username does not exist").body(null)
-        }
-
         val follow = findByFollowerUsernameAndFollowedUsername(username, usernameBeingFollowed)
             ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
                 "message", "$username is not following them").body(null)

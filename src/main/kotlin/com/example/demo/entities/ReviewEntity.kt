@@ -21,8 +21,8 @@ class ReviewEntity() {
     @ManyToOne
     lateinit var destination: DestinationEntity
 
-    @Column(name = "reviewed_date", nullable = false)
-    var reviewedDate: Timestamp = Timestamp.valueOf(LocalDateTime.now())
+    @Column(name = "posted_on", nullable = false)
+    var postedOn: Timestamp = Timestamp.valueOf(LocalDateTime.now())
 
     @Column(name = "star_rating", nullable = false)
 //    @Min(value = 1)
@@ -37,7 +37,7 @@ class ReviewEntity() {
 
     constructor(reviewRequest: ReviewRequest, reviewedDestination: DestinationEntity, user: UserEntity) : this() {
         this.user = user
-        this.reviewedDate = Timestamp.valueOf(LocalDateTime.now())
+        this.postedOn = Timestamp.valueOf(LocalDateTime.now())
         this.starRating = reviewRequest.starRating
         this.destination = reviewedDestination
         this.title = reviewRequest.title

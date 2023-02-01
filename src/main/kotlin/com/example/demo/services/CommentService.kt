@@ -6,7 +6,6 @@ import com.example.demo.entities.UserEntity
 import com.example.demo.repositories.CommentRepository
 import com.example.demo.models.responseModels.Comment
 import com.example.demo.models.requestModels.CommentRequest
-import com.example.demo.models.responseModels.UserNames
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
@@ -20,23 +19,11 @@ class CommentService(
         return Comment(
             commentEntity.id,
             userService.userNames(commentEntity.user),
-            commentEntity.datePosted,
+            commentEntity.postedOn,
             commentEntity.content
         )
     }
     fun getCommentsForJourney(username: String, journeyId: Long): ResponseEntity<List<Comment>> {
-        if (username.isBlank()) {
-            return ResponseEntity.badRequest().header(
-                "message","Missing request parameter: username")
-                .body(null)
-        }
-
-        if (!userService.userWithUsernameExists(username)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
-                "message","Username does not exist")
-                .body(null)
-        }
-
         if (!journeyService.journeyWithIdExists(journeyId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
                 "message","Journey does not exist")
@@ -56,13 +43,6 @@ class CommentService(
         journeyId: Long,
         commentRequest: CommentRequest
     ): ResponseEntity<Comment> {
-
-        if (!userService.userWithUsernameExists(username)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
-                "message","Username does not exist")
-                .body(null)
-        }
-
         if (!journeyService.journeyWithIdExists(journeyId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
                 "message","Journey does not exist")
@@ -83,12 +63,6 @@ class CommentService(
     }
 
     fun editComment(username: String, commentId: Long, commentRequest: CommentRequest): ResponseEntity<Comment> {
-        if (!userService.userWithUsernameExists(username)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
-                "message","Username does not exist")
-                .body(null)
-        }
-
         if (!commentWithIdExists(commentId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
                 "message","Comment does not exist")
@@ -113,12 +87,6 @@ class CommentService(
     }
 
     fun deleteComment(username: String, commentId: Long): ResponseEntity<String> {
-        if (!userService.userWithUsernameExists(username)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
-                "message","Username does not exist")
-                .body(null)
-        }
-
         if (!commentWithIdExists(commentId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
                 "message","Comment does not exist")

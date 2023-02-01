@@ -10,7 +10,7 @@ data class Review(val id: Long,
                   val userNames: UserNames,
                   var starRating: Int,
                   @Serializable(TimestampSerializer::class)
-                          val reviewedDate: Timestamp,
+                          val postedOn: Timestamp,
                   val title: String,
                   val content: String
 )

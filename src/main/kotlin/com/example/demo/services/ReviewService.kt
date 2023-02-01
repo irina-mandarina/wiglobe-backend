@@ -20,7 +20,7 @@ class ReviewService(private val destinationService: DestinationService, private 
             destinationService.destinationFromEntity(reviewEntity.destination)!!,
             userService.userNames(reviewEntity.user),
             reviewEntity.starRating,
-            reviewEntity.reviewedDate,
+            reviewEntity.postedOn,
             reviewEntity.title!!,
             reviewEntity.content!!
         )
