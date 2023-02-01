@@ -14,7 +14,7 @@ import java.sql.Date
 
 @Service
  class UserService(private val userRepository: UserRepository, private val userDetailsService: UserDetailsService,
-                   private val destinationService: DestinationService, private val sessionService: SessionService) {
+                   private val destinationService: DestinationService, private val jwtService: JWTService) {
 
     fun userNames(user: UserEntity): UserNames {
         return UserNames(
@@ -70,7 +70,7 @@ import java.sql.Date
                             userDetails(
                                 user
                             ),
-                            sessionService.issueJWT(logInRequest.username)
+                            jwtService.encode(user.username)
                         )
                     )
             }
