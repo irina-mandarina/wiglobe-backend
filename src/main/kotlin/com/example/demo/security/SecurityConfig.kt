@@ -27,6 +27,7 @@ open class SecurityConfig(private val authenticationFilter: AuthenticationFilter
             .authorizeHttpRequests()
             .anyRequest().permitAll()
             .and().cors()
+            .and().csrf().disable()
         return http.build()
     }
 

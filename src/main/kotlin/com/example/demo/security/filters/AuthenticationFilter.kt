@@ -20,12 +20,12 @@ class AuthenticationFilter(private val sessionService: SessionService): OncePerR
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        println("53egtredsgt5y")
         if (!request.requestURI.contains("login") && !request.requestURI.contains("signup")) {
-
+            println(request.requestURI)
             println( request.getHeader("Authentication"))
             try {
-                if (!sessionService.JWTisValid(request.getHeader("Authentication").removePrefix("Bearer "))) {
+                println("!!!!!!!!!!" + request.getHeader("Authentication").replace("Bearer ", ""))
+                if (!sessionService.JWTisValid(request.getHeader("Authentication").replace("Bearer ", ""))) {
                     response.status = 401
                     return
                 }
@@ -41,7 +41,6 @@ class AuthenticationFilter(private val sessionService: SessionService): OncePerR
                 return
             }
         }
-        println("dgre")
         filterChain.doFilter(request, response)
         return
     }
