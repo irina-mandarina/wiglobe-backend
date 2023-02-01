@@ -1,11 +1,11 @@
 package com.example.demo.recommender;
 
 import com.example.demo.entities.*;
-import com.example.demo.repositories.InterestsRepository;
 import com.example.demo.services.CommentService;
 import com.example.demo.services.InterestsService;
 import com.example.demo.services.JourneyService;
 import com.example.demo.services.UserService;
+import com.example.demo.types.InterestKeyEntityType;
 import com.vader.sentiment.analyzer.SentimentAnalyzer;
 import com.vader.sentiment.analyzer.SentimentPolarities;
 import lombok.RequiredArgsConstructor;
@@ -55,6 +55,7 @@ public class JourneyRecommender {
             try {
                 // calculate the score for the country
                 interestsService.calculateInterest(user, journey.getDestination().getCountry().getCountryCode(),
+                        InterestKeyEntityType.COUNTRY,
                         sentimentPolarities.getCompoundPolarity(), comment.getId());
             } catch (NullPointerException e) {
                 // the destination does not have a country (it is ok)
@@ -62,6 +63,7 @@ public class JourneyRecommender {
 
             try {
                 interestsService.calculateInterest(user, journey.getDestination().getFeatureCode(),
+                        InterestKeyEntityType.FEATURE_CODE,
                         sentimentPolarities.getCompoundPolarity(), comment.getId());
             } catch (NullPointerException e) {
                 // the destination does not have a feature code (it is ok)
@@ -69,6 +71,7 @@ public class JourneyRecommender {
 
             try {
                 interestsService.calculateInterest(user, journey.getDestination().getFeatureClass(),
+                        InterestKeyEntityType.FEATURE_CLASS,
                         sentimentPolarities.getCompoundPolarity(), comment.getId());
             } catch (NullPointerException e) {
                 // the destination does not have a feature class (it is ok)
@@ -79,6 +82,7 @@ public class JourneyRecommender {
 
                 try {
                     interestsService.calculateInterest(user, activity.getType().name(),
+                            InterestKeyEntityType.ACTIVITY,
                             sentimentPolarities.getCompoundPolarity(), comment.getId());
                 } catch (NullPointerException e) {
                     // no activity type
@@ -110,28 +114,28 @@ public class JourneyRecommender {
             double score = 0.0;
             // for each journey characteristic, add the corresponding compound score from the interests map
             try {
-                score += interestsService.findByKeyAndUser(
-                        journey.getDestination().getCountry().getCountryCode(), user
+                score += interestsService.findByKeyAndEntityAndUser(
+                        journey.getDestination().getCountry().getCountryCode(), InterestKeyEntityType.COUNTRY, user
                 ).getValue();
             } catch (NullPointerException ignored) {}
 
             try {
-                score += interestsService.findByKeyAndUser(
-                        journey.getDestination().getFeatureClass(), user
+                score += interestsService.findByKeyAndEntityAndUser(
+                        journey.getDestination().getFeatureClass(), InterestKeyEntityType.FEATURE_CLASS, user
                 ).getValue();
             } catch (NullPointerException ignored) {}
 
             try {
-                score += interestsService.findByKeyAndUser(
-                        journey.getDestination().getFeatureCode(), user
+                score += interestsService.findByKeyAndEntityAndUser(
+                        journey.getDestination().getFeatureCode(), InterestKeyEntityType.FEATURE_CODE, user
                 ).getValue();
             } catch (NullPointerException ignored) {}
 
             for (ActivityEntity activity: journey.getActivities()) {
 
                 try {
-                    score += interestsService.findByKeyAndUser(
-                            activity.getType().name(), user
+                    score += interestsService.findByKeyAndEntityAndUser(
+                            activity.getType().name(), InterestKeyEntityType.ACTIVITY, user
                     ).getValue();
                 } catch (NullPointerException ignored) {}
             }

@@ -1,5 +1,6 @@
 package com.example.demo.entities
 
+import com.example.demo.types.InterestKeyEntityType
 import javax.persistence.*
 
 @Entity
@@ -17,6 +18,10 @@ class InterestEntity() {
     @Column(name = "interest_key")
     lateinit var key: String
 
+    @Column(name = "entity")
+    @Enumerated(EnumType.STRING)
+    lateinit var entity: InterestKeyEntityType
+
     @Column(name = "value")
     var value: Double = 0.0
 
@@ -26,9 +31,10 @@ class InterestEntity() {
     @Column(name = "last_comment_id")
     var lastCommentId: Long = -1
 
-    constructor(user: UserEntity, key: String, value: Double): this() {
+    constructor(user: UserEntity, key: String, keyType: InterestKeyEntityType, value: Double): this() {
         this.value = value
         this.key = key
+        this.entity = keyType
         this.user = user
         this.count = 0
     }

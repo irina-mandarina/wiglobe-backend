@@ -3,6 +3,7 @@ package com.example.demo.services
 import com.example.demo.entities.InterestEntity
 import com.example.demo.entities.UserEntity
 import com.example.demo.repositories.InterestsRepository
+import com.example.demo.types.InterestKeyEntityType
 import org.springframework.stereotype.Service
 
 @Service
@@ -11,24 +12,20 @@ class InterestsService(private val interestsRepository: InterestsRepository) {
         return interestsRepository.findAllByUser(userEntity)
     }
 
-    fun findByKeyAndUser(key: String, userEntity: UserEntity): InterestEntity? {
-        return interestsRepository.findByKeyAndUser(key, userEntity)
+    fun findByKeyAndEntityAndUser(key: String, keyType: InterestKeyEntityType, userEntity: UserEntity): InterestEntity? {
+        return interestsRepository.findByKeyAndEntityAndUser(key, keyType, userEntity)
     }
 
     fun findFirstByUserOrderByLastCommentIdDesc(userEntity: UserEntity): InterestEntity? {
         return interestsRepository.findFirstByUserOrderByLastCommentIdDesc(userEntity)
     }
 
-    fun calculateInterest(user: UserEntity, key: String, value: Double, commentId: Long) {
-        var interest = findByKeyAndUser(key, user)
+    fun calculateInterest(user: UserEntity, key: String, keyType: InterestKeyEntityType, value: Double, commentId: Long) {
+        var interest = findByKeyAndEntityAndUser(key, keyType, user)
 
         if (interest == null) {
             // save new interest
-            interest = InterestEntity(user, key, value)
-//            interest.value = value
-//            interest.key = key
-//            interest.user = user
-//            interest.count = 0
+            interest = InterestEntity(user, key, keyType, value)
         }
         else {
             // add to the score

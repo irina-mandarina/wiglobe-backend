@@ -56,17 +56,18 @@ Recommendations:
 https://sylhare.github.io/2021/07/19/Openapi-swagger-codegen-with-kotlin.html
 
 must haves:
+interests - add type
 1. ~~post journey~~
 2. save user profile from google
 3. lock user profiles
-4. repair get journeys by user (not showing drafts)
+~~4. repair get journeys by user (not showing drafts)~~
 ~~6. jwt~~
 ~~7. security: checks for username there~~
-8. notifications
-9. tests
-10. images: https://www.bezkoder.com/vue-upload-image-axios/ relative!
-11. documentation
-12. rec: weight of params
+4. notifications
+5. tests for services
+6. images: https://www.bezkoder.com/vue-upload-image-axios/ relative!
+7. documentation
+8. rec: weight of params
 
 Future improvements (good to have):
 * elastic search db for destinations

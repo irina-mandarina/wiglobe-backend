@@ -25,6 +25,7 @@ class ActivityEntity() {
     var title: String? = ""
 
     @Column(name = "type")
+    @Enumerated(EnumType.STRING)
     var type: ActivityType? = null
 
     @Column(name = "description")
