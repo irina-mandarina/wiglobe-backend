@@ -1,14 +1,15 @@
 package com.example.demo.controllerTests;
 
 import com.example.demo.controllers.ReviewController
-import com.example.demo.models.requestModels.JourneyRequest
 import com.example.demo.models.requestModels.ReviewRequest
 import com.example.demo.models.responseModels.Review
 import com.example.demo.services.ReviewService
 import io.mockk.every
 import io.mockk.mockkClass
+import io.mockk.verify
 import org.junit.jupiter.api.Test
 import org.springframework.http.ResponseEntity
+import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertSame
 
@@ -91,6 +92,8 @@ class ReviewControllerTest {
 
         // THEN:
         assertNotNull(responseFromController)
-        assertSame(responseFromController, reviewService.deleteReview(sampleUsername, sampleReviewId))
+        verify(exactly = 1) { reviewService.deleteReview(sampleUsername, sampleReviewId) }
+        val result: ResponseEntity<String> = ResponseEntity.ok().body(null)
+        assertEquals(responseFromController, result)
     }
 }

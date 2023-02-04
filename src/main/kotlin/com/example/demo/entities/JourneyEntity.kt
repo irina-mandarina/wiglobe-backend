@@ -35,6 +35,7 @@ class JourneyEntity {
     var description: String? = ""
 
     @Column(name = "visibility")
+    @Enumerated(EnumType.STRING)
     var visibility: Visibility = Visibility.PUBLIC
 
     @OneToMany(mappedBy = "journey")

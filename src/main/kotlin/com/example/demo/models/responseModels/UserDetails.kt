@@ -17,8 +17,8 @@ data class UserDetails(
     val birthdate: Date?,
     val biography: String?,
     @Serializable(TimestampSerializer::class)
-    val registrationDate: Timestamp?,
+    val registrationTimestamp: Timestamp?,
     val gender: Gender,
     val residence: Destination?,
-    val privacy: ProfilePrivacy
+    val profilePrivacy: ProfilePrivacy
 )

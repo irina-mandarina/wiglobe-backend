@@ -222,19 +222,23 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
         // that includes: public, friend only, private
         var journeys = findAllByUserNotAndVisibilityNot(user, Visibility.DRAFT).toMutableList()
         // remove all the private and friend only journeys which poster is not followed by the user arg
-        for (journey: JourneyEntity in journeys) {
-            if (journey.visibility == Visibility.PRIVATE) {
-                if (!user.isFollowing(journey.user)) {
-                    // remove the journey. it should not get recommended because it cannot be seen
-                    journeys.remove(journey)
-                }
-            }
-            else if (journey.visibility == Visibility.FRIEND_ONLY) {
-                if (!user.isFriendsWith(journey.user)) {
-                    // remove the journey. it should not get recommended because it cannot be seen
-                    journeys.remove(journey)
-                }
-            }
+//        for (journey: JourneyEntity in journeys) {
+//            if (journey.visibility == Visibility.PRIVATE) {
+//                if (!user.isFollowing(journey.user)) {
+//                    // remove the journey. it should not get recommended because it cannot be seen
+//                    journeys.remove(journey)
+//                }
+//            }
+//            else if (journey.visibility == Visibility.FRIEND_ONLY) {
+//                if (!user.isFriendsWith(journey.user)) {
+//                    // remove the journey. it should not get recommended because it cannot be seen
+//                    journeys.remove(journey)
+//                }
+//            }
+//        }
+        journeys.removeIf{
+            (it.visibility == Visibility.PRIVATE && !user.isFollowing(it.user)) ||
+                    (it.visibility === Visibility.FRIEND_ONLY && !user.isFriendsWith(it.user))
         }
         return journeys
     }

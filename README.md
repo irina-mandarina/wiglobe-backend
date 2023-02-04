@@ -56,7 +56,7 @@ Recommendations:
 https://sylhare.github.io/2021/07/19/Openapi-swagger-codegen-with-kotlin.html
 
 must haves:
-interests - add type
+~~interests - add type~~
 1. ~~post journey~~
 2. save user profile from google
 3. lock user profiles

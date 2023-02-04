@@ -63,50 +63,29 @@
             <groupId>org.webjars</groupId>
             <artifactId>webjars-locator-core</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/log4j/log4j -->
-        <!--        <dependency>-->
-        <!--            <groupId>log4j</groupId>-->
-        <!--            <artifactId>log4j</artifactId>-->
-        <!--            <version>1.2.17</version>-->
-        <!--        </dependency>-->
-        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/log4j/log4j &ndash;&gt;-->
-        <!--        <dependency>-->
-        <!--            <groupId>log4j</groupId>-->
-        <!--            <artifactId>log4j</artifactId>-->
-        <!--            <version>1.2.17</version>-->
-        <!--        </dependency>-->
-        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.lucene/lucene-analyzers-common &ndash;&gt;-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.apache.lucene</groupId>-->
-        <!--            <artifactId>lucene-analyzers-common</artifactId>-->
-        <!--            <version>6.4.1</version>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-oauth2-client</artifactId>-->
-        <!--        </dependency>-->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.junit.jupiter</groupId>-->
-<!--            <artifactId>junit-jupiter-engine</artifactId>-->
-<!--            <version>5.8.1</version>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-test</artifactId>-->
+        <!--            <scope>test</scope>-->
+        <!--            <exclusions>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>org.junit.vintage</groupId>-->
+        <!--                    <artifactId>junit-vintage-engine</artifactId>-->
+        <!--                </exclusion>-->
+        <!--            </exclusions>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.junit.jupiter</groupId>-->
+        <!--            <artifactId>junit-jupiter-engine</artifactId>-->
+        <!--            <version>5.8.1</version>-->
+        <!--            <scope>test</scope>-->
+        <!--        </dependency>-->
 
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -134,7 +113,7 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
-<!--        TESTS-->
+        <!--        TESTS-->
         <!-- https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-test -->
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -162,14 +141,14 @@
             </exclusions>
         </dependency>
 
-<!--        SECURITY-->
+        <!--        SECURITY-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-<!--        JWT-->
+        <!--        JWT-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -188,11 +167,28 @@
             <scope>runtime</scope>
         </dependency>
 
+<!--        docs-->
 
+        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-data-rest -->
         <dependency>
-            <groupId>com.example</groupId>
-            <artifactId>demo</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-data-rest</artifactId>
+            <version>1.6.14</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.6.14</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-kotlin -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-kotlin</artifactId>
+            <version>1.6.14</version>
+            <scope>runtime</scope>
         </dependency>
 
     </dependencies>
