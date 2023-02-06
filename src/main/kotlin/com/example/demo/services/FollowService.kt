@@ -10,7 +10,8 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 
 @Service
-class FollowService(private val followRepository: FollowRepository, private val userService: UserService ) {
+class FollowService(private val followRepository: FollowRepository,
+                    private val userService: UserService, private val notificationService: NotificationService ) {
     fun followFromEntity(followEntity: FollowEntity): Follow {
         return Follow (
             userService.userNames(followEntity.followed),
@@ -24,6 +25,7 @@ class FollowService(private val followRepository: FollowRepository, private val 
             ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
                 "message", "$username is not following them").body(null)
 
+        notificationService.deleteNotificationForFollow(follow)
         followRepository.delete(follow)
         return ResponseEntity.ok().header(
             "message", "$username stopped following them").body(null)
@@ -34,6 +36,16 @@ class FollowService(private val followRepository: FollowRepository, private val 
             return null
         }
         val follow = FollowEntity(followRequest)
+        if (follow.follower.isFriendsWith(follow.followed)) {
+            notificationService.notifyForFollow(follow,
+                "${follow.followed.username} followed you. You are friends now.")
+        }
+        else {
+            notificationService.notifyForFollow(
+                follow,
+                "${follow.followed.username} followed you"
+            )
+        }
         return followRepository.save(follow)
     }
 

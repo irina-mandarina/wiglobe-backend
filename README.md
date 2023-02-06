@@ -1,8 +1,7 @@
 # tuesthesis
 
 Qs:
-1. names of tests
-2. services return response entity
+1. talk about deploy
 
 To do:
 * ~~get user (others)~~
@@ -63,12 +62,19 @@ must haves:
 ~~4. repair get journeys by user (not showing drafts)~~
 ~~6. jwt~~
 ~~7. security: checks for username there~~
-4. notifications
-5. tests for services
-6. images: https://www.bezkoder.com/vue-upload-image-axios/ relative!
-7. documentation
-8. rec: weight of params
+~~4. notifications~~
+5. recommendations of destinations
+6. fix controller tests (esp delete controllers)
+7. post drafts, edit journeys in the frontend
+8. delete comments and reviews
+9. tests for services
+10. images: https://www.bezkoder.com/vue-upload-image-axios/ relative!
+11. documentation
+12. rec: weight of params
 
 Future improvements (good to have):
 * elastic search db for destinations
 * collaborative recommendations
+* reactions with pictures of faces - then analyse the emotion using ml
+* filters
+* follow recommendations

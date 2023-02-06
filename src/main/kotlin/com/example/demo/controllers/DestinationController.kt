@@ -14,8 +14,14 @@ class DestinationController(private val destinationService: DestinationService) 
         return destinationService.getDestination(destinationId);
     }
 
-    @GetMapping("/destinations")
+    @GetMapping("/destinations/search")
     fun searchDestinations(@RequestParam search: String): ResponseEntity<List<DestinationSearchResult>> {
         return destinationService.searchDestinations(search);
+    }
+
+    // not tested
+    @GetMapping("destinations")
+    fun recommendDestinations(@RequestAttribute username: String): ResponseEntity<List<Destination>> {
+        return destinationService.recommendDestinationsToUser(username)
     }
 }

@@ -13,8 +13,8 @@ import java.time.LocalDateTime
 
 @Service
 class FollowRequestService(private val followRequestRepository: FollowRequestRepository,
-                           private val followService: FollowService, private val userService: UserService) {
-    fun followRequestFromEntity(followRequestEntity: FollowRequestEntity): FollowRequest {
+                           private val followService: FollowService, private val userService: UserService, private val notificationService: NotificationService) {
+    private fun followRequestFromEntity(followRequestEntity: FollowRequestEntity): FollowRequest {
         return FollowRequest(
             userService.userNames(followRequestEntity.requester),
             userService.userNames(followRequestEntity.receiver),
@@ -23,29 +23,26 @@ class FollowRequestService(private val followRequestRepository: FollowRequestRep
     }
 
     fun sendFollowRequest(username: String, receiverUsername: String): ResponseEntity<FollowRequest> {
-        if (!userService.userWithUsernameExists(username)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
-                "message", "Username does not exist"
-            ).body(null)
+        if (!userService.userWithUsernameExists(receiverUsername)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null)
         }
 
         if (findByReceiverUsernameAndAndRequesterUsername(receiverUsername, username) != null) {
-            return ResponseEntity.status(HttpStatus.CREATED).header(
-                "message","$username already requested to follow $receiverUsername"
-            ).body(null)
+            return ResponseEntity.status(HttpStatus.CREATED).body(null)
         }
 
         val receiver = userService.findUserByUsername(receiverUsername)
-            ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
-                "message", "User $receiverUsername does not exist"
-                    ).body(null)
+            ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
         val followRequest = FollowRequestEntity()
 
         followRequest.receiver = receiver
-        followRequest.requester = userService.findUserByUsername(username)!!
+        val requester = userService.findUserByUsername(username)!!
+        followRequest.requester = requester
         followRequest.requestDate = Timestamp.valueOf(LocalDateTime.now())
 
         followRequestRepository.save(followRequest)
+        notificationService.notifyForFollowRequest(followRequest,
+            "$username sent you a follow request")
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
             followRequestFromEntity(followRequest)
@@ -62,14 +59,11 @@ class FollowRequestService(private val followRequestRepository: FollowRequestRep
 
     fun deleteFollowRequest(username: String, receiverUsername: String): ResponseEntity<String> {
         val request = findByReceiverUsernameAndAndRequesterUsername(receiverUsername, username)
-            ?: return ResponseEntity.status(HttpStatus.CREATED).header(
-                "message", "$username has not requested to follow $receiverUsername"
-            ).body(null)
+            ?: return ResponseEntity.status(HttpStatus.CREATED).body(null)
 
         followRequestRepository.delete(request)
-        return ResponseEntity.ok().header(
-            "message","Deleted $username's request to follow $receiverUsername"
-        ).body(null)
+        notificationService.deleteNotificationForFollowRequest(request)
+        return ResponseEntity.ok().body(null)
     }
 
     fun getReceivedFollowRequests(username: String): ResponseEntity<List<FollowRequest>> {
@@ -88,17 +82,17 @@ class FollowRequestService(private val followRequestRepository: FollowRequestRep
 
     fun approveFollowRequest(username: String, requesterUsername: String, response: Boolean): ResponseEntity<Follow> {
         val request = findByReceiverUsernameAndAndRequesterUsername(username, requesterUsername)
-            ?: return ResponseEntity.status(HttpStatus.CREATED).header(
-                "message","$username has not requested to follow that user"
-            ).body(null)
+            ?: return ResponseEntity.status(HttpStatus.CREATED).body(null)
 
         if (response) {
             val follow = followService.saveFollow(request)
-                ?: return ResponseEntity.status(HttpStatus.NOT_MODIFIED).header(
-                    "message","Follow is null: tackle later"
-                ).body(null)
+                ?: return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(null)
 
             followRequestRepository.delete(request)
+
+            notificationService.notifyForFollowRequestResponse(request,
+                "$username approved your follow request."
+            )
             return ResponseEntity.ok().body(
                 Follow(
                     UserNames(
@@ -112,6 +106,9 @@ class FollowRequestService(private val followRequestRepository: FollowRequestRep
             )
         }
         else {
+            notificationService.notifyForFollowRequestResponse(request,
+                    "$username declined your follow request."
+            )
             followRequestRepository.delete(request)
             return ResponseEntity.ok().header(
                 "message","$username rejected $requesterUsername's follow request"

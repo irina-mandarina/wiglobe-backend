@@ -5,13 +5,15 @@ import com.example.demo.models.projections.DestinationSearchProjection
 import com.example.demo.models.responseModels.Destination
 import com.example.demo.models.responseModels.DestinationSearchResult
 import com.example.demo.repositories.DestinationRepository
+import com.example.demo.types.InterestKeyEntityType
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 
 @Service
 class DestinationService(private val destinationRepository: DestinationRepository,
                          private val featureCodeService: FeatureCodeService,
-                         private val countryService: CountryService) {
+                         private val countryService: CountryService,
+                         private val interestsService: InterestsService) {
     fun destinationFromEntity(destinationEntity: DestinationEntity?): Destination? {
         if ( destinationEntity == null )
             return null
@@ -72,6 +74,15 @@ class DestinationService(private val destinationRepository: DestinationRepositor
         return destinationRepository.findDestinationsByCountryCountryCodeStartingWith(keyword)
     }
 
+    fun findAllByFeatureCodeCodeIn(featureCodes: List<String>): List<DestinationEntity> {
+        return destinationRepository.findAllByFeatureCodeCodeIn(featureCodes)
+    }
+
+    fun findAllByFeatureClassIn(featureClasses: List<String>): List<DestinationEntity> {
+        return destinationRepository.findAllByFeatureClassIn(featureClasses)
+    }
+
+
     fun getDestinations(): ResponseEntity<List<Destination>> {
         return ResponseEntity.ok().body(
             destinationRepository.findAll().map {
@@ -94,6 +105,27 @@ class DestinationService(private val destinationRepository: DestinationRepositor
             findDestinationsByCountryCodeStartingWith(keyword) +
             findDestinationsByCountryNameStartingWith(keyword)).map{
                 destinationSearchResultFromProjection(it)
+            }
+        )
+    }
+
+    fun recommendDestinationsToUser(username: String): ResponseEntity<List<Destination>> {
+        val featureClassInterests = interestsService
+            .findAllByEntityAndUserUsernameOrderByValueDesc(InterestKeyEntityType.FEATURE_CLASS, username)
+            .map {
+                it.key
+            }
+        val featureCodeInterests = interestsService
+            .findAllByEntityAndUserUsernameOrderByValueDesc(InterestKeyEntityType.FEATURE_CODE, username)
+            .map {
+                it.key
+            }
+        val recommendations = findAllByFeatureClassIn(featureClassInterests).toMutableList()
+        recommendations += findAllByFeatureCodeCodeIn(featureCodeInterests)
+
+        return ResponseEntity.ok().body(
+            recommendations.map {
+                destinationFromEntity(it)!!
             }
         )
     }

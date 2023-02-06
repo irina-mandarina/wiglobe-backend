@@ -10,7 +10,7 @@ class FollowRequestEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    var id: Long? = null
+    var id: Long = -1
 
     @Column(name = "request_date", nullable = false)
     var requestDate: Timestamp = Timestamp.valueOf(LocalDateTime.now())
