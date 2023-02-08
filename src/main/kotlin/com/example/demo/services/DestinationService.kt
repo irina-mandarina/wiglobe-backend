@@ -6,6 +6,8 @@ import com.example.demo.models.responseModels.Destination
 import com.example.demo.models.responseModels.DestinationSearchResult
 import com.example.demo.repositories.DestinationRepository
 import com.example.demo.types.InterestKeyEntityType
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 
@@ -17,6 +19,11 @@ class DestinationService(private val destinationRepository: DestinationRepositor
     fun destinationFromEntity(destinationEntity: DestinationEntity?): Destination? {
         if ( destinationEntity == null )
             return null
+        var averageRating: Double = 0.0
+        if (destinationEntity.reviews.isNotEmpty()) {
+            destinationEntity.reviews.map {averageRating += it.starRating}
+            averageRating /= destinationEntity.reviews.size
+        }
         return Destination(
             destinationEntity.id!!,
             destinationEntity.latitude,
@@ -24,7 +31,10 @@ class DestinationService(private val destinationRepository: DestinationRepositor
             destinationEntity.name,
             countryService.countryFromEntity(destinationEntity.country),
             featureCodeService.findFeatureClassMeaning(destinationEntity.featureClass),
-            featureCodeService.findFeatureCodeMeaning(destinationEntity.featureCode)
+            featureCodeService.findFeatureCodeMeaning(destinationEntity.featureCode),
+            destinationEntity.journeys.size,
+            averageRating,
+            destinationEntity.reviews.size
         )
     }
 
@@ -74,12 +84,8 @@ class DestinationService(private val destinationRepository: DestinationRepositor
         return destinationRepository.findDestinationsByCountryCountryCodeStartingWith(keyword)
     }
 
-    fun findAllByFeatureCodeCodeIn(featureCodes: List<String>): List<DestinationEntity> {
-        return destinationRepository.findAllByFeatureCodeCodeIn(featureCodes)
-    }
-
-    fun findAllByFeatureClassIn(featureClasses: List<String>): List<DestinationEntity> {
-        return destinationRepository.findAllByFeatureClassIn(featureClasses)
+    fun findAllByFeatureClassInOrFeatureCodeIn(featureClasses: List<String>, featureCodes: List<String>, pageable: Pageable): List<DestinationEntity> {
+        return destinationRepository.findAllByFeatureClassInOrFeatureCodeIn(featureClasses, featureCodes, pageable)
     }
 
 
@@ -109,19 +115,17 @@ class DestinationService(private val destinationRepository: DestinationRepositor
         )
     }
 
-    fun recommendDestinationsToUser(username: String): ResponseEntity<List<Destination>> {
-        val featureClassInterests = interestsService
-            .findAllByEntityAndUserUsernameOrderByValueDesc(InterestKeyEntityType.FEATURE_CLASS, username)
+    fun recommendDestinationsToUser(username: String, pageNumber: Int, pageSize: Int): ResponseEntity<List<Destination>> {
+        val featureInterests = interestsService
+            .findAllByEntityInAndUserUsernameOrderByValueDesc(
+                listOf (InterestKeyEntityType.FEATURE_CLASS, InterestKeyEntityType.FEATURE_CODE),
+                username)
             .map {
                 it.key
             }
-        val featureCodeInterests = interestsService
-            .findAllByEntityAndUserUsernameOrderByValueDesc(InterestKeyEntityType.FEATURE_CODE, username)
-            .map {
-                it.key
-            }
-        val recommendations = findAllByFeatureClassIn(featureClassInterests).toMutableList()
-        recommendations += findAllByFeatureCodeCodeIn(featureCodeInterests)
+
+        val page: Pageable = PageRequest.of(pageNumber, pageSize)
+        val recommendations = findAllByFeatureClassInOrFeatureCodeIn(featureInterests, featureInterests, page)
 
         return ResponseEntity.ok().body(
             recommendations.map {

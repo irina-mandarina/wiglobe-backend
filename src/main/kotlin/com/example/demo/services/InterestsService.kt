@@ -36,9 +36,9 @@ class InterestsService(private val interestsRepository: InterestsRepository) {
         interestsRepository.save(interest)
     }
 
-    fun findAllByEntityAndUserUsernameOrderByValueDesc(entity: InterestKeyEntityType,
+    fun findAllByEntityInAndUserUsernameOrderByValueDesc(entities: List<InterestKeyEntityType>,
                                                        username: String): List<InterestEntity> {
-        return interestsRepository.findAllByEntityAndUserUsernameOrderByValueDesc(entity, username)
+        return interestsRepository.findAllByEntityInAndUserUsernameOrderByValueDesc(entities, username)
     }
 
 }

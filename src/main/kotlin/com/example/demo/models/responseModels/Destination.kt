@@ -1,9 +1,5 @@
 package com.example.demo.models.responseModels
 
-import com.example.demo.models.responseModels.Country
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class Destination( val id: Long,
                         val latitude: Double,
                         val longitude: Double,
@@ -11,4 +7,7 @@ data class Destination( val id: Long,
                         val country: Country?,
                         val featureClass: String?,
                         val featureCode: String?,
+                        val visitCount: Int?,
+                        val averageRating: Double?,
+                        val reviewCount: Int?
                        )

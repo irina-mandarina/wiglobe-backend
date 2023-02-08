@@ -1,6 +1,6 @@
 package com.example.demo.controllers
 
-import com.example.demo.models.Notification
+import com.example.demo.models.responseModels.Notification
 import com.example.demo.services.NotificationService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.CrossOrigin

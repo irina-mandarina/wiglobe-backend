@@ -1,4 +1,4 @@
-package com.example.demo.models
+package com.example.demo.models.responseModels
 
 import com.example.demo.types.NotificationObjectEntityType
 import java.sql.Timestamp

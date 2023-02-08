@@ -64,6 +64,8 @@ must haves:
 ~~7. security: checks for username there~~
 ~~4. notifications~~
 5. recommendations of destinations
+6. view journeys by destination
+7. countries for dest recs
 6. fix controller tests (esp delete controllers)
 7. post drafts, edit journeys in the frontend
 8. delete comments and reviews

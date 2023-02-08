@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository
 interface InterestsRepository: JpaRepository<InterestEntity, Long> {
     fun findAllByUser(userEntity: UserEntity): List<InterestEntity>
     fun findByKeyAndEntityAndUser(key: String, keyType: InterestKeyEntityType, userEntity: UserEntity): InterestEntity?
-    fun findAllByEntityAndUserUsernameOrderByValueDesc(entity: InterestKeyEntityType, username: String): List<InterestEntity>
+    fun findAllByEntityInAndUserUsernameOrderByValueDesc(entities: List<InterestKeyEntityType>, username: String): List<InterestEntity>
     fun findFirstByUserOrderByLastCommentIdDesc(userEntity: UserEntity): InterestEntity?
 }

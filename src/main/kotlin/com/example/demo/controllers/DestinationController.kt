@@ -20,8 +20,9 @@ class DestinationController(private val destinationService: DestinationService) 
     }
 
     // not tested
-    @GetMapping("destinations")
-    fun recommendDestinations(@RequestAttribute username: String): ResponseEntity<List<Destination>> {
-        return destinationService.recommendDestinationsToUser(username)
+    @GetMapping("/destinations")
+    fun recommendDestinations(@RequestAttribute username: String,
+                              @RequestParam pageNumber: Int, @RequestParam pageSize: Int): ResponseEntity<List<Destination>> {
+        return destinationService.recommendDestinationsToUser(username, pageNumber, pageSize)
     }
 }

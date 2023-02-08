@@ -1,7 +1,7 @@
 package com.example.demo.services
 
 import com.example.demo.entities.*
-import com.example.demo.models.Notification
+import com.example.demo.models.responseModels.Notification
 import com.example.demo.repositories.NotificationRepository
 import com.example.demo.types.NotificationObjectEntityType
 import org.springframework.http.ResponseEntity
