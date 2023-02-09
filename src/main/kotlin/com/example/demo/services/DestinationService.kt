@@ -84,8 +84,8 @@ class DestinationService(private val destinationRepository: DestinationRepositor
         return destinationRepository.findDestinationsByCountryCountryCodeStartingWith(keyword)
     }
 
-    fun findAllByFeatureClassInOrFeatureCodeIn(featureClasses: List<String>, featureCodes: List<String>, pageable: Pageable): List<DestinationEntity> {
-        return destinationRepository.findAllByFeatureClassInOrFeatureCodeIn(featureClasses, featureCodes, pageable)
+    fun findAllByFeatureClassInOrFeatureCodeInOrCountryCountryCodeIn(featureClasses: List<String>, featureCodes: List<String>, countryCodes: List<String>, pageable: Pageable): List<DestinationEntity> {
+        return destinationRepository.findAllByFeatureClassInOrFeatureCodeInOrCountryCountryCodeIn(featureClasses, featureCodes, countryCodes, pageable)
     }
 
 
@@ -118,14 +118,14 @@ class DestinationService(private val destinationRepository: DestinationRepositor
     fun recommendDestinationsToUser(username: String, pageNumber: Int, pageSize: Int): ResponseEntity<List<Destination>> {
         val featureInterests = interestsService
             .findAllByEntityInAndUserUsernameOrderByValueDesc(
-                listOf (InterestKeyEntityType.FEATURE_CLASS, InterestKeyEntityType.FEATURE_CODE),
+                listOf (InterestKeyEntityType.FEATURE_CLASS, InterestKeyEntityType.FEATURE_CODE, InterestKeyEntityType.COUNTRY),
                 username)
             .map {
                 it.key
             }
 
         val page: Pageable = PageRequest.of(pageNumber, pageSize)
-        val recommendations = findAllByFeatureClassInOrFeatureCodeIn(featureInterests, featureInterests, page)
+        val recommendations = findAllByFeatureClassInOrFeatureCodeInOrCountryCountryCodeIn(featureInterests, featureInterests, featureInterests, page)
 
         return ResponseEntity.ok().body(
             recommendations.map {

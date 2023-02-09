@@ -14,4 +14,5 @@ interface JourneyRepository: JpaRepository<JourneyEntity, Long> {
     fun findAllByUserNotAndVisibility(user: UserEntity, visibility: Visibility): List<JourneyEntity>
     fun findAllByUserUsernameAndVisibility(username: String, visibility: Visibility): List<JourneyEntity>
     fun findAllByUserNotAndVisibilityNot(user: UserEntity, visibility: Visibility): List<JourneyEntity>
+    fun findAllByDestinationIdAndVisibilityNot(destinationId: Long, visibility: Visibility): List<JourneyEntity>
 }

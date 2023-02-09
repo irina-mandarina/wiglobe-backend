@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository
 @Repository
 interface DestinationRepository: JpaRepository<DestinationEntity, Long> {
     fun findDestinationById(id: Long?): DestinationEntity?
-    fun findAllByFeatureClassInOrFeatureCodeIn(featureClasses: List<String>,
-                                               featureCodes: List<String>, pageable: Pageable): List<DestinationEntity>
+    fun findAllByFeatureClassInOrFeatureCodeInOrCountryCountryCodeIn(featureClasses: List<String>,
+                                               featureCodes: List<String>, countryCodes: List<String>, pageable: Pageable): List<DestinationEntity>
     fun findDestinationsByAsciiNameStartingWith(keyword: String): List<DestinationSearchProjection>
     fun findDestinationsByCountryCountryNameStartingWith(keyword: String): List<DestinationSearchProjection>
     fun findDestinationsByCountryCountryCodeStartingWith(keyword: String): List<DestinationSearchProjection>
