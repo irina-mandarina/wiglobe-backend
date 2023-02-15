@@ -12,7 +12,7 @@ class JourneyEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    var id: Long? = null
+    var id: Long = -1
 
     @JoinColumn(name = "user_id", nullable = false)
     @ManyToOne

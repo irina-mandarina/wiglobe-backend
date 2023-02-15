@@ -5,6 +5,7 @@ import com.example.demo.models.responseModels.FollowRequest
 import com.example.demo.models.responseModels.Follow
 import com.example.demo.models.responseModels.UserNames
 import com.example.demo.repositories.FollowRequestRepository
+import com.example.demo.types.ProfilePrivacy
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
@@ -22,17 +23,26 @@ class FollowRequestService(private val followRequestRepository: FollowRequestRep
         )
     }
 
-    fun sendFollowRequest(username: String, receiverUsername: String): ResponseEntity<FollowRequest> {
+    fun sendFollowRequest(username: String, receiverUsername: String): ResponseEntity<FollowRequest?> {
         if (!userService.userWithUsernameExists(receiverUsername)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null)
         }
 
-        if (findByReceiverUsernameAndAndRequesterUsername(receiverUsername, username) != null) {
+        if (findByReceiverUsernameAndRequesterUsername(receiverUsername, username) != null) {
             return ResponseEntity.status(HttpStatus.CREATED).body(null)
         }
 
         val receiver = userService.findUserByUsername(receiverUsername)
             ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
+
+        // check if not private
+        if (receiver.userDetails.privacy == ProfilePrivacy.PUBLIC) {
+            // if the user's profile is public it's not needed to send a
+            // request so the sender automatically follows the receiver
+            followService.saveFollow(userService.findUserByUsername(username)!!, receiver)
+            return ResponseEntity.status(HttpStatus.CREATED).body(null)
+        }
+
         val followRequest = FollowRequestEntity()
 
         followRequest.receiver = receiver
@@ -58,7 +68,7 @@ class FollowRequestService(private val followRequestRepository: FollowRequestRep
     }
 
     fun deleteFollowRequest(username: String, receiverUsername: String): ResponseEntity<String> {
-        val request = findByReceiverUsernameAndAndRequesterUsername(receiverUsername, username)
+        val request = findByReceiverUsernameAndRequesterUsername(receiverUsername, username)
             ?: return ResponseEntity.status(HttpStatus.CREATED).body(null)
 
         followRequestRepository.delete(request)
@@ -81,7 +91,7 @@ class FollowRequestService(private val followRequestRepository: FollowRequestRep
     }
 
     fun approveFollowRequest(username: String, requesterUsername: String, response: Boolean): ResponseEntity<Follow> {
-        val request = findByReceiverUsernameAndAndRequesterUsername(username, requesterUsername)
+        val request = findByReceiverUsernameAndRequesterUsername(username, requesterUsername)
             ?: return ResponseEntity.status(HttpStatus.CREATED).body(null)
 
         if (response) {
@@ -117,7 +127,7 @@ class FollowRequestService(private val followRequestRepository: FollowRequestRep
 
     }
 
-    fun findByReceiverUsernameAndAndRequesterUsername(receiver: String, requester: String): FollowRequestEntity? {
+    fun findByReceiverUsernameAndRequesterUsername(receiver: String, requester: String): FollowRequestEntity? {
         return followRequestRepository.findByReceiverUsernameAndAndRequesterUsername(receiver, requester)
     }
 

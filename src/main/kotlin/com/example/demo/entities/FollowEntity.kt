@@ -28,4 +28,10 @@ class FollowEntity() {
         this.followed = followRequest.receiver
         this.follower = followRequest.requester
     }
+
+    constructor(follower: UserEntity, followed: UserEntity) : this() {
+        this.followDate = Timestamp.valueOf(LocalDateTime.now())
+        this.followed = followed
+        this.follower = follower
+    }
 }

@@ -61,7 +61,7 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
         }
 
         if (journeyRequest.destinationId != null) {
-            journey.destination = destinationService.findDestinationById(journeyRequest.destinationId!!)
+            journey.destination = destinationService.findDestinationById(journeyRequest.destinationId)
         }
         journey.startDate = journeyRequest.startDate
         journey.endDate = journeyRequest.endDate
@@ -82,13 +82,11 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
 
     fun deleteJourney(username: String, journeyId: Long): ResponseEntity<String> {
         val journey: JourneyEntity = findJourneyById(journeyId)
-            ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
-                "message", "Journey does not exist")
+            ?: return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(null)
 
         journeyRepository.delete(journey)
-        return ResponseEntity.status(HttpStatus.OK).header(
-                "message", "Successfully deleted a journey")
+        return ResponseEntity.status(HttpStatus.OK)
             .body(null)
     }
 

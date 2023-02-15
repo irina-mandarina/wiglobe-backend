@@ -30,6 +30,6 @@ class CommentController(private val commentService: CommentService) {
     @DeleteMapping("/journeys/{journeyId}/comments/{commentId}")
     fun deleteComment(@RequestAttribute username: String, @PathVariable journeyId: Long,
                       @PathVariable commentId: Long): ResponseEntity<String> {
-        return commentService.deleteComment(username, commentId)
+        return commentService.deleteComment(username, journeyId, commentId)
     }
 }

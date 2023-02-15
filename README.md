@@ -39,7 +39,7 @@ Front end to do list:
 10. finish user profile
 11. settings
 12. not found
-13. notifications (after impl in the backend)
+13. ~~notifications (after impl in the backend)~~
 14. explore - destinations, search, trending journeys
 15. ~~vuelidate / vee-validate~~
 16. notification pop ups
@@ -59,20 +59,22 @@ must haves:
 1. ~~post journey~~
 2. save user profile from google
 3. lock user profiles
-~~4. repair get journeys by user (not showing drafts)~~
-~~6. jwt~~
-~~7. security: checks for username there~~
-~~4. notifications~~
-~~5. recommendations of destinations~~
-6. view journeys by destination
-7. countries for dest recs
-6. fix controller tests (esp delete controllers)
-7. post drafts, edit journeys in the frontend
-8. delete comments and reviews
-9. tests for services
-10. images: https://www.bezkoder.com/vue-upload-image-axios/ relative!
-11. documentation
-12. rec: weight of params
+4. ~~repair get journeys by user (not showing drafts)~~
+5. ~~jwt~~
+6. ~~security: checks for username there~~
+7. ~~notifications~~
+8. ~~recommendations of destinations~~
+9. ~~view journeys by destination~~
+10. ~~countries for dest recs~~
+11. ~~fix controller tests (esp delete controllers)~~
+12. make recommendations to be not by followed
+12. post drafts, edit journeys in the frontend
+13. ~~update fontawesome~~
+14. delete comments and reviews
+15. tests for services
+16. images: https://www.bezkoder.com/vue-upload-image-axios/ relative!
+17. documentation
+18. rec: weight of params
 
 Future improvements (good to have):
 * elastic search db for destinations
@@ -80,3 +82,4 @@ Future improvements (good to have):
 * reactions with pictures of faces - then analyse the emotion using ml
 * filters
 * follow recommendations
+* future j list

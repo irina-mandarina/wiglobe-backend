@@ -73,7 +73,7 @@ class NotificationService(private val notificationRepository: NotificationReposi
 
     fun getNotifications(username: String): ResponseEntity<List<Notification>> {
         return ResponseEntity.ok().body(
-            findAllByReceiverUsername(username).map{
+            findAllByReceiverUsernameOrderByTimestampDesc(username).map{
                 notificationFromEntity(it)
             }
         )
@@ -109,8 +109,8 @@ class NotificationService(private val notificationRepository: NotificationReposi
             .findByReceiverUsernameAndSubjectUsernameAndObjectTypeAndObjectId(receiver, requester, objType, objId)
     }
 
-    fun findAllByReceiverUsername(receiver: String): List<NotificationEntity> {
-        return notificationRepository.findAllByReceiverUsername(receiver)
+    fun findAllByReceiverUsernameOrderByTimestampDesc(receiver: String): List<NotificationEntity> {
+        return notificationRepository.findAllByReceiverUsernameOrderByTimestampDesc(receiver)
     }
 
 }

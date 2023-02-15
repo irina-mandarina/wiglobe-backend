@@ -2,6 +2,7 @@ package com.example.demo.services
 
 import com.example.demo.entities.FollowEntity
 import com.example.demo.entities.FollowRequestEntity
+import com.example.demo.entities.UserEntity
 import com.example.demo.models.responseModels.Follow
 import com.example.demo.models.responseModels.UserDetails
 import com.example.demo.repositories.FollowRepository
@@ -22,13 +23,12 @@ class FollowService(private val followRepository: FollowRepository,
 
     fun unfollow(username: String, usernameBeingFollowed: String): ResponseEntity<String> {
         val follow = findByFollowerUsernameAndFollowedUsername(username, usernameBeingFollowed)
-            ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
-                "message", "$username is not following them").body(null)
+            // not followind
+            ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
 
         notificationService.deleteNotificationForFollow(follow)
         followRepository.delete(follow)
-        return ResponseEntity.ok().header(
-            "message", "$username stopped following them").body(null)
+        return ResponseEntity.ok().body(null)
     }
 
     fun saveFollow(followRequest: FollowRequestEntity): FollowEntity? {
@@ -36,6 +36,25 @@ class FollowService(private val followRepository: FollowRepository,
             return null
         }
         val follow = FollowEntity(followRequest)
+        if (follow.follower.isFriendsWith(follow.followed)) {
+            notificationService.notifyForFollow(follow,
+                "${follow.followed.username} followed you. You are friends now.")
+        }
+        else {
+            notificationService.notifyForFollow(
+                follow,
+                "${follow.followed.username} followed you"
+            )
+        }
+        return followRepository.save(follow)
+    }
+
+    fun saveFollow(follower: UserEntity, followed: UserEntity): FollowEntity? {
+        if (findByFollowerUsernameAndFollowedUsername(follower.username, followed.username) != null) {
+            return null
+        }
+        val follow = FollowEntity(follower, followed)
+
         if (follow.follower.isFriendsWith(follow.followed)) {
             notificationService.notifyForFollow(follow,
                 "${follow.followed.username} followed you. You are friends now.")

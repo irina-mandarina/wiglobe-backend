@@ -62,8 +62,7 @@ class JourneyController(private val journeyService: JourneyService,
         return journeyService.getDrafts(username)
     }
 
-    // not tested
-    @GetMapping("/journeys/destination/{destinationId}")
+    @GetMapping("/destinations/{destinationId}/journeys")
     fun getJourneysByDestination(@RequestAttribute username: String, @PathVariable destinationId: Long): ResponseEntity<List<Journey>> {
         return journeyService.getJourneysByDestination(username, destinationId)
     }

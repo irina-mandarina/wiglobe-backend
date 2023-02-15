@@ -10,5 +10,5 @@ interface NotificationRepository: JpaRepository<NotificationEntity, Long> {
     fun findByReceiverUsernameAndSubjectUsernameAndObjectTypeAndObjectId(
         receiver: String, requester: String, objType: NotificationObjectEntityType, objId: Long): NotificationEntity
 
-    fun findAllByReceiverUsername(receiver: String): List<NotificationEntity>
+    fun findAllByReceiverUsernameOrderByTimestampDesc(receiver: String): List<NotificationEntity>
 }

@@ -17,6 +17,7 @@ class CommentService(private val journeyService: JourneyService, private val use
     fun commentFromEntity(commentEntity: CommentEntity): Comment {
         return Comment(
             commentEntity.id,
+            commentEntity.journey.id,
             userService.userNames(commentEntity.user),
             commentEntity.postedOn,
             commentEntity.content
@@ -24,8 +25,7 @@ class CommentService(private val journeyService: JourneyService, private val use
     }
     fun getCommentsForJourney(username: String, journeyId: Long): ResponseEntity<List<Comment>> {
         if (!journeyService.journeyWithIdExists(journeyId)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
-                "message","Journey does not exist")
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(null)
         }
 
@@ -43,8 +43,7 @@ class CommentService(private val journeyService: JourneyService, private val use
         commentRequest: CommentRequest
     ): ResponseEntity<Comment> {
         if (!journeyService.journeyWithIdExists(journeyId)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
-                "message","Journey does not exist")
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(null)
         }
 
@@ -53,7 +52,7 @@ class CommentService(private val journeyService: JourneyService, private val use
 
         comment = commentRepository.save(comment)
         notificationService.notifyForComment(comment,
-            "$username commented on your post")
+            "$username commented on your journey")
         return ResponseEntity.status(HttpStatus.CREATED).body(
             commentFromEntity(comment)
         )
@@ -79,7 +78,7 @@ class CommentService(private val journeyService: JourneyService, private val use
         )
     }
 
-    fun deleteComment(username: String, commentId: Long): ResponseEntity<String> {
+    fun deleteComment(username: String, journeyId: Long, commentId: Long): ResponseEntity<String> {
         if (!commentWithIdExists(commentId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
         }
