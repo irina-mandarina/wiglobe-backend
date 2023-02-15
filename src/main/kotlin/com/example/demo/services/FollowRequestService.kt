@@ -43,14 +43,15 @@ class FollowRequestService(private val followRequestRepository: FollowRequestRep
             return ResponseEntity.status(HttpStatus.CREATED).body(null)
         }
 
-        val followRequest = FollowRequestEntity()
+        var followRequest = FollowRequestEntity()
 
         followRequest.receiver = receiver
         val requester = userService.findUserByUsername(username)!!
         followRequest.requester = requester
         followRequest.requestDate = Timestamp.valueOf(LocalDateTime.now())
 
-        followRequestRepository.save(followRequest)
+        followRequest = followRequestRepository.save(followRequest)
+        
         notificationService.notifyForFollowRequest(followRequest,
             "$username sent you a follow request")
 
@@ -128,7 +129,7 @@ class FollowRequestService(private val followRequestRepository: FollowRequestRep
     }
 
     fun findByReceiverUsernameAndRequesterUsername(receiver: String, requester: String): FollowRequestEntity? {
-        return followRequestRepository.findByReceiverUsernameAndAndRequesterUsername(receiver, requester)
+        return followRequestRepository.findByReceiverUsernameAndRequesterUsername(receiver, requester)
     }
 
     fun findAllByReceiverUsername(receiverUsername: String): List<FollowRequestEntity> {
