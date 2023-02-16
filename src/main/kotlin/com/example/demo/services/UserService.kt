@@ -29,19 +29,19 @@ import java.sql.Date
     fun userDetails(user: UserEntity): UserDetails {
 //        val userDetails: UserDetailsEntity = userDetailsService.findByUserUsername(user.username)
         var residence: Destination? = null
-        if (user.userDetails.residence !== null) {
-            residence = destinationService.destinationFromEntity(user.userDetails.residence!!)
+        if (user.userDetails!!.residence !== null) {
+            residence = destinationService.destinationFromEntity(user.userDetails!!.residence!!)
         }
         return UserDetails(
             user.username,
             user.firstName,
             user.lastName,
-            user.userDetails.birthdate,
-            user.userDetails.biography,
-            user.userDetails.registrationTimestamp,
-            user.userDetails.gender,
+            user.userDetails!!.birthdate,
+            user.userDetails!!.biography,
+            user.userDetails!!.registrationTimestamp,
+            user.userDetails!!.gender,
             residence,
-            user.userDetails.privacy
+            user.userDetails!!.privacy
         )
     }
 
@@ -105,7 +105,7 @@ import java.sql.Date
                 signUp(SignUpRequest(
                     googlePayload.email.substring(0, googlePayload.email.indexOf('@')-1),
                     googlePayload.email,
-                    googlePayload.id.toString(),
+                    googlePayload.id,
                     googlePayload.given_name,
                     googlePayload.family_name,
                     "",
@@ -145,7 +145,9 @@ import java.sql.Date
 
         var user = UserEntity(signUpRequest)
 
-        userDetailsService.save(UserDetailsEntity(signUpRequest))
+        val userDetails = UserDetailsEntity(signUpRequest)
+        user.userDetails = userDetails
+        userDetailsService.save(userDetails)
         user = userRepository.save(user)
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
@@ -172,7 +174,7 @@ fun deleteAccount(username: String): ResponseEntity<String> {
     }
 
     fun setBio(username: String, bio: String): ResponseEntity<UserDetails> {
-        val userDetails = userDetailsService.findByUserUsername(username)
+        val userDetails = findUserByUsername(username)!!.userDetails!!
         userDetails.biography = bio
         userDetailsService.save(userDetails)
 
@@ -186,7 +188,7 @@ fun deleteAccount(username: String): ResponseEntity<String> {
 
     fun getUserDetails(username: String, otherUserUsername: String): ResponseEntity<UserDetails> {
         val requestedDetailsOwner = findUserByUsername(otherUserUsername)!!
-        if (requestedDetailsOwner.userDetails.privacy == ProfilePrivacy.PRIVATE) {
+        if (requestedDetailsOwner.userDetails!!.privacy == ProfilePrivacy.PRIVATE) {
             if (! findUserByUsername(username)!!.isFollowing(requestedDetailsOwner)) {
                 // can't
                 return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT).body(
@@ -195,8 +197,8 @@ fun deleteAccount(username: String): ResponseEntity<String> {
                         requestedDetailsOwner.firstName,
                         requestedDetailsOwner.lastName,
                         null, null, null,
-                        requestedDetailsOwner.userDetails.gender, null,
-                        requestedDetailsOwner.userDetails.privacy
+                        requestedDetailsOwner.userDetails!!.gender, null,
+                        requestedDetailsOwner.userDetails!!.privacy
                     )
                 )
             }
@@ -210,7 +212,7 @@ fun deleteAccount(username: String): ResponseEntity<String> {
     }
 
     fun setResidence(username: String, destinationId: Long): ResponseEntity<UserDetails> {
-        val userDetails = userDetailsService.findByUserUsername(username)
+        val userDetails = findUserByUsername(username)!!.userDetails!!
         userDetails.residence = destinationService.findDestinationById(destinationId)
         userDetailsService.save(userDetails)
         return ResponseEntity.ok()
@@ -222,7 +224,7 @@ fun deleteAccount(username: String): ResponseEntity<String> {
     }
 
     fun setProfilePrivacy(username: String, privacy: ProfilePrivacy): ResponseEntity<UserDetails> {
-        val userDetails = userDetailsService.findByUserUsername(username)
+        val userDetails = findUserByUsername(username)!!.userDetails!!
         userDetails.privacy = privacy
         userDetailsService.save(userDetails)
         return ResponseEntity.ok()
@@ -234,7 +236,7 @@ fun deleteAccount(username: String): ResponseEntity<String> {
     }
 
     fun setBirthdate(username: String, birthdate: Date): ResponseEntity<UserDetails> {
-        val userDetails = userDetailsService.findByUserUsername(username)
+        val userDetails = findUserByUsername(username)!!.userDetails!!
         userDetails.birthdate = birthdate
         userDetailsService.save(userDetails)
         return ResponseEntity.ok()
@@ -246,7 +248,7 @@ fun deleteAccount(username: String): ResponseEntity<String> {
     }
 
     fun setGender(username: String, gender: Gender): ResponseEntity<UserDetails> {
-        val userDetails = userDetailsService.findByUserUsername(username)
+        val userDetails = findUserByUsername(username)!!.userDetails!!
         userDetails.gender = gender
         userDetailsService.save(userDetails)
         return ResponseEntity.ok()

@@ -1,7 +1,6 @@
 package com.example.demo.entities
 
 import com.example.demo.models.requestModels.SignUpRequest
-import com.example.demo.serialization.TimestampSerializer
 import com.example.demo.types.Gender
 import com.example.demo.types.ProfilePrivacy
 import kotlinx.serialization.Serializable
@@ -32,7 +31,6 @@ class UserDetailsEntity() {
     @Enumerated(EnumType.STRING)
     var gender: Gender = Gender.OTHER
 
-    @Serializable(TimestampSerializer::class)
     @Column(name = "registration_timestamp")
     var registrationTimestamp: Timestamp = Timestamp.valueOf(LocalDateTime.now())
 
@@ -47,8 +45,8 @@ class UserDetailsEntity() {
     @OneToOne
     var residence: DestinationEntity? = null
 
-    @OneToOne(mappedBy = "userDetails")
-    lateinit var user: UserEntity
+//    @OneToOne(mappedBy = "userDetails")
+//    lateinit var user: UserEntity
 
     constructor(signUpRequest: SignUpRequest) : this() {
         this.biography = signUpRequest.biography

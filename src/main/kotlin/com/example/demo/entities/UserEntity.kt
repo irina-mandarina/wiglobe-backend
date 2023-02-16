@@ -1,13 +1,6 @@
 package com.example.demo.entities
 
 import com.example.demo.models.requestModels.SignUpRequest
-import com.example.demo.serialization.TimestampSerializer
-import com.example.demo.types.Gender
-import kotlinx.serialization.Serializable
-import java.sql.Date
-import java.sql.Timestamp
-import java.time.LocalDate
-import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
@@ -35,7 +28,7 @@ class UserEntity() {
 
     @OneToOne
     @JoinColumn(name = "details_id", referencedColumnName = "id")
-    lateinit var userDetails: UserDetailsEntity
+    var userDetails: UserDetailsEntity? = null
 
     @OneToMany(mappedBy="user")
     var journeys: List<JourneyEntity> = listOf()

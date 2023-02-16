@@ -36,7 +36,7 @@ class FollowRequestService(private val followRequestRepository: FollowRequestRep
             ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
 
         // check if not private
-        if (receiver.userDetails.privacy == ProfilePrivacy.PUBLIC) {
+        if (receiver.userDetails!!.privacy == ProfilePrivacy.PUBLIC) {
             // if the user's profile is public it's not needed to send a
             // request so the sender automatically follows the receiver
             followService.saveFollow(userService.findUserByUsername(username)!!, receiver)

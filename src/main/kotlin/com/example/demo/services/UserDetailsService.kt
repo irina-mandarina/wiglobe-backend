@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service
 
 @Service
 class UserDetailsService(private val userDetailsRepository: UserDetailsRepository) {
-    public fun findByUserUsername(username: String): UserDetailsEntity {
-        return userDetailsRepository.findByUserUsername(username)
-    }
+//    public fun findByUserUsername(username: String): UserDetailsEntity {
+//        return userDetailsRepository.findByUserUsername(username)
+//    }
 
     public fun save(userDetailsEntity: UserDetailsEntity): UserDetailsEntity {
-        return save(userDetailsEntity)
+        return userDetailsRepository.save(userDetailsEntity)
     }
 
 //    public fun save(signUpRequest: SignUpRequest): UserDetailsEntity {
