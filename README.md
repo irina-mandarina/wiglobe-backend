@@ -58,7 +58,7 @@ must haves:
 ~~interests - add type~~
 1. ~~post journey~~
 2. save user profile from google
-3. lock user profiles
+3. ~~lock user profiles~~
 4. ~~repair get journeys by user (not showing drafts)~~
 5. ~~jwt~~
 6. ~~security: checks for username there~~

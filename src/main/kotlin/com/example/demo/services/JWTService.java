@@ -1,15 +1,25 @@
 package com.example.demo.services;
-
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier.Builder;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import java.util.Collections;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.gson.GsonFactory;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Service;
 import java.security.Key;
-import java.time.Instant;
 import java.util.Date;
+
 
 @Service
 public class JWTService {
-    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private static final String CLIENT_ID = "1045612066490-onub3orv8hplavb7e873m4d8nedpej5o.apps.googleusercontent.com";
+    private final SignatureAlgorithm algorithm = SignatureAlgorithm.HS256;
+    private final Key key = Keys.secretKeyFor(algorithm);
     public String encode(String username) {
         Date exp = new Date();
         if (exp.getMonth() == 12) {
@@ -27,7 +37,6 @@ public class JWTService {
     public String getSubject(String token) throws JwtException {
         System.out.println(token);
         try {
-
             Jws<Claims> jws = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return jws.getBody().getSubject();
 
@@ -60,5 +69,38 @@ public class JWTService {
         catch (JwtException e) {
             return false;
         }
+    }
+
+    public String getIssuer(String token) {
+        try {
+            Jws<Claims> jws = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            return jws.getBody().getIssuer();
+
+        } catch (JwtException e) {
+            //don't trust the JWT!
+            throw e;
+        }
+    }
+
+    public String getGoogleEmail(String token) throws Exception {
+        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
+                .setAudience(Collections.singletonList(CLIENT_ID))
+                .build();
+
+        GoogleIdToken googleIdToken = verifier.verify(token);
+        if (googleIdToken != null) {
+            GoogleIdToken.Payload payload = googleIdToken.getPayload();
+            return payload.getEmail();
+        }
+        return null;
+    }
+
+    public boolean googleJWTIsValid(String idToken) throws Exception {
+        GoogleIdTokenVerifier verifier = new Builder(new NetHttpTransport(), new GsonFactory())
+                .setAudience(Collections.singletonList(CLIENT_ID))
+                .build();
+
+        GoogleIdToken token = verifier.verify(idToken);
+        return token != null;
     }
 }

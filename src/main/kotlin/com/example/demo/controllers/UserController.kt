@@ -1,5 +1,6 @@
 package com.example.demo.controllers
 
+import com.example.demo.models.requestModels.GooglePayload
 import com.example.demo.models.requestModels.LogInRequest
 import com.example.demo.models.requestModels.SignUpRequest
 import com.example.demo.models.responseModels.LogInResponse
@@ -23,6 +24,11 @@ class UserController(private val userService: UserService) {
     @PostMapping("/users/signup")
     fun signUp(@RequestBody signUpRequest: SignUpRequest): ResponseEntity<SignUpResponse> { // taken user details
         return userService.signUp(signUpRequest)
+    }
+
+    @PostMapping("/users/login/google")
+    fun authenticateWithGoogle(@RequestAttribute token: String, @RequestBody googlePayload: GooglePayload): ResponseEntity<LogInResponse> {
+        return userService.authenticateWithGoogle(token, googlePayload)
     }
 
     @PostMapping("/users/logout")

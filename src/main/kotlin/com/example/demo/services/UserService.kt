@@ -1,6 +1,8 @@
 package com.example.demo.services
 
+import com.example.demo.entities.UserDetailsEntity
 import com.example.demo.entities.UserEntity
+import com.example.demo.models.requestModels.GooglePayload
 import com.example.demo.repositories.UserRepository
 import com.example.demo.models.requestModels.LogInRequest
 import com.example.demo.models.requestModels.SignUpRequest
@@ -44,11 +46,15 @@ import java.sql.Date
     }
 
     fun userWithUsernameExists(username: String): Boolean {
-        return (userRepository.findUserByUsername(username) != null)
+        return userRepository.findUserByUsername(username) != null
     }
 
     fun userWithEmailExists(email: String): Boolean {
-        return ((userRepository.findUserByEmail(email)) != null)
+        return (userRepository.findUserByEmail(email)) != null
+    }
+
+    fun findUserByEmail(email: String): UserEntity? {
+        return userRepository.findUserByEmail(email)
     }
 
     fun findUserByUsername(username: String): UserEntity? {
@@ -56,28 +62,61 @@ import java.sql.Date
     }
 
     fun logIn(logInRequest: LogInRequest): ResponseEntity<LogInResponse> {
-        if (userWithUsernameExists(logInRequest.username!!)) {
-            val user = findUserByUsername(logInRequest.username)!!
-            return if (user.password != logInRequest.password) {
-                ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
-                    "message", "Wrong password")
-                    .body(null)
-            } else {
-                ResponseEntity.ok().header(
-                    "message", "Successfully logged in")
-                    .body(
-                        LogInResponse(
-                            userDetails(
-                                user
-                            ),
-                            jwtService.encode(user.username)
-                        )
+        val user: UserEntity
+        if (logInRequest.userIdentifier.contains("@")) {
+            // the user is logging in with an email
+            if (!userWithEmailExists(logInRequest.userIdentifier)) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
+            }
+            user = findUserByEmail(logInRequest.userIdentifier)!!
+        }
+        else {
+            if (!userWithUsernameExists(logInRequest.userIdentifier)) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
+            }
+            user = findUserByUsername(logInRequest.userIdentifier)!!
+        }
+        return if (user.password != logInRequest.password) {
+            ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                // wrong password
+                .body(null)
+        } else {
+            ResponseEntity.ok()
+                .body(
+                    LogInResponse(
+                        userDetails(
+                            user
+                        ),
+                        jwtService.encode(user.username)
                     )
+                )
+        }
+    }
+
+    fun authenticateWithGoogle(token: String, googlePayload: GooglePayload): ResponseEntity<LogInResponse> {
+        if (jwtService.googleJWTIsValid(token)) {
+            val email = jwtService.getGoogleEmail(token)
+            if (userWithEmailExists(email)) {
+                // log in
+                return logIn(LogInRequest(email, findUserByEmail(email)!!.password))
+            }
+            else {
+                // sign up
+                signUp(SignUpRequest(
+                    googlePayload.email.substring(0, googlePayload.email.indexOf('@')-1),
+                    googlePayload.email,
+                    googlePayload.id.toString(),
+                    googlePayload.given_name,
+                    googlePayload.family_name,
+                    "",
+                    null, null
+                ))
+                return logIn(LogInRequest(email, findUserByEmail(email)!!.password))
             }
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
-            "message", "Username does not exist")
-            .body(null)
+        return ResponseEntity.ok().body(
+            null
+        )
     }
 
     fun signUp(signUpRequest: SignUpRequest): ResponseEntity<SignUpResponse> {
@@ -106,8 +145,8 @@ import java.sql.Date
 
         var user = UserEntity(signUpRequest)
 
+        userDetailsService.save(UserDetailsEntity(signUpRequest))
         user = userRepository.save(user)
-        userDetailsService.save(signUpRequest)
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
             SignUpResponse(

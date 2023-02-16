@@ -51,7 +51,7 @@ class FollowRequestService(private val followRequestRepository: FollowRequestRep
         followRequest.requestDate = Timestamp.valueOf(LocalDateTime.now())
 
         followRequest = followRequestRepository.save(followRequest)
-        
+
         notificationService.notifyForFollowRequest(followRequest,
             "$username sent you a follow request")
 

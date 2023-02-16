@@ -16,9 +16,9 @@ class UserDetailsService(private val userDetailsRepository: UserDetailsRepositor
         return save(userDetailsEntity)
     }
 
-    public fun save(signUpRequest: SignUpRequest): UserDetailsEntity {
-        return save (
-            UserDetailsEntity(signUpRequest)
-        )
-    }
+//    public fun save(signUpRequest: SignUpRequest): UserDetailsEntity {
+//        return save (
+//            UserDetailsEntity(signUpRequest)
+//        )
+//    }
 }

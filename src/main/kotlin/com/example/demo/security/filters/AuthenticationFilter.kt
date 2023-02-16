@@ -40,6 +40,21 @@ class AuthenticationFilter(private val jwtService: JWTService, private val userS
                 return
             }
         }
+        if (request.requestURI.contains("login/google")) {
+            try {
+                val token = (request.getHeader("Authentication").removePrefix("Bearer "))
+                if (!jwtService.googleJWTIsValid(token)) {
+                    response.status = 401
+                    return
+                }
+                else {
+                    request.setAttribute("token", token)
+                }
+            } catch (e: Exception) {
+                response.status = 401
+                return
+            }
+        }
         filterChain.doFilter(request, response)
         return
     }
