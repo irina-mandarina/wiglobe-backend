@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository
 @Repository
 interface NotificationRepository: JpaRepository<NotificationEntity, Long> {
     fun findByReceiverUsernameAndSubjectUsernameAndObjectTypeAndObjectId(
-        receiver: String, requester: String, objType: NotificationObjectEntityType, objId: Long): NotificationEntity
+        receiver: String, requester: String, objType: NotificationObjectEntityType, objId: Long): NotificationEntity?
 
     fun findAllByReceiverUsernameOrderByTimestampDesc(receiver: String): List<NotificationEntity>
 }

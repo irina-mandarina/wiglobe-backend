@@ -9,6 +9,7 @@ import com.example.demo.models.requestModels.SignUpRequest
 import com.example.demo.models.responseModels.*
 import com.example.demo.types.Gender
 import com.example.demo.types.ProfilePrivacy
+import org.springframework.data.domain.PageRequest
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
@@ -102,12 +103,18 @@ import java.sql.Date
             }
             else {
                 // sign up
+                // create a username that is not taken:
+                var generatedUsername: String = googlePayload.email.substring(0, googlePayload.email.indexOf('@'))
+                while (userWithUsernameExists(generatedUsername)) {
+                    generatedUsername += googlePayload.id
+                        .toString()[generatedUsername.length - googlePayload.email.substring(0, googlePayload.email.indexOf('@')).length]
+                }
                 signUp(SignUpRequest(
-                    googlePayload.email.substring(0, googlePayload.email.indexOf('@')-1),
+                    generatedUsername,
                     googlePayload.email,
-                    googlePayload.id,
-                    googlePayload.given_name,
-                    googlePayload.family_name,
+                    googlePayload.id.toString(),
+                    googlePayload.given_name.toString(),
+                    googlePayload.family_name.toString(),
                     "",
                     null, null
                 ))
@@ -159,17 +166,12 @@ import java.sql.Date
         )
     }
 
-    fun logOut(username: String): ResponseEntity<String> {
-        TODO("Not yet implemented")
-    }
-
-fun deleteAccount(username: String): ResponseEntity<String> {
+    fun deleteAccount(username: String): ResponseEntity<String> {
         val user = findUserByUsername(username)
         if (user != null) {
             userRepository.delete(user)
         }
-        return ResponseEntity.ok().header(
-            "message", "Deleted account with username: $username")
+        return ResponseEntity.ok()
             .body(null)
     }
 
@@ -257,5 +259,13 @@ fun deleteAccount(username: String): ResponseEntity<String> {
                     findUserByUsername(username)!!
                 )
             )
+    }
+
+    fun searchUsers(keyword: String, pageNumber: Int, pageSize: Int): ResponseEntity<List<UserNames>> {
+        val pageable = PageRequest.of(pageNumber, pageSize)
+        return ResponseEntity.ok().body(
+            userRepository.findAllByUsernameStartingWithOrFirstNameStartingWithOrLastNameStartingWith(keyword, keyword, keyword, pageable)
+                .map { userNames(it) }
+        )
     }
 }

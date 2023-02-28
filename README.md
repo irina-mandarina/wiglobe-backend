@@ -1,7 +1,7 @@
 # tuesthesis
 
 Qs:
-1. talk about deploy
+1. on delete cascade
 
 To do:
 * ~~get user (others)~~
@@ -67,14 +67,17 @@ must haves:
 9. ~~view journeys by destination~~
 10. ~~countries for dest recs~~
 11. ~~fix controller tests (esp delete controllers)~~
-12. make recommendations to be not by followed
-12. post drafts, edit journeys in the frontend
-13. ~~update fontawesome~~
-14. delete comments and reviews
-15. tests for services
-16. images: https://www.bezkoder.com/vue-upload-image-axios/ relative!
-17. documentation
-18. rec: weight of params
+12. order recs by date and then rating???
+13. ~~post drafts, edit journeys in the frontend~~
+14. ~~update fontawesome~~
+15. delete comments and reviews. BEFORE DELETE COM: CHECK IF IT IS THE LAST INTEREST
+16. tests for services
+17. dont search for journeys that arent visible
+18. documentation
+19. components in profile pages
+20. filters in search
+21. journeys visible by user
+22. encode passwords
 
 Future improvements (good to have):
 * elastic search db for destinations
@@ -83,3 +86,20 @@ Future improvements (good to have):
 * filters
 * follow recommendations
 * future j list
+* projection for user names when searching
+22. rec: weight of params
+
+to do:
+private images, backend, db on azure
+
+  C:\Program Files\MySQL\MySQL Server 8.0\bin>.\mysql.exe -h wiglobe-db.mysql.database.azure.com -u irinaahamad -p wiglobedb < "C:\\Users\\irina\\demodbdump.sql"
+
+import java.math.BigInteger
+import java.security.MessageDigest
+
+fun md5(input:String): String {
+val md = MessageDigest.getInstance("MD5")
+return BigInteger(1, md.digest(input.toByteArray())).toString(16).padStart(32, '0')
+}
+
+mvn spring-boot:run

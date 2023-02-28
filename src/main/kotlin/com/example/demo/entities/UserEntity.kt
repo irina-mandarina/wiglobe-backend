@@ -9,7 +9,7 @@ class UserEntity() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)
-    var id: Long = 0
+    var id: Long = -1
 
     @Column(name = "email", nullable = false, unique = true)
     var email: String = ""
@@ -23,8 +23,8 @@ class UserEntity() {
     @Column(name = "first_name", nullable = false)
     var firstName: String = ""
 
-    @Column(name = "last_name")
-    var lastName: String? = ""
+    @Column(name = "last_name", nullable = false)
+    var lastName: String = ""
 
     @OneToOne
     @JoinColumn(name = "details_id", referencedColumnName = "id")

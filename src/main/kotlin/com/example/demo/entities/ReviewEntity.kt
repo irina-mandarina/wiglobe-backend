@@ -11,7 +11,7 @@ class ReviewEntity() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    var id: Long? = null
+    var id: Long = -1
 
     @JoinColumn(name = "user_id", nullable = false)
     @ManyToOne
@@ -25,8 +25,6 @@ class ReviewEntity() {
     var postedOn: Timestamp = Timestamp.valueOf(LocalDateTime.now())
 
     @Column(name = "star_rating", nullable = false)
-//    @Min(value = 1)
-//    @Max(value = 10)
     var starRating: Int = 1
 
     @Column(name = "title")

@@ -16,7 +16,7 @@ class FollowRequestEntity {
     var requestDate: Timestamp = Timestamp.valueOf(LocalDateTime.now())
 
     @JoinColumn(name = "requester_id", nullable = false)
-    @ManyToOne
+    @ManyToOne(cascade = [CascadeType.REMOVE])
     lateinit var requester: UserEntity
 
     @JoinColumn(name = "receiver_id", nullable = false)

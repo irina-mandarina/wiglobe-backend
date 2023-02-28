@@ -11,7 +11,7 @@ class NotificationEntity() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    var id: Long? = null
+    var id: Long = -1
 
     @JoinColumn(name = "receiver_id", nullable = false)
     @ManyToOne
@@ -40,5 +40,4 @@ class NotificationEntity() {
 
     @Column(name = "content")
     var content: String = ""
-
 }

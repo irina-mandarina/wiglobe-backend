@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
+import org.springframework.web.bind.annotation.RequestParam
 
 @Service
 class DestinationService(private val destinationRepository: DestinationRepository,
@@ -38,7 +39,7 @@ class DestinationService(private val destinationRepository: DestinationRepositor
         )
     }
 
-    private fun destinationSearchResultFromProjection(destinationSearchProjection: DestinationSearchProjection): DestinationSearchResult {
+    fun destinationSearchResultFromProjection(destinationSearchProjection: DestinationSearchProjection): DestinationSearchResult {
         return DestinationSearchResult(
             destinationSearchProjection.id,
             featureCodeService.findFeatureCodeMeaning(destinationSearchProjection.featureCode.toString()),
@@ -105,14 +106,29 @@ class DestinationService(private val destinationRepository: DestinationRepositor
         )
     }
 
-    fun searchDestinations(keyword: String): ResponseEntity<List<DestinationSearchResult>> {
-        return ResponseEntity.ok().body(
-            (findDestinationsByAsciiNameStartingWith(keyword) +
-            findDestinationsByCountryCodeStartingWith(keyword) +
-            findDestinationsByCountryNameStartingWith(keyword)).map{
-                destinationSearchResultFromProjection(it)
-            }
-        )
+    fun searchDestinations(keyword: String, pageNumber: Int, pageSize: Int): ResponseEntity<List<DestinationSearchResult>> {
+        val result = (findDestinationsByAsciiNameStartingWith(keyword) +
+                findDestinationsByCountryCodeStartingWith(keyword) +
+                findDestinationsByCountryNameStartingWith(keyword))
+        val startIndex = pageNumber * pageSize
+        var endIndex = (pageNumber + 1) * pageSize - 1
+        if (endIndex >= result.size) {
+            endIndex = result.size - 1
+        }
+        if (startIndex <= result.size) {
+            return ResponseEntity.ok().body(
+                result
+                    .subList(startIndex, endIndex)
+                    .map{
+                        destinationSearchResultFromProjection(it)
+                    }
+            )
+        }
+        else {
+            return ResponseEntity.ok().body(
+                listOf()
+            )
+        }
     }
 
     fun recommendDestinationsToUser(username: String, pageNumber: Int, pageSize: Int): ResponseEntity<List<Destination>> {

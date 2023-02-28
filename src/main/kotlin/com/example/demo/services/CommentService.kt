@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class CommentService(private val journeyService: JourneyService, private val userService: UserService,
-                     private val commentRepository: CommentRepository, private val notificationService: NotificationService) {
+                     private val commentRepository: CommentRepository, private val notificationService: NotificationService, interestsService: InterestsService) {
 
     fun commentFromEntity(commentEntity: CommentEntity): Comment {
         return Comment(
@@ -88,6 +88,9 @@ class CommentService(private val journeyService: JourneyService, private val use
         if (comment.user.username != username) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null)
         }
+
+//        if (intere)
+
         notificationService.deleteNotificationForComment(comment)
         commentRepository.delete(comment)
 

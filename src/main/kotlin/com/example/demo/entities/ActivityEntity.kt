@@ -3,7 +3,6 @@ package com.example.demo.entities
 import com.example.demo.models.requestModels.ActivityRequest
 import com.example.demo.types.ActivityType
 import java.sql.Timestamp
-import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
@@ -12,7 +11,7 @@ class ActivityEntity() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    var id: Long? = null
+    var id: Long = 1
 
     @JoinColumn(name = "journey_id", nullable = false)
     @ManyToOne

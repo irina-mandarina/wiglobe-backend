@@ -15,8 +15,8 @@ class DestinationController(private val destinationService: DestinationService) 
     }
 
     @GetMapping("/destinations/search")
-    fun searchDestinations(@RequestParam search: String): ResponseEntity<List<DestinationSearchResult>> {
-        return destinationService.searchDestinations(search);
+    fun searchDestinations(@RequestParam keyword: String, @RequestParam pageNumber: Int, @RequestParam pageSize: Int): ResponseEntity<List<DestinationSearchResult>> {
+        return destinationService.searchDestinations(keyword, pageNumber, pageSize);
     }
 
     // not tested

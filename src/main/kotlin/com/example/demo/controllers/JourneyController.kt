@@ -2,10 +2,9 @@ package com.example.demo.controllers
 
 import com.example.demo.models.requestModels.JourneyRequest
 import com.example.demo.models.responseModels.Journey
+import com.example.demo.models.responseModels.UserNames
 import com.example.demo.recommender.JourneyRecommender
-import com.example.demo.services.CommentService
 import com.example.demo.services.JourneyService
-import com.example.demo.services.UserService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -40,7 +39,7 @@ class JourneyController(private val journeyService: JourneyService,
 
     @GetMapping("/journeys")
     fun getJourneyRecommendations(@RequestAttribute username: String): List<Journey> {
-        val journeyRecommendations = journeyScoreCalculator.recommendForUser(username)
+        val journeyRecommendations = journeyScoreCalculator.recommendJourneysToUser(username)
             .toList().sortedByDescending { (_, value) -> value}.toMap()
 
         for (set in journeyRecommendations) {
@@ -66,4 +65,12 @@ class JourneyController(private val journeyService: JourneyService,
     fun getJourneysByDestination(@RequestAttribute username: String, @PathVariable destinationId: Long): ResponseEntity<List<Journey>> {
         return journeyService.getJourneysByDestination(username, destinationId)
     }
+
+    @GetMapping("/journeys/search")
+    fun searchJourneys(@RequestAttribute username: String,
+                       @RequestParam keyword: String, @RequestParam pageNumber: Int,
+                       @RequestParam pageSize: Int): ResponseEntity<List<Journey>> {
+        return journeyService.searchJourneys(keyword, pageNumber, pageSize)
+    }
+
 }

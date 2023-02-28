@@ -20,7 +20,4 @@ class CountryEntity {
 
     @Column(name = "continent")
     var continent: String = ""
-
-//    @OneToMany(mappedBy = "country")
-//    lateinit var destinationEntity: List<DestinationEntity>
 }

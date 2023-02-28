@@ -23,7 +23,7 @@ class FollowService(private val followRepository: FollowRepository,
 
     fun unfollow(username: String, usernameBeingFollowed: String): ResponseEntity<String> {
         val follow = findByFollowerUsernameAndFollowedUsername(username, usernameBeingFollowed)
-            // not followind
+            // not following
             ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
 
         notificationService.deleteNotificationForFollow(follow)
@@ -38,7 +38,7 @@ class FollowService(private val followRepository: FollowRepository,
         val follow = FollowEntity(followRequest)
         if (follow.follower.isFriendsWith(follow.followed)) {
             notificationService.notifyForFollow(follow,
-                "${follow.followed.username} followed you. You are friends now.")
+                "${follow.followed.username} followed you. You are friends now")
         }
         else {
             notificationService.notifyForFollow(

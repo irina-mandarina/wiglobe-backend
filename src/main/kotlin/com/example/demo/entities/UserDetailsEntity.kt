@@ -18,11 +18,7 @@ class UserDetailsEntity() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    var id: Long? = null
-
-//    @JoinColumn(name = "user_id", nullable = false)
-//    @OneToOne
-//    lateinit var user: UserEntity
+    var id: Long = -1
 
     @Column(name = "biography")
     var biography: String = ""
@@ -44,10 +40,6 @@ class UserDetailsEntity() {
     @JoinColumn(name = "residence")
     @OneToOne
     var residence: DestinationEntity? = null
-
-//    @OneToOne(mappedBy = "userDetails")
-//    lateinit var user: UserEntity
-
     constructor(signUpRequest: SignUpRequest) : this() {
         this.biography = signUpRequest.biography
         this.birthdate = signUpRequest.birthdate

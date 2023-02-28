@@ -1,14 +1,13 @@
 package com.example.demo.entities
 
 import javax.persistence.*
-//import org.springframework.data.relational.core.mapping.Table
 
 @Entity
 @Table(name = "geonames")
 class DestinationEntity {
     @Id
     @Column(name = "geonameid", nullable = false)
-    var id: Long? = null
+    var id: Long = -1
 
     @Column(name = "latitude", nullable = false)
     var latitude: Double = 0.0

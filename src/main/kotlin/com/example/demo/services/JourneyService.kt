@@ -7,6 +7,7 @@ import com.example.demo.models.responseModels.Journey
 import com.example.demo.models.requestModels.JourneyRequest
 import com.example.demo.models.responseModels.Activity
 import com.example.demo.types.Visibility
+import org.springframework.data.domain.PageRequest
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
@@ -251,6 +252,13 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
     fun findAllByDestinationIdAndVisibilityNot(destinationId: Long,
                                                visibility: Visibility): List<JourneyEntity> {
         return journeyRepository.findAllByDestinationIdAndVisibilityNot(destinationId, visibility)
+    }
+
+    fun searchJourneys(keyword: String, pageNumber: Int, pageSize: Int): ResponseEntity<List<Journey>> {
+        return ResponseEntity.ok().body(
+            journeyRepository.findAllByDescriptionContaining(keyword, PageRequest.of(pageNumber, pageSize))
+                .map { journeyFromEntity( it ) }
+        )
     }
 
 }

@@ -87,7 +87,8 @@ class ReviewControllerTest {
         )
 
         // WHEN:
-        val responseFromController = reviewController.deleteReview(sampleUsername, sampleDestinationId, sampleReviewId)
+        val responseFromController = reviewController
+            .deleteReview(sampleUsername, sampleDestinationId, sampleReviewId)
 
         // THEN:
         assertNotNull(responseFromController)

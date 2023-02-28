@@ -102,7 +102,7 @@ class FollowRequestService(private val followRequestRepository: FollowRequestRep
             followRequestRepository.delete(request)
 
             notificationService.notifyForFollowRequestResponse(request,
-                "$username approved your follow request."
+                "$username approved your follow request"
             )
             return ResponseEntity.ok().body(
                 Follow(
@@ -118,7 +118,7 @@ class FollowRequestService(private val followRequestRepository: FollowRequestRep
         }
         else {
             notificationService.notifyForFollowRequestResponse(request,
-                    "$username declined your follow request."
+                    "$username declined your follow request"
             )
             followRequestRepository.delete(request)
             return ResponseEntity.ok().header(

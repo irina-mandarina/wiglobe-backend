@@ -80,31 +80,40 @@ class NotificationService(private val notificationRepository: NotificationReposi
     }
 
     fun deleteNotificationForFollowRequest(obj: FollowRequestEntity) {
-        notificationRepository.delete(
-            findByReceiverUsernameAndSubjectUsernameAndObjectTypeAndObjectId(
-                obj.receiver.username, obj.requester.username, NotificationObjectEntityType.FOLLOW_REQUEST, obj.id
-            )
+        val objectToDelete = findByReceiverUsernameAndSubjectUsernameAndObjectTypeAndObjectId(
+            obj.receiver.username, obj.requester.username, NotificationObjectEntityType.FOLLOW_REQUEST, obj.id
         )
+        if (objectToDelete != null) {
+            notificationRepository.delete(
+                objectToDelete
+            )
+        }
     }
 
     fun deleteNotificationForComment(obj: CommentEntity) {
-        notificationRepository.delete(
-            findByReceiverUsernameAndSubjectUsernameAndObjectTypeAndObjectId(
-                obj.journey.user.username, obj.user.username, NotificationObjectEntityType.COMMENT, obj.id
-            )
+        val objectToDelete = findByReceiverUsernameAndSubjectUsernameAndObjectTypeAndObjectId(
+            obj.journey.user.username, obj.user.username, NotificationObjectEntityType.COMMENT, obj.id
         )
+        if (objectToDelete != null) {
+            notificationRepository.delete(
+                objectToDelete
+            )
+        }
     }
 
     fun deleteNotificationForFollow(obj: FollowEntity) {
-        notificationRepository.delete(
-            findByReceiverUsernameAndSubjectUsernameAndObjectTypeAndObjectId(
-                obj.followed.username, obj.follower.username, NotificationObjectEntityType.FOLLOW, obj.id
-            )
+        val objectToDelete = findByReceiverUsernameAndSubjectUsernameAndObjectTypeAndObjectId(
+            obj.followed.username, obj.follower.username, NotificationObjectEntityType.FOLLOW, obj.id
         )
+        if (objectToDelete != null) {
+            notificationRepository.delete(
+                objectToDelete
+            )
+        }
     }
 
     fun findByReceiverUsernameAndSubjectUsernameAndObjectTypeAndObjectId
-                (receiver: String, requester: String, objType: NotificationObjectEntityType, objId: Long): NotificationEntity {
+                (receiver: String, requester: String, objType: NotificationObjectEntityType, objId: Long): NotificationEntity? {
         return notificationRepository
             .findByReceiverUsernameAndSubjectUsernameAndObjectTypeAndObjectId(receiver, requester, objType, objId)
     }

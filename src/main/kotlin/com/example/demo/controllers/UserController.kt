@@ -6,6 +6,7 @@ import com.example.demo.models.requestModels.SignUpRequest
 import com.example.demo.models.responseModels.LogInResponse
 import com.example.demo.models.responseModels.SignUpResponse
 import com.example.demo.models.responseModels.UserDetails
+import com.example.demo.models.responseModels.UserNames
 import com.example.demo.services.UserService
 import com.example.demo.types.Gender
 import com.example.demo.types.ProfilePrivacy
@@ -29,11 +30,6 @@ class UserController(private val userService: UserService) {
     @PostMapping("/users/login/google")
     fun authenticateWithGoogle(@RequestAttribute token: String, @RequestBody googlePayload: GooglePayload): ResponseEntity<LogInResponse> {
         return userService.authenticateWithGoogle(token, googlePayload)
-    }
-
-    @PostMapping("/users/logout")
-    fun logOut(@RequestAttribute username: String): ResponseEntity<String> {
-        return userService.logOut(username)
     }
 
     @GetMapping("/users/{username}")
@@ -70,5 +66,10 @@ class UserController(private val userService: UserService) {
     @PutMapping("/users/{username}/birthdate")
     fun editBirthdate(@RequestAttribute username: String, @RequestBody birthdate: Date): ResponseEntity<UserDetails> {
         return userService.setBirthdate(username, birthdate)
+    }
+
+    @GetMapping("/users/search")
+    fun searchUsers(@RequestAttribute username: String, @RequestParam keyword: String, @RequestParam pageNumber: Int, @RequestParam pageSize: Int): ResponseEntity<List<UserNames>> {
+        return userService.searchUsers(keyword, pageNumber, pageSize)
     }
 }

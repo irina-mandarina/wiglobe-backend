@@ -98,18 +98,18 @@ class JourneyControllerTest {
     fun journeyServiceReturnsJourneys_WhenGetJourneyRecommendationsCalled_JourneysReturned() {
         // GIVEN:
         every {
-            journeyRecommender.recommendForUser(sampleUsername)
+            journeyRecommender.recommendJourneysToUser(sampleUsername)
         } returns mapOf(
             Pair(mockkClass(JourneyEntity::class),
             0.7)
         )
 
         // WHEN:
-        val responseFromController = journeyRecommender.recommendForUser(sampleUsername)
+        val responseFromController = journeyRecommender.recommendJourneysToUser(sampleUsername)
 
         // THEN:
         assertNotNull(responseFromController)
-        assertSame(responseFromController, journeyRecommender.recommendForUser(sampleUsername))
+        assertSame(responseFromController, journeyRecommender.recommendJourneysToUser(sampleUsername))
     }
 
 
