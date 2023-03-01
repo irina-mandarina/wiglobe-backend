@@ -115,7 +115,7 @@ class DestinationService(private val destinationRepository: DestinationRepositor
         if (endIndex >= result.size) {
             endIndex = result.size - 1
         }
-        if (startIndex <= result.size) {
+        if (startIndex < result.size) {
             return ResponseEntity.ok().body(
                 result
                     .subList(startIndex, endIndex)

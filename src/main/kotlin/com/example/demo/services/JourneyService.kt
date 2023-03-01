@@ -120,34 +120,36 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
 
     fun getJourney(username: String, journeyId: Long): ResponseEntity<Journey> {
        if (!userService.userWithUsernameExists(username)) {
-            return ResponseEntity.badRequest().header(
-                "message", "Username does not exist").body(null)
+            return ResponseEntity.badRequest().body(null)
        }
 
        val journey: JourneyEntity = findJourneyById(journeyId)
-            ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
-                "message", "Journey does not exist")
+            ?: return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(null)
 
-       if (journey.visibility != Visibility.PUBLIC && journey.user.username != username) {
-           if (journey.visibility == Visibility.DRAFT ) {
-               return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                   .body(null)
-           }
-           if (journey.visibility == Visibility.FRIEND_ONLY) {
-               if (!followService.areFriends(username, journey.user.username)) {
-                   return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                       .body(null)
-               }
-           }
-           if (journey.visibility == Visibility.PRIVATE) {
-               if (!followService.isFollowing(username, journey.user.username)) {
-                   return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                       .body(null)
-               }
-           }
-
+       if ( !isJourneyVisibleByUser(journey, userService.findUserByUsername(username)!!) ) {
+           return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null)
        }
+//
+//       if (journey.visibility != Visibility.PUBLIC && journey.user.username != username) {
+//           if (journey.visibility == Visibility.DRAFT ) {
+//               return ResponseEntity.status(HttpStatus.FORBIDDEN)
+//                   .body(null)
+//           }
+//           if (journey.visibility == Visibility.FRIEND_ONLY) {
+//               if (!followService.areFriends(username, journey.user.username)) {
+//                   return ResponseEntity.status(HttpStatus.FORBIDDEN)
+//                       .body(null)
+//               }
+//           }
+//           if (journey.visibility == Visibility.PRIVATE) {
+//               if (!followService.isFollowing(username, journey.user.username)) {
+//                   return ResponseEntity.status(HttpStatus.FORBIDDEN)
+//                       .body(null)
+//               }
+//           }
+//
+//       }
 
         return ResponseEntity.ok().body(
             journeyFromEntity(journey)
@@ -177,8 +179,12 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
                 findAllByUserUsernameAndVisibility(requestedJourneysOwnerUsername, Visibility.PUBLIC)
             }
 
+        val user = userService.findUserByUsername(username)!!
+
         return ResponseEntity.ok().body(
-            journeys.map {
+            journeys
+                .filter { isJourneyVisibleByUser(it, user) }
+                .map {
                 journeyFromEntity( it )
             }
         )
@@ -188,13 +194,15 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
         val journeys = findAllByDestinationIdAndVisibilityNot(destinationId, Visibility.DRAFT).toMutableList()
         val user = userService.findUserByUsername(username)!!
 
-        journeys.removeIf{
-            (it.visibility == Visibility.PRIVATE && !user.isFollowing(it.user)) ||
-                    (it.visibility === Visibility.FRIEND_ONLY && !user.isFriendsWith(it.user))
-        }
+//        journeys.removeIf{
+//            (it.visibility == Visibility.PRIVATE && !user.isFollowing(it.user)) ||
+//                    (it.visibility === Visibility.FRIEND_ONLY && !user.isFriendsWith(it.user))
+//        }
 
         return ResponseEntity.ok().body(
-            journeys.map {
+            journeys
+                .filter { isJourneyVisibleByUser(it, user) }
+                .map {
                 journeyFromEntity(it)
             }
         )
@@ -234,15 +242,18 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
     }
 
     fun findAllVisibleByUserAndNotByUser(user: UserEntity): List<JourneyEntity> {
-        // that includes: public, friend only, private
+//        // that includes: public, friend only, private
+//        var journeys = findAllByUserNotAndVisibilityNot(user, Visibility.DRAFT).toMutableList()
+//        // remove all the private and friend only journeys which poster is not followed by the user arg
+//
+//        journeys.removeIf{
+//            (it.visibility == Visibility.PRIVATE && !user.isFollowing(it.user)) ||
+//                    (it.visibility === Visibility.FRIEND_ONLY && !user.isFriendsWith(it.user))
+//        }
+//        return journeys
         var journeys = findAllByUserNotAndVisibilityNot(user, Visibility.DRAFT).toMutableList()
-        // remove all the private and friend only journeys which poster is not followed by the user arg
-
-        journeys.removeIf{
-            (it.visibility == Visibility.PRIVATE && !user.isFollowing(it.user)) ||
-                    (it.visibility === Visibility.FRIEND_ONLY && !user.isFriendsWith(it.user))
-        }
         return journeys
+            .filter { isJourneyVisibleByUser(it, user) }
     }
 
     fun findAllByUserNotAndVisibilityNot(user: UserEntity, visibility: Visibility): List<JourneyEntity> {
@@ -254,11 +265,47 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
         return journeyRepository.findAllByDestinationIdAndVisibilityNot(destinationId, visibility)
     }
 
-    fun searchJourneys(keyword: String, pageNumber: Int, pageSize: Int): ResponseEntity<List<Journey>> {
-        return ResponseEntity.ok().body(
-            journeyRepository.findAllByDescriptionContaining(keyword, PageRequest.of(pageNumber, pageSize))
-                .map { journeyFromEntity( it ) }
-        )
+    fun searchJourneys(username: String, keyword: String, pageNumber: Int, pageSize: Int): ResponseEntity<List<Journey>> {
+        val user = userService.findUserByUsername(username)!!
+        val result = journeyRepository.findAllByDescriptionContaining(keyword, PageRequest.of(pageNumber, pageSize))
+            .filter { isJourneyVisibleByUser( it, user ) }
+        val startIndex = pageNumber * pageSize
+        var endIndex = (pageNumber + 1) * pageSize
+
+        if (startIndex < result.size) {
+            if (endIndex >= result.size)
+                endIndex = result.size - 1
+            return ResponseEntity.ok().body(
+                result
+                    .subList(startIndex, endIndex)
+                    .map { journeyFromEntity( it ) }
+            )
+        }
+        else {
+            return ResponseEntity.ok().body(
+                listOf()
+            )
+        }
+
+    }
+
+    fun isJourneyVisibleByUser(journey: JourneyEntity, user: UserEntity): Boolean {
+        if (journey.visibility === Visibility.PUBLIC)
+            return true
+        if (journey.visibility === Visibility.PRIVATE) {
+            if (user.isFollowing(journey.user)) {
+                return true
+            }
+        }
+        if (journey.visibility === Visibility.FRIEND_ONLY) {
+            if (user.isFriendsWith(journey.user)) {
+                return true
+            }
+        }
+        if (journey.user === user) {
+            return true
+        }
+        return false
     }
 
 }

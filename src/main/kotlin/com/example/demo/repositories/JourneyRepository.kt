@@ -19,4 +19,5 @@ interface JourneyRepository: JpaRepository<JourneyEntity, Long>, PagingAndSortin
     fun findAllByDestinationIdAndVisibilityNot(destinationId: Long, visibility: Visibility): List<JourneyEntity>
 
     fun findAllByDescriptionContaining(keyword: String, pageable: Pageable): List<JourneyEntity>
+    fun findAllByDescriptionContaining(keyword: String): List<JourneyEntity>
 }

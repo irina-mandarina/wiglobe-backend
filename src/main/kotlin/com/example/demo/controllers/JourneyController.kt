@@ -70,7 +70,7 @@ class JourneyController(private val journeyService: JourneyService,
     fun searchJourneys(@RequestAttribute username: String,
                        @RequestParam keyword: String, @RequestParam pageNumber: Int,
                        @RequestParam pageSize: Int): ResponseEntity<List<Journey>> {
-        return journeyService.searchJourneys(keyword, pageNumber, pageSize)
+        return journeyService.searchJourneys(username, keyword, pageNumber, pageSize)
     }
 
 }
