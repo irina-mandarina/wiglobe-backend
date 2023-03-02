@@ -1,6 +1,7 @@
 package com.example.demo.entities
 
 import com.example.demo.models.requestModels.CommentRequest
+import com.example.demo.types.EntityStatus
 import java.sql.Timestamp
 import java.time.LocalDateTime
 import javax.persistence.*
@@ -27,12 +28,16 @@ class CommentEntity() {
     @Column(name = "content", nullable = false)
     var content: String = ""
 
+    @Column(name = "status")
+    var status: EntityStatus = EntityStatus.POSTED
+
     constructor(commentRequest: CommentRequest, journey: JourneyEntity,
                 user: UserEntity) : this() {
         this.user = user
         this.journey = journey
         this.postedOn = Timestamp.valueOf(LocalDateTime.now())
         this.content = commentRequest.content
+        status = EntityStatus.POSTED
     }
 
 }

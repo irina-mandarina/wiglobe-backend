@@ -43,27 +43,27 @@ class UserController(private val userService: UserService) {
         return userService.deleteAccount(username)
     }
 
-    @PutMapping("/users/{username}/bio")
+    @PostMapping("/users/{username}/bio")
     fun editBio(@RequestAttribute username: String, @RequestBody bio: String): ResponseEntity<UserDetails> {
         return userService.setBio(username, bio)
     }
 
-    @PutMapping("/users/{username}/residence")
+    @PostMapping("/users/{username}/residence")
     fun editResidence(@RequestAttribute username: String, @RequestBody destinationId: Long): ResponseEntity<UserDetails> {
         return userService.setResidence(username, destinationId)
     }
 
-    @PutMapping("/users/{username}/privacy")
+    @PostMapping("/users/{username}/privacy")
     fun editProfilePrivacy(@RequestAttribute username: String, @RequestBody privacy: ProfilePrivacy): ResponseEntity<UserDetails> {
         return userService.setProfilePrivacy(username, privacy)
     }
 
-    @PutMapping("/users/{username}/gender")
+    @PostMapping("/users/{username}/gender")
     fun editGender(@RequestAttribute username: String, @RequestBody gender: Gender): ResponseEntity<UserDetails> {
         return userService.setGender(username, gender)
     }
 
-    @PutMapping("/users/{username}/birthdate")
+    @PostMapping("/users/{username}/birthdate")
     fun editBirthdate(@RequestAttribute username: String, @RequestBody birthdate: Date): ResponseEntity<UserDetails> {
         return userService.setBirthdate(username, birthdate)
     }

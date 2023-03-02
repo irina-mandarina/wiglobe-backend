@@ -116,7 +116,7 @@ import java.sql.Date
                     googlePayload.given_name.toString(),
                     googlePayload.family_name.toString(),
                     "",
-                    null, null
+                    null, Gender.OTHER
                 ))
                 return logIn(LogInRequest(email, findUserByEmail(email)!!.password))
             }

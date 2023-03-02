@@ -6,6 +6,7 @@ import com.example.demo.entities.UserEntity
 import com.example.demo.repositories.CommentRepository
 import com.example.demo.models.responseModels.Comment
 import com.example.demo.models.requestModels.CommentRequest
+import com.example.demo.types.EntityStatus
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
@@ -88,11 +89,10 @@ class CommentService(private val journeyService: JourneyService, private val use
         if (comment.user.username != username) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null)
         }
-
-//        if (intere)
+        comment.status = EntityStatus.DELETED
 
         notificationService.deleteNotificationForComment(comment)
-        commentRepository.delete(comment)
+        commentRepository.save(comment)
 
         return ResponseEntity.ok().body(null)
     }
@@ -106,7 +106,7 @@ class CommentService(private val journeyService: JourneyService, private val use
     }
 
     fun findCommentsByJourney(journey: JourneyEntity): List<CommentEntity> {
-        return commentRepository.findCommentsByJourney(journey)
+        return commentRepository.findCommentsByJourneyAndStatus(journey)
     }
 
     fun findAllByUser(user: UserEntity): List<CommentEntity> {
@@ -114,7 +114,7 @@ class CommentService(private val journeyService: JourneyService, private val use
     }
 
     fun findAllByUserAndIdGreaterThan(user: UserEntity, id: Long): List<CommentEntity> {
-        return commentRepository.findAllByUserAndIdGreaterThan(user, id)
+        return commentRepository.findAllByUserAndIdGreaterThanAndStatus(user, id)
     }
 
 }

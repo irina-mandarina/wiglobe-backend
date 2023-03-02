@@ -110,8 +110,9 @@ class DestinationService(private val destinationRepository: DestinationRepositor
         val result = (findDestinationsByAsciiNameStartingWith(keyword) +
                 findDestinationsByCountryCodeStartingWith(keyword) +
                 findDestinationsByCountryNameStartingWith(keyword))
+            .sortedBy { it.name }
         val startIndex = pageNumber * pageSize
-        var endIndex = (pageNumber + 1) * pageSize - 1
+        var endIndex = (pageNumber + 1) * pageSize
         if (endIndex >= result.size) {
             endIndex = result.size - 1
         }

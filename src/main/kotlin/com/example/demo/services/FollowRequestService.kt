@@ -72,8 +72,8 @@ class FollowRequestService(private val followRequestRepository: FollowRequestRep
         val request = findByReceiverUsernameAndRequesterUsername(receiverUsername, username)
             ?: return ResponseEntity.status(HttpStatus.CREATED).body(null)
 
-        followRequestRepository.delete(request)
         notificationService.deleteNotificationForFollowRequest(request)
+        followRequestRepository.delete(request)
         return ResponseEntity.ok().body(null)
     }
 
