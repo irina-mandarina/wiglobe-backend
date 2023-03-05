@@ -8,4 +8,5 @@ data class JourneyRequest(val id: Long?,
                           val endDate: Timestamp?,
                           val destinationId: Long?,
                           val description: String?,
-                          val visibility: Visibility?)
+                          val visibility: Visibility?,
+                          val images: List<String>)

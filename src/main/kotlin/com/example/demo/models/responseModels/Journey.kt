@@ -11,5 +11,6 @@ data class Journey(val id: Long,
                    val description: String?,
                    val destination: Destination?,
                    val activities: List<Activity>,
-                   val visibility: Visibility
+                   val visibility: Visibility,
+                   val images: List<String>
 )

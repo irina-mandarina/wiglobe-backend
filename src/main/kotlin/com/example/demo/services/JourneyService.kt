@@ -15,7 +15,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class JourneyService(private val journeyRepository: JourneyRepository, private val userService: UserService,
-                     private val destinationService: DestinationService, private val followService: FollowService) {
+                     private val destinationService: DestinationService, private val followService: FollowService,
+                     private val journeyImageService: JourneyImageService) {
 
     fun journeyFromEntity(journeyEntity: JourneyEntity): Journey {
         return Journey (
@@ -36,7 +37,11 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
                     it.location
                 )
             },
-            journeyEntity.visibility
+            journeyEntity.visibility,
+            journeyImageService.findAllByJourney(journeyEntity)
+                .map {
+                    it.filepath
+                }
         )
     }
 
@@ -74,7 +79,10 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
         else {
             journey.visibility = journeyRequest.visibility
         }
+        // first saving the journey to get an entity with an id
         journeyRepository.save(journey)
+        // saving the image paths
+        journeyImageService.save(journeyRequest.images, journey)
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
             journeyFromEntity(journey)
@@ -130,26 +138,6 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
        if ( !isJourneyVisibleByUser(journey, userService.findUserByUsername(username)!!) ) {
            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null)
        }
-//
-//       if (journey.visibility != Visibility.PUBLIC && journey.user.username != username) {
-//           if (journey.visibility == Visibility.DRAFT ) {
-//               return ResponseEntity.status(HttpStatus.FORBIDDEN)
-//                   .body(null)
-//           }
-//           if (journey.visibility == Visibility.FRIEND_ONLY) {
-//               if (!followService.areFriends(username, journey.user.username)) {
-//                   return ResponseEntity.status(HttpStatus.FORBIDDEN)
-//                       .body(null)
-//               }
-//           }
-//           if (journey.visibility == Visibility.PRIVATE) {
-//               if (!followService.isFollowing(username, journey.user.username)) {
-//                   return ResponseEntity.status(HttpStatus.FORBIDDEN)
-//                       .body(null)
-//               }
-//           }
-//
-//       }
 
         return ResponseEntity.ok().body(
             journeyFromEntity(journey)

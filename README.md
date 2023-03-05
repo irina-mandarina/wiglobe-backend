@@ -67,16 +67,11 @@ must haves:
 9. ~~view journeys by destination~~
 10. ~~countries for dest recs~~
 11. ~~fix controller tests (esp delete controllers)~~
-12. order recs by date and then rating???
 13. ~~post drafts, edit journeys in the frontend~~
 14. ~~update fontawesome~~
-15. delete comments and reviews. BEFORE DELETE COM: CHECK IF IT IS THE LAST INTEREST
+15. delete reviews
 16. tests for services
-17. dont search for journeys that arent visible
 18. documentation
-19. components in profile pages
-20. filters in search
-21. journeys visible by user
 22. encode passwords
 
 Future improvements (good to have):
