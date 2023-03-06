@@ -7,6 +7,7 @@ import com.example.demo.recommender.JourneyRecommender
 import com.example.demo.services.JourneyService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
 
 @RestController
 @CrossOrigin("http://localhost:3000")
@@ -71,6 +72,13 @@ class JourneyController(private val journeyService: JourneyService,
                        @RequestParam keyword: String, @RequestParam pageNumber: Int,
                        @RequestParam pageSize: Int): ResponseEntity<List<Journey>> {
         return journeyService.searchJourneys(username, keyword, pageNumber, pageSize)
+    }
+
+    @PostMapping("/journeys/{journeyId}/images")
+    fun postImage(@RequestAttribute username: String,
+                  @PathVariable journeyId: Long,
+                  @RequestParam image: MultipartFile): ResponseEntity<String> {
+        return journeyService.postImage( username, journeyId, image)
     }
 
 }

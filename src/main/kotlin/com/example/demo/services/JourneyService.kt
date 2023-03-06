@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
+import org.springframework.web.multipart.MultipartFile
 
 
 @Service
@@ -53,7 +54,7 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
             return ResponseEntity.badRequest().body(null)
         }
 
-        val journey: JourneyEntity
+        var journey: JourneyEntity
         if (journeyRequest.id != null) {
             if (findJourneyById(journeyRequest.id) != null){
                 journey = findJourneyById(journeyRequest.id)!!
@@ -80,9 +81,9 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
             journey.visibility = journeyRequest.visibility
         }
         // first saving the journey to get an entity with an id
-        journeyRepository.save(journey)
-        // saving the image paths
-        journeyImageService.save(journeyRequest.images, journey)
+        journey = journeyRepository.save(journey)
+//        // saving the image paths
+//        journeyImageService.save(journeyRequest.images, journey)
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
             journeyFromEntity(journey)
@@ -181,11 +182,6 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
     fun getJourneysByDestination(username: String, destinationId: Long): ResponseEntity<List<Journey>> {
         val journeys = findAllByDestinationIdAndVisibilityNot(destinationId, Visibility.DRAFT).toMutableList()
         val user = userService.findUserByUsername(username)!!
-
-//        journeys.removeIf{
-//            (it.visibility == Visibility.PRIVATE && !user.isFollowing(it.user)) ||
-//                    (it.visibility === Visibility.FRIEND_ONLY && !user.isFriendsWith(it.user))
-//        }
 
         return ResponseEntity.ok().body(
             journeys
@@ -296,4 +292,16 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
         return false
     }
 
+    fun postImage(username: String, journeyId: Long, image: MultipartFile): ResponseEntity<String> {
+        if (!journeyWithIdExists(journeyId)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
+        }
+        val result = journeyImageService.save(image, findJourneyById(journeyId)!!)
+
+        if (result == null) {
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(null)
+        }
+
+        return ResponseEntity.ok().body(result.filepath)
+    }
 }
