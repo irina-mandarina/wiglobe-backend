@@ -4,7 +4,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "journey_images")
-class JourneyImageEntity {
+class JourneyImageEntity() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -17,7 +17,7 @@ class JourneyImageEntity {
     @Column(name = "filepath", nullable = false)
     lateinit var filepath: String
 
-    constructor(journey: JourneyEntity, filepath: String) {
+    constructor(journey: JourneyEntity, filepath: String) : this() {
         this.journey = journey
         this.filepath = filepath
     }

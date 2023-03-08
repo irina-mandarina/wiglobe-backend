@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface JourneyRepository: JpaRepository<JourneyEntity, Long>, PagingAndSortingRepository<JourneyEntity, Long> {
-    fun findAllByUserUsername(username: String): List<JourneyEntity>
+    fun findAllByUserUsernameOrderByPostedOnDesc(username: String): List<JourneyEntity>
     fun findAllByUserUsernameAndVisibilityIsIn(username: String, visibilities: List<Visibility>): List<JourneyEntity>
     fun findJourneyEntityById(id: Long): JourneyEntity?
     fun findAllByUserNotAndVisibility(user: UserEntity, visibility: Visibility): List<JourneyEntity>
@@ -18,6 +18,6 @@ interface JourneyRepository: JpaRepository<JourneyEntity, Long>, PagingAndSortin
     fun findAllByUserNotAndVisibilityNot(user: UserEntity, visibility: Visibility): List<JourneyEntity>
     fun findAllByDestinationIdAndVisibilityNot(destinationId: Long, visibility: Visibility): List<JourneyEntity>
 
-    fun findAllByDescriptionContaining(keyword: String, pageable: Pageable): List<JourneyEntity>
-    fun findAllByDescriptionContaining(keyword: String): List<JourneyEntity>
+    fun findAllByDescriptionContainingOrderByPostedOnDesc(keyword: String, pageable: Pageable): List<JourneyEntity>
+    fun findAllByDescriptionContainingOrderByPostedOnDesc(keyword: String): List<JourneyEntity>
 }

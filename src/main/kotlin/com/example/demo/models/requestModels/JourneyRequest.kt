@@ -11,5 +11,5 @@ data class JourneyRequest(val id: Long?,
                           val destinationId: Long?,
                           val description: String?,
                           val visibility: Visibility?,
-//                          val images: List<MultipartFile>?
+                          val images: List<String>?
 )

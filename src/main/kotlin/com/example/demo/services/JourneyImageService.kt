@@ -19,68 +19,77 @@ class JourneyImageService(private val journeyImageRepository: JourneyImageReposi
         return journeyImageRepository.findAllByJourney(journeyEntity)
     }
 
-    fun save(images: List<MultipartFile>, journeyEntity: JourneyEntity) {
-        val uploadPath: Path = Paths.get(imageFolderPath)
-
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath)
-        }
-
-        for (image in images) {
-            // temporary filename
-            var filename = "journey${journeyEntity.id}"
-
-            var imageEntity = JourneyImageEntity(journeyEntity, filename)
-
-            imageEntity = journeyImageRepository.save(imageEntity)
-
-            filename = "journey${journeyEntity.id}${imageEntity.id}"
-            imageEntity.filepath = filename
-
-            // save with an updated filename
-            journeyImageRepository.save(imageEntity)
-
-            try {
-                image.inputStream.use { inputStream ->
-                    val filePath: Path = uploadPath.resolve(filename)
-                    Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING)
-                }
-            } catch (ioe: IOException) {
-                println("ignored ex")
+    fun save(images: List<String>?, journeyEntity: JourneyEntity) {
+        if (images != null) {
+            for (path in images) {
+                var img = JourneyImageEntity(journeyEntity, path)
+                journeyImageRepository.save(img)
             }
         }
     }
-
-    fun save(image: MultipartFile, journeyEntity: JourneyEntity): JourneyImageEntity? {
-        val uploadPath: Path = Paths.get(imageFolderPath)
-
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath)
-        }
-
-        // temporary filename
-        var filename = "journey${journeyEntity.id}"
-
-        var imageEntity = JourneyImageEntity(journeyEntity, filename)
-
-        imageEntity = journeyImageRepository.save(imageEntity)
-
-        filename = "journey${journeyEntity.id}${imageEntity.id}"
-        imageEntity.filepath = filename
-
-        // save with an updated filename
-        journeyImageRepository.save(imageEntity)
-
-        try {
-            image.inputStream.use { inputStream ->
-                val filePath: Path = uploadPath.resolve(filename)
-                Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING)
-            }
-        } catch (ioe: IOException) {
-            println("ignored ex")
-        }
-
-        return imageEntity
-    }
+//
+//    fun save(images: List<MultipartFile>, journeyEntity: JourneyEntity) {
+//        val uploadPath: Path = Paths.get(imageFolderPath)
+//
+//        if (!Files.exists(uploadPath)) {
+//            Files.createDirectories(uploadPath)
+//        }
+//
+//        for (image in images) {
+//            // temporary filename
+//            var filename = "journey${journeyEntity.id}"
+//
+//            var imageEntity = JourneyImageEntity(journeyEntity, filename)
+//
+//            imageEntity = journeyImageRepository.save(imageEntity)
+//
+//            filename = "journey${journeyEntity.id}${imageEntity.id}"
+//            imageEntity.filepath = filename
+//
+//            // save with an updated filename
+//            journeyImageRepository.save(imageEntity)
+//
+//            try {
+//                image.inputStream.use { inputStream ->
+//                    val filePath: Path = uploadPath.resolve(filename)
+//                    Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING)
+//                }
+//            } catch (ioe: IOException) {
+//                println("ignored ex")
+//            }
+//        }
+//    }
+//
+//    fun save(image: MultipartFile, journeyEntity: JourneyEntity): JourneyImageEntity? {
+//        val uploadPath: Path = Paths.get(imageFolderPath)
+//
+//        if (!Files.exists(uploadPath)) {
+//            Files.createDirectories(uploadPath)
+//        }
+//
+//        // temporary filename
+//        var filename = "journey${journeyEntity.id}"
+//
+//        var imageEntity = JourneyImageEntity(journeyEntity, filename)
+//
+//        imageEntity = journeyImageRepository.save(imageEntity)
+//
+//        filename = "journey${journeyEntity.id}${imageEntity.id}"
+//        imageEntity.filepath = filename
+//
+//        // save with an updated filename
+//        journeyImageRepository.save(imageEntity)
+//
+//        try {
+//            image.inputStream.use { inputStream ->
+//                val filePath: Path = uploadPath.resolve(filename)
+//                Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING)
+//            }
+//        } catch (ioe: IOException) {
+//            println("ignored ex")
+//        }
+//
+//        return imageEntity
+//    }
 
 }

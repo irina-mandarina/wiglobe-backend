@@ -3,22 +3,26 @@ package com.example.demo.services
 import com.example.demo.entities.UserDetailsEntity
 import com.example.demo.entities.UserEntity
 import com.example.demo.models.requestModels.GooglePayload
-import com.example.demo.repositories.UserRepository
 import com.example.demo.models.requestModels.LogInRequest
 import com.example.demo.models.requestModels.SignUpRequest
 import com.example.demo.models.responseModels.*
+import com.example.demo.repositories.UserRepository
 import com.example.demo.types.Gender
 import com.example.demo.types.ProfilePrivacy
 import org.springframework.data.domain.PageRequest
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import java.sql.Date
+import java.util.*
+
 
 @Service
  class UserService(private val userRepository: UserRepository, private val userDetailsService: UserDetailsService,
                    private val destinationService: DestinationService, private val jwtService: JWTService) {
 
+    val bCryptPasswordEncoder = BCryptPasswordEncoder()
     fun userNames(user: UserEntity): UserNames {
         return UserNames(
             user.username,
@@ -77,7 +81,8 @@ import java.sql.Date
             }
             user = findUserByUsername(logInRequest.userIdentifier)!!
         }
-        return if (user.password != logInRequest.password) {
+//        return if (user.password != logInRequest.password) {
+        return if (bCryptPasswordEncoder.matches(logInRequest.password, user.password)) {
             ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 // wrong password
                 .body(null)
@@ -112,7 +117,7 @@ import java.sql.Date
                 signUp(SignUpRequest(
                     generatedUsername,
                     googlePayload.email,
-                    googlePayload.id.toString(),
+                    bcryptEncode(generatePassword()),
                     googlePayload.given_name.toString(),
                     googlePayload.family_name.toString(),
                     "",
@@ -124,6 +129,26 @@ import java.sql.Date
         return ResponseEntity.ok().body(
             null
         )
+    }
+
+    private fun bcryptEncode(text: String): String {
+        return bCryptPasswordEncoder.encode(text)
+    }
+
+    private fun generatePassword(): String {
+        val leftLimit = 48 // numeral '0'
+        val rightLimit = 122 // letter 'z'
+
+        val targetStringLength = 15L
+        val random = Random()
+
+        val generatedString: String = random.ints(leftLimit, rightLimit + 1)
+            .filter { i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97) }
+            .limit(targetStringLength)
+            .collect({ StringBuilder() }, java.lang.StringBuilder::appendCodePoint, java.lang.StringBuilder::append)
+            .toString()
+
+        return generatedString
     }
 
     fun signUp(signUpRequest: SignUpRequest): ResponseEntity<SignUpResponse> {

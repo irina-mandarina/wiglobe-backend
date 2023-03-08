@@ -74,11 +74,11 @@ class JourneyController(private val journeyService: JourneyService,
         return journeyService.searchJourneys(username, keyword, pageNumber, pageSize)
     }
 
-    @PostMapping("/journeys/{journeyId}/images")
-    fun postImage(@RequestAttribute username: String,
-                  @PathVariable journeyId: Long,
-                  @RequestParam image: MultipartFile): ResponseEntity<String> {
-        return journeyService.postImage( username, journeyId, image)
-    }
+//    @PostMapping("/journeys/{journeyId}/images")
+//    fun postImage(@RequestAttribute username: String,
+//                  @PathVariable journeyId: Long,
+//                  @RequestParam image: MultipartFile): ResponseEntity<String> {
+//        return journeyService.postImage( username, journeyId, image)
+//    }
 
 }
