@@ -10,4 +10,5 @@ data class SignUpRequest(val username: String,
                          val lastName: String,
                          val biography: String,
                          val birthdate: Date?,
-                         val gender: Gender?)
+                         val gender: Gender?,
+                         val profilePicture: String?)

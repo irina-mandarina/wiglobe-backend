@@ -57,5 +57,6 @@ class UserDetailsEntity() {
         }
         this.registrationTimestamp = Timestamp.valueOf(LocalDateTime.now())
         this.privacy = ProfilePrivacy.PUBLIC
+        this.profilePicture = signUpRequest.profilePicture
     }
 }

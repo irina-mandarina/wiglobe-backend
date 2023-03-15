@@ -106,7 +106,7 @@ class CommentService(private val journeyService: JourneyService, private val use
     }
 
     fun findCommentsByJourney(journey: JourneyEntity): List<CommentEntity> {
-        return commentRepository.findCommentsByJourneyAndStatus(journey)
+        return commentRepository.findCommentsByJourneyAndStatus(journey, EntityStatus.POSTED)
     }
 
     fun findAllByUser(user: UserEntity): List<CommentEntity> {

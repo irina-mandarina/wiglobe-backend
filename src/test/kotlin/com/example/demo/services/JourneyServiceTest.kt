@@ -15,9 +15,10 @@ class JourneyServiceTest {
     val userService = mockkClass(UserService::class)
     val destinationService = mockkClass(DestinationService::class)
     val followService = mockkClass(FollowService::class)
+    val journeyImageService = mockkClass(JourneyImagePathService::class)
     val journey = mockkClass(JourneyEntity::class)
 
-    val journeyService = JourneyService(journeyRepository, userService, destinationService, followService)
+    val journeyService = JourneyService(journeyRepository, userService, destinationService, followService, journeyImageService)
 
     val username = "kiril"
 

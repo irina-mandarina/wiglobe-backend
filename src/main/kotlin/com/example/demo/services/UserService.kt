@@ -104,29 +104,37 @@ import java.util.*
     fun authenticateWithGoogle(token: String, googlePayload: GooglePayload): ResponseEntity<LogInResponse> {
         if (jwtService.googleJWTIsValid(token)) {
             val email = jwtService.getGoogleEmail(token)
-            if (userWithEmailExists(email)) {
-                // log in
-                return logIn(LogInRequest(email, findUserByEmail(email)!!.password))
+            if (email != null) {
+                if (userWithEmailExists(email)) {
+                    // log in
+                    return logIn(LogInRequest(email, findUserByEmail(email)!!.password))
+                }
+                else {
+                    // sign up
+                    // create a username that is not taken:
+                    var generatedUsername: String = googlePayload.email.substring(0, googlePayload.email.indexOf('@'))
+                    while (userWithUsernameExists(generatedUsername)) {
+                        generatedUsername += googlePayload.id
+                            .toString()[generatedUsername.length - googlePayload.email.substring(0, googlePayload.email.indexOf('@')).length]
+                    }
+                    signUp(SignUpRequest(
+                        generatedUsername,
+                        googlePayload.email,
+                        bcryptEncode(generatePassword()),
+                        googlePayload.given_name.toString(),
+                        googlePayload.family_name.toString(),
+                        "",
+                        null, Gender.OTHER,
+                        googlePayload.picture
+                    ))
+
+                    return logIn(LogInRequest(email, findUserByEmail(email)!!.password))
+                }
             }
             else {
-                // sign up
-                // create a username that is not taken:
-                var generatedUsername: String = googlePayload.email.substring(0, googlePayload.email.indexOf('@'))
-                while (userWithUsernameExists(generatedUsername)) {
-                    generatedUsername += googlePayload.id
-                        .toString()[generatedUsername.length - googlePayload.email.substring(0, googlePayload.email.indexOf('@')).length]
-                }
-                signUp(SignUpRequest(
-                    generatedUsername,
-                    googlePayload.email,
-                    bcryptEncode(generatePassword()),
-                    googlePayload.given_name.toString(),
-                    googlePayload.family_name.toString(),
-                    "",
-                    null, Gender.OTHER
-                ))
-                return logIn(LogInRequest(email, findUserByEmail(email)!!.password))
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null)
             }
+
         }
         return ResponseEntity.ok().body(
             null
@@ -176,12 +184,15 @@ import java.util.*
                     )
                 )
         }
-
+        // create a user entity
         var user = UserEntity(signUpRequest)
-
-        val userDetails = UserDetailsEntity(signUpRequest)
+        // create a userDetails entity
+        var userDetails = UserDetailsEntity(signUpRequest)
+        // save user details and assign them so an id is present
+        userDetails = userDetailsService.save(userDetails)
+        // assign the user details to the user
         user.userDetails = userDetails
-        userDetailsService.save(userDetails)
+        // save the user entity
         user = userRepository.save(user)
 
         return ResponseEntity.status(HttpStatus.CREATED).body(

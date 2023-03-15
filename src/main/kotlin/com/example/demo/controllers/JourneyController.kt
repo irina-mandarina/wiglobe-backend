@@ -5,6 +5,7 @@ import com.example.demo.models.responseModels.Journey
 import com.example.demo.services.JourneyService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import com.example.demo.recommender.JourneyRecommender
 
 @RestController
 @CrossOrigin("http://localhost:3000")
@@ -37,12 +38,13 @@ class JourneyController(private val journeyService: JourneyService,
 
     @GetMapping("/journeys")
     fun getJourneyRecommendations(@RequestAttribute username: String): List<Journey> {
-        val journeyRecommendations = journeyScoreCalculator.recommendJourneysToUser(username)
-            .toList().sortedByDescending { (_, value) -> value}.toMap()
+        var journeyRecommendations = journeyScoreCalculator.recommendJourneysToUser(username)
+        journeyRecommendations
+//            .toList().sortedByDescending { (_, value) -> value}.toMap()
 
-        for (set in journeyRecommendations) {
-            println("${set.key}: ${set.value} ")
-        }
+//        for (set in journeyRecommendations) {
+//            println("${set.key}: ${set.value} ")
+//        }
         return journeyRecommendations.map {
             journeyService.journeyFromEntity( it.key )
         }
