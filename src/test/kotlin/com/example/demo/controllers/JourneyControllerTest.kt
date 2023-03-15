@@ -16,7 +16,7 @@ import kotlin.test.assertSame
 
 class JourneyControllerTest {
     private val journeyService = mockkClass(JourneyService::class)
-    private val journeyRecommender = mockkClass(JourneyRecommender::class)
+    private val journeyRecommender = mockkClass(com.example.demo.recommender.JourneyRecommender::class)
     private val journeyController = JourneyController(journeyService, journeyRecommender)
     private val sampleUsername = "kiril"
     private val sampleJourneyId = 1L

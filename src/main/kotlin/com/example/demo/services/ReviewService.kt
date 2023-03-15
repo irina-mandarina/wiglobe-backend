@@ -14,10 +14,10 @@ import org.springframework.stereotype.Service
 class ReviewService(private val destinationService: DestinationService, private val userService: UserService,
                     private val reviewRepository: ReviewRepository) {
 
-    fun reviewFromEntity(reviewEntity: ReviewEntity): Review {
+    private fun reviewFromEntity(reviewEntity: ReviewEntity): Review {
         return Review (
-            reviewEntity.id!!,
-            destinationService.destinationFromEntity(reviewEntity.destination)!!,
+            reviewEntity.id,
+            destinationService.destinationFromEntity(reviewEntity.destination),
             userService.userNames(reviewEntity.user),
             reviewEntity.starRating,
             reviewEntity.postedOn,
@@ -26,12 +26,6 @@ class ReviewService(private val destinationService: DestinationService, private 
         )
     }
     fun getReviewsForDestination(username: String, destinationId: Long): ResponseEntity<List<Review>> {
-        if (!userService.userWithUsernameExists(username)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
-                "message", "Username does not exist")
-                .body(null)
-        }
-
         if (!destinationService.destinationWithIdExists(destinationId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
                 "message", "Destination does not exist")
@@ -49,12 +43,6 @@ class ReviewService(private val destinationService: DestinationService, private 
     }
 
     fun reviewDestination(username: String, destinationId: Long, reviewRequest: ReviewRequest): ResponseEntity<Review> {
-        if (!userService.userWithUsernameExists(username)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(
-                "message", "Username does not exist")
-                .body(null)
-        }
-
         if (!destinationService.destinationWithIdExists(destinationId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
                 "message", "Destination does not exist")

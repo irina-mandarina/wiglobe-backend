@@ -19,6 +19,7 @@ class NotificationService(private val notificationRepository: NotificationReposi
             notification.prepositionObjectType, notification.prepositionObjectId,
             notification.content)
     }
+
     fun notifyForComment(obj: CommentEntity, content: String) {
         val notification = NotificationEntity()
         notification.receiver = obj.journey.user

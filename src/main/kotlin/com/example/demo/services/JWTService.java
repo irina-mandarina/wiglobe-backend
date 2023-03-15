@@ -1,15 +1,13 @@
 package com.example.demo.services;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier.Builder;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import java.util.Collections;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import java.security.Key;
 import java.util.Date;
@@ -17,7 +15,8 @@ import java.util.Date;
 
 @Service
 public class JWTService {
-    private static final String CLIENT_ID = "1045612066490-onub3orv8hplavb7e873m4d8nedpej5o.apps.googleusercontent.com";
+    @Value("${google.clientid}")
+    private static String CLIENT_ID;
     private final SignatureAlgorithm algorithm = SignatureAlgorithm.HS256;
     private final Key key = Keys.secretKeyFor(algorithm);
     public String encode(String username) {
@@ -35,7 +34,6 @@ public class JWTService {
     }
 
     public String getSubject(String token) throws JwtException {
-        System.out.println(token);
         try {
             Jws<Claims> jws = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return jws.getBody().getSubject();

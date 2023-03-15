@@ -6,29 +6,25 @@ import com.example.demo.repositories.ActivityRepository
 import com.example.demo.models.requestModels.ActivityRequest
 import com.example.demo.models.responseModels.Activity
 import com.example.demo.types.ActivityType
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 
 @Service
-class ActivityService(
-    private val activityRepository: ActivityRepository, private val journeyService: JourneyService,
-    private val userService: UserService) {
+class ActivityService(private val activityRepository: ActivityRepository,
+                      private val journeyService: JourneyService) {
 
-    fun activityFromEntity(activityEntity: ActivityEntity): Activity {
+    private fun activityFromEntity(activityEntity: ActivityEntity): Activity {
         return Activity(
-            activityEntity.id!!,
-            activityEntity.title,
+            activityEntity.id,
             activityEntity.description,
             activityEntity.type,
             activityEntity.date,
-            activityEntity.location
+            activityEntity.image
         )
     }
-    fun addActivityToJourney(username: String, activityRequest: ActivityRequest,
-                             journeyId: Long): ResponseEntity<Activity> {
+
+    fun addActivityToJourney(activityRequest: ActivityRequest, journeyId: Long): ResponseEntity<Activity> {
         if (!journeyService.journeyWithIdExists(journeyId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
                 "message","Journey does not exist")
@@ -48,28 +44,23 @@ class ActivityService(
     fun editActivityForJourney(username: String, activityRequest: ActivityRequest, journeyId: Long,
                                activityId: Long): ResponseEntity<Activity> {
         if (!journeyService.journeyWithIdExists(journeyId)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
-                "message","Journey does not exist")
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(null)
         }
 
         if (!activityWithIdExists(activityId)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
-                "message","Activity does not exist")
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(null)
         }
 
         val journey = journeyService.findJourneyById(journeyId)!!
         if (journey.id != journeyId) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
-                "message","Activity does not belong to journey")
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(null)
         }
 
         val activity = findActivityById(activityId)!!
         activity.description = activityRequest.description.toString()
-        activity.location = activityRequest.location.toString()
-        activity.title = activityRequest.title.toString()
         activity.type = activityRequest.type!!
         activity.date = activityRequest.date!!
 
@@ -80,27 +71,21 @@ class ActivityService(
         )
     }
 
-    fun deleteActivityFromJourney(username: String, journeyId: Long, activityId: Long): ResponseEntity<String> {
+    fun deleteActivityFromJourney(username: String, journeyId: Long, activityId: Long): ResponseEntity<Void> {
         if (!journeyService.journeyWithIdExists(journeyId)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
-                "message","Journey does not exist")
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(null)
         }
 
         if (!activityWithIdExists(activityId)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
-                "message","Activity does not exist")
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(null)
         }
 
         val activity = findActivityById(activityId)!!
         activityRepository.delete(activity)
 
-        return ResponseEntity.status(HttpStatus.OK).header(
-                "message",
-            "Successfully deleted an activity"
-        )
-        .body(null)
+        return ResponseEntity.status(HttpStatus.OK).body(null)
     }
 
     fun activityWithIdExists(id: Long): Boolean {
@@ -115,7 +100,7 @@ class ActivityService(
         return activityRepository.findActivitiesByJourney(journey)
     }
 
-    fun getActivitiesForJourney(username: String, journeyId: Long): ResponseEntity<List<Activity>> {
+    fun getActivitiesForJourney(journeyId: Long): ResponseEntity<List<Activity>> {
         if (!journeyService.journeyWithIdExists(journeyId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
         }

@@ -17,16 +17,16 @@ class DestinationService(private val destinationRepository: DestinationRepositor
                          private val featureCodeService: FeatureCodeService,
                          private val countryService: CountryService,
                          private val interestsService: InterestsService) {
-    fun destinationFromEntity(destinationEntity: DestinationEntity?): Destination? {
-        if ( destinationEntity == null )
-            return null
+    fun destinationFromEntity(destinationEntity: DestinationEntity): Destination {
+//        if ( destinationEntity == null )
+//            return null
         var averageRating: Double = 0.0
         if (destinationEntity.reviews.isNotEmpty()) {
             destinationEntity.reviews.map {averageRating += it.starRating}
             averageRating /= destinationEntity.reviews.size
         }
         return Destination(
-            destinationEntity.id!!,
+            destinationEntity.id,
             destinationEntity.latitude,
             destinationEntity.longitude,
             destinationEntity.name,
@@ -51,14 +51,14 @@ class DestinationService(private val destinationRepository: DestinationRepositor
     fun destinationSearchResultFromEntity(destinationEntity: DestinationEntity): DestinationSearchResult {
         if (destinationEntity.country == null) {
             return DestinationSearchResult(
-                destinationEntity.id!!,
+                destinationEntity.id,
                 featureCodeService.findFeatureClassMeaning(destinationEntity.featureClass),
                 destinationEntity.name,
                 null
             )
         }
         return DestinationSearchResult(
-            destinationEntity.id!!,
+            destinationEntity.id,
             featureCodeService.findFeatureClassMeaning(destinationEntity.featureClass),
             destinationEntity.name,
             destinationEntity.country!!.countryName
@@ -146,7 +146,7 @@ class DestinationService(private val destinationRepository: DestinationRepositor
 
         return ResponseEntity.ok().body(
             recommendations.map {
-                destinationFromEntity(it)!!
+                destinationFromEntity(it)
             }
         )
     }

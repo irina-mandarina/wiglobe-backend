@@ -89,12 +89,18 @@ private images, backend, db on azure
 
   C:\Program Files\MySQL\MySQL Server 8.0\bin>.\mysql.exe -h wiglobe-db.mysql.database.azure.com -u irinaahamad -p wiglobedb < "C:\\Users\\irina\\demodbdump.sql"
 
-import java.math.BigInteger
-import java.security.MessageDigest
-
-fun md5(input:String): String {
-val md = MessageDigest.getInstance("MD5")
-return BigInteger(1, md.digest(input.toByteArray())).toString(16).padStart(32, '0')
-}
-
 mvn spring-boot:run
+
+IMPORTANT VALUE FROM APP.PROP FOR GOOGLE CLIENT ID
+NOTIFICATINO CONSTRUCTOR
+
+1. limit comment lenght in fronend
+2. https
+3. scr main java
+4. dont throw exceptions in recommender
+5. average rating in difff func
+
+
+qs:
+1. can we reset the free tier usage? we want to have a 1 month free Azure Database for MySQL flexible server
+2. can we use a mysql database for more than a month?

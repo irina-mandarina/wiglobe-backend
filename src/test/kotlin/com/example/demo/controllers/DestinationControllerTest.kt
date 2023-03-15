@@ -39,18 +39,18 @@ class DestinationControllerTest {
     fun destinationServiceReturnsDestination_WhenSearchDestinationCalled_DestinationReturned() {
         // GIVEN
         every {
-            destinationService.searchDestinations(sampleKeyword)
+            destinationService.searchDestinations(sampleKeyword, 2, 2)
         } returns ResponseEntity.ok().body(
             listOf(
                 mockkClass(DestinationSearchResult::class)
             )
         )
         // WHEN
-        val responseFromController = destinationController.searchDestinations(sampleKeyword)
+        val responseFromController = destinationController.searchDestinations(sampleKeyword, 2, 2)
 
         // THEN
         assertNotNull(responseFromController)
-        assertSame(responseFromController, destinationService.searchDestinations(sampleKeyword))
+        assertSame(responseFromController, destinationService.searchDestinations(sampleKeyword, 2,2 ))
 
     }
 

@@ -20,9 +20,6 @@ class ActivityEntity() {
     @Column(name = "date", nullable = false)
     var date: Timestamp? = null
 
-    @Column(name = "title")
-    var title: String? = ""
-
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     var type: ActivityType? = null
@@ -30,14 +27,13 @@ class ActivityEntity() {
     @Column(name = "description")
     var description: String? = ""
 
-    @Column(name = "location")
-    var location: String? = ""
+    @Column(name = "image")
+    var image: String? = ""
 
     constructor(activityRequest: ActivityRequest, journey: JourneyEntity) : this() {
         this.date = activityRequest.date
         this.journey = journey
-        this.title = activityRequest.title
-        this.location = activityRequest.location
+        this.image = activityRequest.image
         this.description = activityRequest.description
         if (activityRequest.type == null) {
            this.type = ActivityType.OTHER

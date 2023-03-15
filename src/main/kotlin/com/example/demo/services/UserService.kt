@@ -22,17 +22,18 @@ import java.util.*
  class UserService(private val userRepository: UserRepository, private val userDetailsService: UserDetailsService,
                    private val destinationService: DestinationService, private val jwtService: JWTService) {
 
-    val bCryptPasswordEncoder = BCryptPasswordEncoder()
+    private val bCryptPasswordEncoder = BCryptPasswordEncoder()
     fun userNames(user: UserEntity): UserNames {
         return UserNames(
             user.username,
             user.firstName,
-            user.lastName
+            user.lastName,
+            user.userDetails!!.profilePicture,
+            user.userDetails!!.gender
         )
     }
 
     fun userDetails(user: UserEntity): UserDetails {
-//        val userDetails: UserDetailsEntity = userDetailsService.findByUserUsername(user.username)
         var residence: Destination? = null
         if (user.userDetails!!.residence !== null) {
             residence = destinationService.destinationFromEntity(user.userDetails!!.residence!!)
@@ -46,7 +47,9 @@ import java.util.*
             user.userDetails!!.registrationTimestamp,
             user.userDetails!!.gender,
             residence,
-            user.userDetails!!.privacy
+            user.userDetails!!.privacy,
+            user.userDetails!!.profilePicture,
+            user.userDetails!!.backgroundPicture
         )
     }
 
@@ -81,7 +84,6 @@ import java.util.*
             }
             user = findUserByUsername(logInRequest.userIdentifier)!!
         }
-//        return if (user.password != logInRequest.password) {
         return if (bCryptPasswordEncoder.matches(logInRequest.password, user.password)) {
             ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 // wrong password
@@ -225,7 +227,9 @@ import java.util.*
                         requestedDetailsOwner.lastName,
                         null, null, null,
                         requestedDetailsOwner.userDetails!!.gender, null,
-                        requestedDetailsOwner.userDetails!!.privacy
+                        requestedDetailsOwner.userDetails!!.privacy,
+                        requestedDetailsOwner.userDetails!!.profilePicture,
+                        null
                     )
                 )
             }
@@ -277,6 +281,30 @@ import java.util.*
     fun setGender(username: String, gender: Gender): ResponseEntity<UserDetails> {
         val userDetails = findUserByUsername(username)!!.userDetails!!
         userDetails.gender = gender
+        userDetailsService.save(userDetails)
+        return ResponseEntity.ok()
+            .body(
+                userDetails(
+                    findUserByUsername(username)!!
+                )
+            )
+    }
+
+    fun setProfilePicture(username: String, profilePictureFilename: String): ResponseEntity<UserDetails> {
+        val userDetails = findUserByUsername(username)!!.userDetails!!
+        userDetails.profilePicture = profilePictureFilename
+        userDetailsService.save(userDetails)
+        return ResponseEntity.ok()
+            .body(
+                userDetails(
+                    findUserByUsername(username)!!
+                )
+            )
+    }
+
+    fun setBackgroundPicture(username: String, backgroundPictureFilename: String): ResponseEntity<UserDetails> {
+        val userDetails = findUserByUsername(username)!!.userDetails!!
+        userDetails.backgroundPicture = backgroundPictureFilename
         userDetailsService.save(userDetails)
         return ResponseEntity.ok()
             .body(

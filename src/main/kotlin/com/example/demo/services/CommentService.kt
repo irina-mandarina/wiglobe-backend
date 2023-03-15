@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service
 class CommentService(private val journeyService: JourneyService, private val userService: UserService,
                      private val commentRepository: CommentRepository, private val notificationService: NotificationService, interestsService: InterestsService) {
 
-    fun commentFromEntity(commentEntity: CommentEntity): Comment {
+    private fun commentFromEntity(commentEntity: CommentEntity): Comment {
         return Comment(
             commentEntity.id,
             commentEntity.journey.id,

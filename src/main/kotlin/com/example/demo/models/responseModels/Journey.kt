@@ -4,7 +4,7 @@ import com.example.demo.types.Visibility
 import java.sql.Timestamp
 
 data class Journey(val id: Long,
-                   val usernames: UserNames,
+                   val userNames: UserNames,
                    val postedOn: Timestamp,
                    val startDate: Timestamp?,
                    val endDate: Timestamp?,

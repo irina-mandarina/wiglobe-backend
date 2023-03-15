@@ -14,5 +14,7 @@ data class UserDetails(
     val registrationTimestamp: Timestamp?,
     val gender: Gender,
     val residence: Destination?,
-    val profilePrivacy: ProfilePrivacy
+    val profilePrivacy: ProfilePrivacy,
+    val profilePicture: String?,
+    val backgroundPicture: String?
 )

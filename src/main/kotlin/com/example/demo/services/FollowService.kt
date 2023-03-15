@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service
 @Service
 class FollowService(private val followRepository: FollowRepository,
                     private val userService: UserService, private val notificationService: NotificationService ) {
-    fun followFromEntity(followEntity: FollowEntity): Follow {
+    private fun followFromEntity(followEntity: FollowEntity): Follow {
         return Follow (
             userService.userNames(followEntity.followed),
             userService.userNames(followEntity.follower),

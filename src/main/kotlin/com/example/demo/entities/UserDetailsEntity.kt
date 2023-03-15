@@ -37,6 +37,12 @@ class UserDetailsEntity() {
     @Enumerated(EnumType.STRING)
     var privacy: ProfilePrivacy = ProfilePrivacy.PUBLIC
 
+    @Column(name = "profile_picture")
+    var profilePicture: String? = null
+
+    @Column(name = "background_picture")
+    var backgroundPicture: String? = null
+
     @JoinColumn(name = "residence")
     @OneToOne
     var residence: DestinationEntity? = null

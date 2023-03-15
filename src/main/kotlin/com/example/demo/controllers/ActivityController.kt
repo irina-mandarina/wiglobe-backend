@@ -13,7 +13,7 @@ class ActivityController(private val activityService: ActivityService) {
     @PostMapping("/journeys/{journeyId}/activities")
     fun addActivityToJourney(@RequestAttribute username: String, @RequestBody activityRequest: ActivityRequest,
                              @PathVariable journeyId: Long): ResponseEntity<Activity> {
-        return activityService.addActivityToJourney(username, activityRequest, journeyId)
+        return activityService.addActivityToJourney(activityRequest, journeyId)
     }
 
     @PutMapping("/journeys/{journeyId}/activities/{activityId}")
@@ -24,14 +24,14 @@ class ActivityController(private val activityService: ActivityService) {
 
     @DeleteMapping("/journeys/{journeyId}/activities/{activityId}")
     fun deleteActivityFromJourney(@RequestAttribute username: String,
-                               @PathVariable journeyId: Long, @PathVariable activityId: Long): ResponseEntity<String> {
+                               @PathVariable journeyId: Long, @PathVariable activityId: Long): ResponseEntity<Void> {
         return activityService.deleteActivityFromJourney(username, journeyId, activityId)
     }
 
     @GetMapping("/journeys/{journeyId}/activities")
     fun getActivitiesForJourney(@RequestAttribute username: String,
                                 @PathVariable journeyId: Long): ResponseEntity<List<Activity>> {
-        return activityService.getActivitiesForJourney(username, journeyId)
+        return activityService.getActivitiesForJourney(journeyId)
     }
 
     @GetMapping("/activities")

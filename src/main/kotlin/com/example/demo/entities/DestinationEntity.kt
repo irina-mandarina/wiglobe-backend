@@ -21,9 +21,6 @@ class DestinationEntity {
     @Column(name = "asciiname")
     var asciiName: String = ""
 
-    @Column(name = "alternatenames")
-    var alternateNames: String = ""
-
     @Column(name = "feature_class")
     var featureClass: String = ""
 

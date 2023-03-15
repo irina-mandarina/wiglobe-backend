@@ -6,6 +6,7 @@ import com.example.demo.repositories.JourneyRepository
 import com.example.demo.models.responseModels.Journey
 import com.example.demo.models.requestModels.JourneyRequest
 import com.example.demo.models.responseModels.Activity
+import com.example.demo.models.responseModels.Destination
 import com.example.demo.types.Visibility
 import org.springframework.data.domain.PageRequest
 import org.springframework.http.HttpStatus
@@ -16,25 +17,28 @@ import org.springframework.stereotype.Service
 @Service
 class JourneyService(private val journeyRepository: JourneyRepository, private val userService: UserService,
                      private val destinationService: DestinationService, private val followService: FollowService,
-                     private val journeyImageService: JourneyImageService) {
+                     private val journeyImageService: JourneyImagePathService) {
 
-    fun journeyFromEntity(journeyEntity: JourneyEntity): Journey {
+    public fun journeyFromEntity(journeyEntity: JourneyEntity): Journey {
+        var destination: Destination? = null
+        if (journeyEntity.destination != null) {
+            destination = destinationService.destinationFromEntity((journeyEntity.destination!!))
+        }
         return Journey (
-            journeyEntity.id!!,
+            journeyEntity.id,
             userService.userNames(journeyEntity.user),
             journeyEntity.postedOn,
             journeyEntity.startDate,
             journeyEntity.endDate,
             journeyEntity.description,
-            destinationService.destinationFromEntity(journeyEntity.destination),
+            destination,
             journeyEntity.activities.map {
                 Activity(
-                    it.id!!,
-                    it.title,
+                    it.id,
                     it.description,
                     it.type,
                     it.date,
-                    it.location
+                    it.image
                 )
             },
             journeyEntity.visibility,
@@ -105,8 +109,7 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
         journeyRequest: JourneyRequest
     ): ResponseEntity<Journey> {
         val journey: JourneyEntity = findJourneyById(journeyId)
-            ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
-                "message", "Journey does not exist")
+            ?: return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(null)
 
         if (journeyRequest.visibility != Visibility.DRAFT &&
@@ -127,10 +130,6 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
     }
 
     fun getJourney(username: String, journeyId: Long): ResponseEntity<Journey> {
-       if (!userService.userWithUsernameExists(username)) {
-            return ResponseEntity.badRequest().body(null)
-       }
-
        val journey: JourneyEntity = findJourneyById(journeyId)
             ?: return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(null)
@@ -225,15 +224,6 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
     }
 
     fun findAllVisibleByUserAndNotByUser(user: UserEntity): List<JourneyEntity> {
-//        // that includes: public, friend only, private
-//        var journeys = findAllByUserNotAndVisibilityNot(user, Visibility.DRAFT).toMutableList()
-//        // remove all the private and friend only journeys which poster is not followed by the user arg
-//
-//        journeys.removeIf{
-//            (it.visibility == Visibility.PRIVATE && !user.isFollowing(it.user)) ||
-//                    (it.visibility === Visibility.FRIEND_ONLY && !user.isFriendsWith(it.user))
-//        }
-//        return journeys
         var journeys = findAllByUserNotAndVisibilityNot(user, Visibility.DRAFT).toMutableList()
         return journeys
             .filter { isJourneyVisibleByUser(it, user) }
@@ -290,17 +280,4 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
         }
         return false
     }
-
-//    fun postImage(username: String, journeyId: Long, image: MultipartFile): ResponseEntity<String> {
-//        if (!journeyWithIdExists(journeyId)) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
-//        }
-//        val result = journeyImageService.save(image, findJourneyById(journeyId)!!)
-//
-//        if (result == null) {
-//            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(null)
-//        }
-//
-//        return ResponseEntity.ok().body(result.filepath)
-//    }
 }

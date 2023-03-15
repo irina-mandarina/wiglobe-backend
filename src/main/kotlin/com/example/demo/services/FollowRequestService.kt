@@ -14,7 +14,8 @@ import java.time.LocalDateTime
 
 @Service
 class FollowRequestService(private val followRequestRepository: FollowRequestRepository,
-                           private val followService: FollowService, private val userService: UserService, private val notificationService: NotificationService) {
+                           private val followService: FollowService, private val userService: UserService,
+                           private val notificationService: NotificationService) {
     private fun followRequestFromEntity(followRequestEntity: FollowRequestEntity): FollowRequest {
         return FollowRequest(
             userService.userNames(followRequestEntity.requester),
@@ -24,16 +25,17 @@ class FollowRequestService(private val followRequestRepository: FollowRequestRep
     }
 
     fun sendFollowRequest(username: String, receiverUsername: String): ResponseEntity<FollowRequest?> {
-        if (!userService.userWithUsernameExists(receiverUsername)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null)
-        }
-
-        if (findByReceiverUsernameAndRequesterUsername(receiverUsername, username) != null) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(null)
-        }
-
         val receiver = userService.findUserByUsername(receiverUsername)
             ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
+
+        val followRequestEntity =
+            findByReceiverUsernameAndRequesterUsername(receiverUsername, username)
+
+        if (followRequestEntity != null) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(
+                followRequestFromEntity(followRequestEntity)
+            )
+        }
 
         // check if not private
         if (receiver.userDetails!!.privacy == ProfilePrivacy.PUBLIC) {
@@ -106,12 +108,8 @@ class FollowRequestService(private val followRequestRepository: FollowRequestRep
             )
             return ResponseEntity.ok().body(
                 Follow(
-                    UserNames(
-                        follow.follower.username, follow.follower.firstName, follow.follower.lastName
-                    ),
-                    UserNames(
-                        follow.followed.username, follow.followed.firstName, follow.followed.lastName
-                    ),
+                    userService.userNames(follow.follower),
+                    userService.userNames(follow.followed),
                     follow.followDate
                 )
             )

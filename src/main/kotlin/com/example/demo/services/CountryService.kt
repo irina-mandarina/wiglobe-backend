@@ -7,9 +7,6 @@ import org.springframework.stereotype.Service
 
 @Service
 class CountryService(private val countryRepository: CountryRepository) {
-    fun findCountryByCountryCode(countryCode: String): CountryEntity {
-        return countryRepository.findCountryByCountryCode(countryCode)
-    }
 
     fun countryFromEntity(country: CountryEntity?): Country? {
         if (country == null) {

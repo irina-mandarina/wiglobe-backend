@@ -24,7 +24,7 @@ class ActivityControllerTest {
         // GIVEN:
         val sampleActivityReq = mockkClass(ActivityRequest::class)
         every {
-            activityService.addActivityToJourney(sampleUsername, sampleActivityReq, sampleJourneyId)
+            activityService.addActivityToJourney(sampleActivityReq, sampleJourneyId)
         } returns ResponseEntity.ok().body(
             mockkClass(Activity::class)
         )
@@ -34,7 +34,7 @@ class ActivityControllerTest {
 
         // THEN:
         assertNotNull(responseFromController)
-        assertSame(responseFromController, activityService.addActivityToJourney(sampleUsername, sampleActivityReq, sampleJourneyId))
+        assertSame(responseFromController, activityService.addActivityToJourney(sampleActivityReq, sampleJourneyId))
     }
 
     @Test
@@ -70,7 +70,7 @@ class ActivityControllerTest {
         // THEN:
         assertNotNull(responseFromController)
         assertSame(responseFromController, activityService.deleteActivityFromJourney(sampleUsername, sampleJourneyId, sampleActivityId))
-        val result: ResponseEntity<String> = ResponseEntity.ok().body(null)
+        val result: ResponseEntity<Void> = ResponseEntity.ok().body(null)
         assertEquals(responseFromController, result)
     }
 
@@ -78,7 +78,7 @@ class ActivityControllerTest {
     fun activityServiceReturnsActivitiesForJourney_WhenGetActivitiesFromJourneyCalled_ActivitiesReturned() {
         // GIVEN:
         every {
-            activityService.getActivitiesForJourney(sampleUsername, sampleJourneyId)
+            activityService.getActivitiesForJourney(sampleJourneyId)
         } returns ResponseEntity.ok().body(
             listOf(
                 mockkClass(Activity::class)
@@ -90,7 +90,7 @@ class ActivityControllerTest {
 
         // THEN:
         assertNotNull(responseFromController)
-        assertSame(responseFromController, activityService.getActivitiesForJourney(sampleUsername, sampleJourneyId))
+        assertSame(responseFromController, activityService.getActivitiesForJourney(sampleJourneyId))
     }
 
     @Test

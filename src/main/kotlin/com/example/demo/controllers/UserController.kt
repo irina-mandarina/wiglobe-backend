@@ -49,23 +49,33 @@ class UserController(private val userService: UserService) {
     }
 
     @PostMapping("/users/{username}/residence")
-    fun editResidence(@RequestAttribute username: String, @RequestBody destinationId: Long): ResponseEntity<UserDetails> {
+    fun setResidence(@RequestAttribute username: String, @RequestBody destinationId: Long): ResponseEntity<UserDetails> {
         return userService.setResidence(username, destinationId)
     }
 
     @PostMapping("/users/{username}/privacy")
-    fun editProfilePrivacy(@RequestAttribute username: String, @RequestBody privacy: ProfilePrivacy): ResponseEntity<UserDetails> {
+    fun setProfilePrivacy(@RequestAttribute username: String, @RequestBody privacy: ProfilePrivacy): ResponseEntity<UserDetails> {
         return userService.setProfilePrivacy(username, privacy)
     }
 
     @PostMapping("/users/{username}/gender")
-    fun editGender(@RequestAttribute username: String, @RequestBody gender: Gender): ResponseEntity<UserDetails> {
+    fun setGender(@RequestAttribute username: String, @RequestBody gender: Gender): ResponseEntity<UserDetails> {
         return userService.setGender(username, gender)
     }
 
     @PostMapping("/users/{username}/birthdate")
-    fun editBirthdate(@RequestAttribute username: String, @RequestBody birthdate: Date): ResponseEntity<UserDetails> {
+    fun setBirthdate(@RequestAttribute username: String, @RequestBody birthdate: Date): ResponseEntity<UserDetails> {
         return userService.setBirthdate(username, birthdate)
+    }
+
+    @PostMapping("/users/{username}/profile-picture")
+    fun setProfilePicture(@RequestAttribute username: String, @RequestBody profilePictureFilename: String): ResponseEntity<UserDetails> {
+        return userService.setProfilePicture(username, profilePictureFilename)
+    }
+
+    @PostMapping("/users/{username}/background-picture")
+    fun setBackgroundPicture(@RequestAttribute username: String, @RequestBody backgroundPictureFilename: String): ResponseEntity<UserDetails> {
+        return userService.setBackgroundPicture(username, backgroundPictureFilename)
     }
 
     @GetMapping("/users/search")

@@ -1,6 +1,9 @@
-package com.example.demo.recommender;
+package recommender;
 
-import com.example.demo.entities.*;
+import com.example.demo.entities.ActivityEntity;
+import com.example.demo.entities.CommentEntity;
+import com.example.demo.entities.JourneyEntity;
+import com.example.demo.entities.UserEntity;
 import com.example.demo.services.CommentService;
 import com.example.demo.services.InterestsService;
 import com.example.demo.services.JourneyService;
@@ -11,13 +14,15 @@ import com.vader.sentiment.analyzer.SentimentPolarities;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class JourneyRecommender {
     private final JourneyService journeyService;
-
     private final CommentService commentService;
     private final UserService userService;
     private final InterestsService interestsService;
@@ -39,10 +44,8 @@ public class JourneyRecommender {
         }
 
         for (CommentEntity comment : comments) {
-            System.out.println(comment.getContent());
             final SentimentPolarities sentimentPolarities =
                     SentimentAnalyzer.getScoresFor(comment.getContent());
-            System.out.println(sentimentPolarities);
 
             JourneyEntity journey = comment.getJourney();
 
@@ -77,7 +80,6 @@ public class JourneyRecommender {
                 // the destination does not have a feature class (it is ok)
             }
 
-
             for (ActivityEntity activity : journey.getActivities()) {
 
                 try {
@@ -91,13 +93,6 @@ public class JourneyRecommender {
             }
         }
 
-//        Map<String, Double> interests = new HashMap<>();
-//
-//        System.out.println("Interests map: ");
-//        for(Map.Entry<String, Double> interest: interests.entrySet()) {
-//            System.out.println(interest.getKey() + ": " + interest.getValue());
-//        }
-//        return interests;
     }
 
     public Map<JourneyEntity, Double> recommendJourneysToUser(String username) {
@@ -140,7 +135,6 @@ public class JourneyRecommender {
                 } catch (NullPointerException ignored) {}
             }
             recommendationsWithScores.put(journey, score);
-            System.out.println(journey.getId() + ": " + score);
         }
 
         return recommendationsWithScores;

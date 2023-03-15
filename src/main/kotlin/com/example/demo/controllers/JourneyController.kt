@@ -2,12 +2,9 @@ package com.example.demo.controllers
 
 import com.example.demo.models.requestModels.JourneyRequest
 import com.example.demo.models.responseModels.Journey
-import com.example.demo.models.responseModels.UserNames
-import com.example.demo.recommender.JourneyRecommender
 import com.example.demo.services.JourneyService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.multipart.MultipartFile
 
 @RestController
 @CrossOrigin("http://localhost:3000")
