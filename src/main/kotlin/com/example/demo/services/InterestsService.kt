@@ -41,4 +41,9 @@ class InterestsService(private val interestsRepository: InterestsRepository) {
         return interestsRepository.findAllByEntityInAndUserUsernameOrderByValueDesc(entities, username)
     }
 
+    fun decreaseInterest(interest: InterestEntity) {
+        interest.value -= 0.00000000001
+        interestsRepository.save(interest)
+    }
+
 }

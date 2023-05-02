@@ -6,6 +6,7 @@ import com.example.demo.entities.UserEntity
 import com.example.demo.repositories.ReviewRepository
 import com.example.demo.models.responseModels.Review
 import com.example.demo.models.requestModels.ReviewRequest
+import org.springframework.data.domain.PageRequest
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
@@ -134,4 +135,8 @@ class ReviewService(private val destinationService: DestinationService, private 
     fun findReviewsByDestination(destination: DestinationEntity): List<ReviewEntity> {
         return reviewRepository.findReviewsByDestination(destination)
     }
+
+//    fun findAllOrderByStarRatingDescAndPostedOnDesc(pageNumber: Int, pageSize: Int): List<ReviewEntity> {
+//        return reviewRepository.findAllOrderByStarRatingDescAndPostedOnDesc(PageRequest.of(pageNumber, pageSize))
+//    }
 }

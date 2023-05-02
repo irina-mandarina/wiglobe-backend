@@ -84,7 +84,7 @@ import java.util.*
             }
             user = findUserByUsername(logInRequest.userIdentifier)!!
         }
-        return if (bCryptPasswordEncoder.matches(logInRequest.password, user.password)) {
+        return if (!bCryptPasswordEncoder.matches(logInRequest.password, user.password)) {
             ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 // wrong password
                 .body(null)
@@ -105,9 +105,18 @@ import java.util.*
         if (jwtService.googleJWTIsValid(token)) {
             val email = jwtService.getGoogleEmail(token)
             if (email != null) {
-                if (userWithEmailExists(email)) {
+                val user = findUserByEmail(email)
+                if (user != null) {
                     // log in
-                    return logIn(LogInRequest(email, findUserByEmail(email)!!.password))
+                    return ResponseEntity.ok()
+                            .body(
+                                    LogInResponse(
+                                            userDetails(
+                                                    user
+                                            ),
+                                            jwtService.encode(user.username)
+                                    )
+                            )
                 }
                 else {
                     // sign up
@@ -128,7 +137,16 @@ import java.util.*
                         googlePayload.picture
                     ))
 
-                    return logIn(LogInRequest(email, findUserByEmail(email)!!.password))
+                    val user = findUserByEmail(email)!!
+                    return ResponseEntity.ok()
+                            .body(
+                                    LogInResponse(
+                                            userDetails(
+                                                    user
+                                            ),
+                                            jwtService.encode(user.username)
+                                    )
+                            )
                 }
             }
             else {

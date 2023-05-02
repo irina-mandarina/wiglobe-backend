@@ -38,12 +38,12 @@ class FollowService(private val followRepository: FollowRepository,
         val follow = FollowEntity(followRequest)
         if (follow.follower.isFriendsWith(follow.followed)) {
             notificationService.notifyForFollow(follow,
-                "${follow.followed.username} followed you. You are friends now")
+                "${follow.follower.username} followed you. You are friends now")
         }
         else {
             notificationService.notifyForFollow(
                 follow,
-                "${follow.followed.username} followed you"
+                "${follow.follower.username} followed you"
             )
         }
         return followRepository.save(follow)
@@ -57,12 +57,12 @@ class FollowService(private val followRepository: FollowRepository,
 
         if (follow.follower.isFriendsWith(follow.followed)) {
             notificationService.notifyForFollow(follow,
-                "${follow.followed.username} followed you. You are friends now.")
+                "${follow.follower.username} followed you. You are friends now.")
         }
         else {
             notificationService.notifyForFollow(
                 follow,
-                "${follow.followed.username} followed you"
+                "${follow.follower.username} followed you"
             )
         }
         return followRepository.save(follow)

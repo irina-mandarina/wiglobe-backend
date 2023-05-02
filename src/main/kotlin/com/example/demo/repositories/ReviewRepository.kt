@@ -3,6 +3,7 @@ package com.example.demo.repositories
 import com.example.demo.entities.DestinationEntity
 import com.example.demo.entities.ReviewEntity
 import com.example.demo.entities.UserEntity
+import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
@@ -12,4 +13,6 @@ interface ReviewRepository: JpaRepository<ReviewEntity, Long> {
 
     fun findReviewsByUser(user: UserEntity): List<ReviewEntity>
     fun findReviewsByDestination(destination: DestinationEntity): List<ReviewEntity>
+    fun findAllByOrderByStarRatingDescPostedOnDesc(pageable: Pageable): List<ReviewEntity>
+//    fun findAllByOrOrderByStarRatingDescOrderByPostedOnDesc
 }

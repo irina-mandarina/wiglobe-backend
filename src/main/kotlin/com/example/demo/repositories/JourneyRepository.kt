@@ -18,6 +18,6 @@ interface JourneyRepository: JpaRepository<JourneyEntity, Long>, PagingAndSortin
     fun findAllByUserNotAndVisibilityNot(user: UserEntity, visibility: Visibility): List<JourneyEntity>
     fun findAllByDestinationIdAndVisibilityNot(destinationId: Long, visibility: Visibility): List<JourneyEntity>
 
-    fun findAllByDescriptionContainingOrderByPostedOnDesc(keyword: String, pageable: Pageable): List<JourneyEntity>
-    fun findAllByDescriptionContainingOrderByPostedOnDesc(keyword: String): List<JourneyEntity>
+    fun findAllByDestinationCountryCountryNameStartsWith(keyword: String, pageable: Pageable): List<JourneyEntity>
+    fun findAllByDestinationCountryCountryNameStartsWith(keyword: String): List<JourneyEntity>
 }

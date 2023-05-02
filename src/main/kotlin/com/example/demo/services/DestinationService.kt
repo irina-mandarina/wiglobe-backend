@@ -1,19 +1,21 @@
 package com.example.demo.services
 
 import com.example.demo.entities.DestinationEntity
+import com.example.demo.entities.ReviewEntity
 import com.example.demo.models.projections.DestinationSearchProjection
 import com.example.demo.models.responseModels.Destination
 import com.example.demo.models.responseModels.DestinationSearchResult
 import com.example.demo.repositories.DestinationRepository
+import com.example.demo.repositories.ReviewRepository
 import com.example.demo.types.InterestKeyEntityType
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
-import org.springframework.web.bind.annotation.RequestParam
 
 @Service
 class DestinationService(private val destinationRepository: DestinationRepository,
+                         private val reviewRepository: ReviewRepository,
                          private val featureCodeService: FeatureCodeService,
                          private val countryService: CountryService,
                          private val interestsService: InterestsService) {
@@ -89,15 +91,6 @@ class DestinationService(private val destinationRepository: DestinationRepositor
         return destinationRepository.findAllByFeatureClassInOrFeatureCodeInOrCountryCountryCodeIn(featureClasses, featureCodes, countryCodes, pageable)
     }
 
-
-    fun getDestinations(): ResponseEntity<List<Destination>> {
-        return ResponseEntity.ok().body(
-            destinationRepository.findAll().map {
-                destinationFromEntity(it)!!
-            }
-        )
-    }
-
     fun getDestination(destinationId: Long): ResponseEntity<Destination> {
         return ResponseEntity.ok().body (
             destinationFromEntity(
@@ -108,8 +101,8 @@ class DestinationService(private val destinationRepository: DestinationRepositor
 
     fun searchDestinations(keyword: String, pageNumber: Int, pageSize: Int): ResponseEntity<List<DestinationSearchResult>> {
         val result = (findDestinationsByAsciiNameStartingWith(keyword) +
-                findDestinationsByCountryCodeStartingWith(keyword) +
-                findDestinationsByCountryNameStartingWith(keyword))
+                findDestinationsByCountryNameStartingWith(keyword)) +
+                findDestinationsByCountryCodeStartingWith(keyword)
             .sortedBy { it.name }
         val startIndex = pageNumber * pageSize
         var endIndex = (pageNumber + 1) * pageSize
@@ -132,6 +125,10 @@ class DestinationService(private val destinationRepository: DestinationRepositor
         }
     }
 
+    fun findAllByOrderByStarRatingDescOrderByPostedOnDesc(pageNumber: Int, pageSize: Int): List<ReviewEntity> {
+        return reviewRepository.findAllByOrderByStarRatingDescPostedOnDesc(PageRequest.of(pageNumber, pageSize))
+    }
+
     fun recommendDestinationsToUser(username: String, pageNumber: Int, pageSize: Int): ResponseEntity<List<Destination>> {
         val featureInterests = interestsService
             .findAllByEntityInAndUserUsernameOrderByValueDesc(
@@ -142,7 +139,12 @@ class DestinationService(private val destinationRepository: DestinationRepositor
             }
 
         val page: Pageable = PageRequest.of(pageNumber, pageSize)
-        val recommendations = findAllByFeatureClassInOrFeatureCodeInOrCountryCountryCodeIn(featureInterests, featureInterests, featureInterests, page)
+//        val recommendations = findAllByFeatureClassInOrFeatureCodeInOrCountryCountryCodeIn(featureInterests, featureInterests, featureInterests, page)
+
+        // find top-rated and score them
+        val recommendations = findAllByOrderByStarRatingDescOrderByPostedOnDesc(1, 200)
+                .map{it -> it.destination}
+
 
         return ResponseEntity.ok().body(
             recommendations.map {

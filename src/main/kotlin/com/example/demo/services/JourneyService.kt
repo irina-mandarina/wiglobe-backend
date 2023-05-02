@@ -19,7 +19,7 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
                      private val destinationService: DestinationService, private val followService: FollowService,
                      private val journeyImageService: JourneyImagePathService) {
 
-    public fun journeyFromEntity(journeyEntity: JourneyEntity): Journey {
+    fun journeyFromEntity(journeyEntity: JourneyEntity): Journey {
         var destination: Destination? = null
         if (journeyEntity.destination != null) {
             destination = destinationService.destinationFromEntity((journeyEntity.destination!!))
@@ -240,8 +240,8 @@ class JourneyService(private val journeyRepository: JourneyRepository, private v
 
     fun searchJourneys(username: String, keyword: String, pageNumber: Int, pageSize: Int): ResponseEntity<List<Journey>> {
         val user = userService.findUserByUsername(username)!!
-        val result = journeyRepository.findAllByDescriptionContainingOrderByPostedOnDesc(keyword, PageRequest.of(pageNumber, pageSize))
-            .filter { isJourneyVisibleByUser( it, user ) }
+        val result = journeyRepository.findAllByDestinationCountryCountryNameStartsWith(keyword, PageRequest.of(pageNumber, pageSize))
+//            .filter { isJourneyVisibleByUser( it, user ) }
         val startIndex = pageNumber * pageSize
         var endIndex = (pageNumber + 1) * pageSize
 

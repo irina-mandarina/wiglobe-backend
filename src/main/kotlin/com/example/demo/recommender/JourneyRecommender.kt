@@ -90,50 +90,57 @@ class JourneyRecommender(private val journeyService: JourneyService, private val
 
         // find scores for journeys
         for (journey in journeys) {
-            var score = 0.0
-            // for each journey characteristic, add the corresponding compound score from the interests map
-            if (journey.destination != null) {
-                if (journey.destination!!.country != null) {
-                    val interest = interestsService.findByKeyAndEntityAndUser(
-                        journey.destination!!.country!!.countryCode, InterestKeyEntityType.COUNTRY, user
-                    )
-                    if (interest != null) {
-                        score += interest.value
-                    }
-                }
-
-                if (journey.destination!!.featureClass.isNotEmpty()) {
-                    val interest = interestsService.findByKeyAndEntityAndUser(
-                        journey.destination!!.featureClass, InterestKeyEntityType.FEATURE_CLASS, user
-                    )
-                    if (interest != null) {
-                        score += interest.value
-                    }
-                }
-
-                if (journey.destination!!.featureCode.isNotEmpty()) {
-                    val interest = interestsService.findByKeyAndEntityAndUser(
-                        journey.destination!!.featureCode, InterestKeyEntityType.FEATURE_CODE, user
-                    )
-                    if (interest != null) {
-                        score += interest.value
-                    }
-                }
-
-                for (activity in journey.activities) {
-                    if (activity.type != null) {
-                        val interest = interestsService.findByKeyAndEntityAndUser(
-                            activity.type.toString(), InterestKeyEntityType.ACTIVITY, user
-                        )
-                        if (interest != null) {
-                            score += interest.value
-                        }
-                    }
-                }
-
-            }
-            recommendationsWithScores[journey] = score
+            recommendationsWithScores[journey] = calculateJourneyPolarityScoreForUser(journey, user)
         }
         return recommendationsWithScores
+    }
+
+    private fun calculateJourneyPolarityScoreForUser(journey: JourneyEntity, user: UserEntity): Double {
+        var score = 0.0
+        // for each journey characteristic, add the corresponding compound score from the interests map
+        if (journey.destination != null) {
+            if (journey.destination!!.country != null) {
+                val interest = interestsService.findByKeyAndEntityAndUser(
+                        journey.destination!!.country!!.countryCode, InterestKeyEntityType.COUNTRY, user
+                )
+                if (interest != null) {
+                    score += interest.value
+                    interestsService.decreaseInterest(interest)
+                }
+            }
+
+            if (journey.destination!!.featureClass.isNotEmpty()) {
+                val interest = interestsService.findByKeyAndEntityAndUser(
+                        journey.destination!!.featureClass, InterestKeyEntityType.FEATURE_CLASS, user
+                )
+                if (interest != null) {
+                    score += interest.value
+                    interestsService.decreaseInterest(interest)
+                }
+            }
+
+            if (journey.destination!!.featureCode.isNotEmpty()) {
+                val interest = interestsService.findByKeyAndEntityAndUser(
+                        journey.destination!!.featureCode, InterestKeyEntityType.FEATURE_CODE, user
+                )
+                if (interest != null) {
+                    score += interest.value
+                    interestsService.decreaseInterest(interest)
+                }
+            }
+
+        }
+        for (activity in journey.activities) {
+            if (activity.type != null) {
+                val interest = interestsService.findByKeyAndEntityAndUser(
+                        activity.type.toString(), InterestKeyEntityType.ACTIVITY, user
+                )
+                if (interest != null) {
+                    score += interest.value
+                    interestsService.decreaseInterest(interest)
+                }
+            }
+        }
+        return score
     }
 }

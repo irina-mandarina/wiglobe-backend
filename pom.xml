@@ -28,11 +28,20 @@
 
 
     <dependencies>
+<!--        hot deploy -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+<!--        ml-->
         <dependency>
             <groupId>com.github.apanimesh061</groupId>
             <artifactId>VaderSentimentJava</artifactId>
             <version>v1.1.1</version>
         </dependency>
+
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
